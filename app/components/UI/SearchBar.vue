@@ -24,10 +24,10 @@
 </template>
 
 <script setup lang="ts">
-const value = ref('')
+const value = ref("")
 
 const onClear = () => {
-  value.value = ''
+  value.value = ""
 }
 </script>
 

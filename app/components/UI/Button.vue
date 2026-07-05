@@ -16,29 +16,29 @@
 </template>
 
 <script setup lang="ts">
-const { type = 'primary', isStrong = false } = defineProps<{
-  type?: 'primary' | 'secondary' | 'inverted' | 'outlined' | 'outlined-light'
+const { type = "primary", isStrong = false } = defineProps<{
+  type?: "primary" | "secondary" | "inverted" | "outlined" | "outlined-light"
   isStrong?: boolean
 }>()
 
-const isSecondary = computed(() => type === 'secondary')
-const isOutlined = computed(() => type === 'outlined' || type === 'outlined-light')
-const isLight = computed(() => type === 'outlined-light')
-const variant = computed(() => (isOutlined.value ? 'outline' : 'solid'))
+const isSecondary = computed(() => type === "secondary")
+const isOutlined = computed(() => type === "outlined" || type === "outlined-light")
+const isLight = computed(() => type === "outlined-light")
+const variant = computed(() => (isOutlined.value ? "outline" : "solid"))
 const color = computed(() => {
   switch (type) {
-    case 'primary':
-      return 'primary'
-    case 'secondary':
-      return 'secondary'
-    case 'inverted':
-      return 'neutral'
-    case 'outlined':
-      return 'secondary' // Use secondary color for outlined variant
-    case 'outlined-light':
-      return 'primary'
+    case "primary":
+      return "primary"
+    case "secondary":
+      return "secondary"
+    case "inverted":
+      return "neutral"
+    case "outlined":
+      return "secondary" // Use secondary color for outlined variant
+    case "outlined-light":
+      return "primary"
     default:
-      return 'primary'
+      return "primary"
   }
 })
 </script>
