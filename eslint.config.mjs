@@ -1,6 +1,12 @@
 // @ts-check
 import withNuxt from './.nuxt/eslint.config.mjs'
 
-export default withNuxt(
-  // Your custom configs here
-)
+export default withNuxt({
+  rules: {
+    '@typescript-eslint/unified-signatures': 'warn',
+    '@stylistic/quotes': ['error', 'double', { avoidEscape: true }],
+    '@stylistic/quote-props': ['error', 'as-needed'],
+    '@stylistic/semi': ['error', 'never'],
+    '@stylistic/comma-dangle': ['error', 'never']
+  }
+})

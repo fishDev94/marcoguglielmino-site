@@ -1,7 +1,7 @@
 <template>
   <div>
     <h1 class="my-text">
-      Test test
+      {{ test?.testCollection?.items[0]?.title }}
     </h1>
     <div class="button-content">
       <UIButton
@@ -29,6 +29,18 @@
     <UISearchBar />
   </div>
 </template>
+
+<script setup lang="ts">
+const { data: test } = await useAsyncGql({
+  operation: "test",
+  variables: { title: "test-test" },
+  options: {
+    getCachedData(key, nuxtApp) {
+      return nuxtApp.payload.data[key] || nuxtApp.static.data[key]
+    }
+  }
+})
+</script>
 
 <style lang="scss" scoped>
 .my-text {
