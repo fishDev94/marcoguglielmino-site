@@ -1,0 +1,64 @@
+:root {
+  /* === Core Brand Colors === */
+  --mg-color-primary: #007aff;      /* Atletica Blue – main brand color for actions and highlights */
+  --mg-color-secondary: #0f172a;    /* Track Navy – used for headers, navigation, and dark surfaces */
+  --mg-color-tertiary: #d75600;     /* Performance Orange – accent for metrics and energy elements */
+  --mg-color-neutral: #747781;      /* Split Gray – neutral tone for text, borders, and metadata */
+
+  /* === Supporting & Functional Colors === */
+  --mg-color-accent: #00e5ff;       /* Velocity Cyan – highlight for “Personal Best” or active states */
+  --mg-color-surface: #f9f9ff;      /* Main background surface */
+  --mg-color-surface-alt: #f1f3fe;  /* Secondary surface for cards or containers */
+  --mg-color-on-surface: #181c23;   /* Primary text color on light surfaces */
+  --mg-color-on-surface-variant: #414755; /* Secondary text color for muted content */
+  --mg-color-outline: #c1c6d7;      /* Borders and dividers */
+  --mg-color-error: #ba1a1a;        /* Error or alert color */
+  --mg-color-on-error: #ffffff;     /* Text color on error backgrounds */
+
+  /* === Button Backgrounds === */
+  --mg-btn-bg-primary: var(--mg-color-primary);        /* Solid Atletica Blue background */
+  --mg-btn-bg-secondary: var(--mg-color-secondary);    /* Solid Track Navy background */
+  --mg-btn-bg-tertiary: var(--mg-color-tertiary);      /* Optional accent button (Performance Orange) */
+  --mg-btn-bg-neutral: var(--mg-color-neutral);        /* Neutral gray for less prominent actions */
+
+  /* === Button Text Colors === */
+  --mg-btn-text-primary: #ffffff;                      /* White text on primary buttons */
+  --mg-btn-text-secondary: #ffffff;                    /* White text on secondary buttons */
+  --mg-btn-text-tertiary: #ffffff;                     /* White text on tertiary buttons */
+  --mg-btn-text-neutral: var(--mg-color-on-surface);   /* Dark text on neutral buttons */
+
+  /* === Button Variants === */
+  --mg-btn-bg-inverted: #ffffff;                       /* White background for inverted variant */
+  --mg-btn-text-inverted: var(--mg-color-primary);     /* Blue text on inverted button */
+  --mg-btn-bg-outlined: transparent;                   /* Transparent background for outlined variant */
+  --mg-btn-border-outlined: var(--mg-color-secondary); /* Navy border for outlined button */
+  --mg-btn-text-outlined: var(--mg-color-secondary);   /* Navy text for outlined button */
+
+  /* === Hover / Active States === */
+  --mg-btn-hover-primary: #0066d6;                     /* Slightly darker blue for hover */
+  --mg-btn-hover-secondary: #1a2238;                   /* Darker navy hover */
+  --mg-btn-hover-inverted: #f1f3fe;                    /* Light tint hover for inverted */
+  --mg-btn-hover-outlined: rgba(15, 23, 42, 0.08);     /* Subtle navy tint on hover */
+
+  /* === Search Bar Colors === */
+  --mg-search-bg: var(--mg-color-surface-alt);        /* Light container background */
+  --mg-search-border: var(--mg-color-outline);        /* Subtle border for structure */
+  --mg-search-text: var(--mg-color-on-surface);       /* Main input text color */
+  --mg-search-placeholder: var(--mg-color-on-surface-variant); /* Muted placeholder text */
+  --mg-search-icon: var(--mg-color-neutral);          /* Icon color (magnifier, clear) */
+
+  /* === Search Bar Focus & Hover States === */
+  --mg-search-focus-border: var(--mg-color-primary);  /* Blue border when focused */
+  --mg-search-hover-bg: var(--mg-color-surface);      /* Slightly brighter background on hover */
+  --mg-search-hover-border: var(--mg-color-neutral);  /* Gray border on hover */
+
+  /* === Search Bar Active / Filled States === */
+  --mg-search-active-bg: #ffffff;                     /* White background when text is entered */
+  --mg-search-active-border: var(--mg-color-primary); /* Blue border when active */
+  --mg-search-active-icon: var(--mg-color-primary);   /* Blue icon when active */
+
+  /* === Search Bar Disabled State === */
+  --mg-search-disabled-bg: var(--mg-color-surface-container-low); /* Dimmed background */
+  --mg-search-disabled-text: var(--mg-color-on-surface-variant);  /* Muted text */
+  --mg-search-disabled-border: var(--mg-color-outline);           /* Faint border */
+}

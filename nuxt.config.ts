@@ -1,6 +1,5 @@
 // https://nuxt.com/docs/api/configuration/nuxt-config
 export default defineNuxtConfig({
-
   modules: [
     '@nuxt/eslint',
     '@nuxt/ui',
@@ -14,8 +13,12 @@ export default defineNuxtConfig({
   devtools: {
     enabled: true
   },
+
   app: {
     head: {
+      htmlAttrs: {
+        lang: 'en'
+      },
       title: 'Marco Guglielmino',
       meta: [
         { name: 'viewport', content: 'width=device-width, initial-scale=1' },
@@ -44,11 +47,27 @@ export default defineNuxtConfig({
 
   css: ['~/assets/css/main.css'],
 
+  ui: {
+    colorMode: false
+  },
+
   routeRules: {
     '/': { prerender: true }
   },
 
   compatibilityDate: '2026-06-30',
+
+  vite: {
+    css: {
+      preprocessorOptions: {
+        scss: {
+          additionalData: `
+            @use "assets/scss/main" as *;
+          `
+        }
+      }
+    }
+  },
 
   eslint: {
     config: {
