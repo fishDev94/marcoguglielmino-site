@@ -5,6 +5,9 @@ on: push
 jobs:
   ci:
     runs-on: ${{ matrix.os }}
+    env:
+      CTF_CDA_ACCESS_TOKEN: ${{ secrets.CTF_CDA_ACCESS_TOKEN }}
+      CTF_CDA_SPACE_ID: ${{ secrets.CTF_CDA_SPACE_ID }}
 
     strategy:
       matrix:
