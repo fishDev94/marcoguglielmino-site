@@ -3,6 +3,18 @@
     <h1 class="my-text">
       Test test
     </h1>
+    <UIButton type="primary">
+      Primary
+    </UIButton>
+    <UIButton type="secondary">
+      Secondary
+    </UIButton>
+    <UIButton type="inverted">
+      Inverted
+    </UIButton>
+    <UIButton type="outlined">
+      Outlined
+    </UIButton>
   </div>
 </template>
 

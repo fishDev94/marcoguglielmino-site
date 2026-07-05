@@ -17,13 +17,13 @@
 
   /* === Button Backgrounds === */
   --mg-btn-bg-primary: var(--mg-color-primary);        /* Solid Atletica Blue background */
-  --mg-btn-bg-secondary: var(--mg-color-secondary);    /* Solid Track Navy background */
+  --mg-btn-bg-secondary: var(--mg-color-surface-alt);    /* Solid Track Navy background */
   --mg-btn-bg-tertiary: var(--mg-color-tertiary);      /* Optional accent button (Performance Orange) */
   --mg-btn-bg-neutral: var(--mg-color-neutral);        /* Neutral gray for less prominent actions */
 
   /* === Button Text Colors === */
   --mg-btn-text-primary: #ffffff;                      /* White text on primary buttons */
-  --mg-btn-text-secondary: #ffffff;                    /* White text on secondary buttons */
+  --mg-btn-text-secondary: #444654;                    /* White text on secondary buttons */
   --mg-btn-text-tertiary: #ffffff;                     /* White text on tertiary buttons */
   --mg-btn-text-neutral: var(--mg-color-on-surface);   /* Dark text on neutral buttons */
 
@@ -35,10 +35,10 @@
   --mg-btn-text-outlined: var(--mg-color-secondary);   /* Navy text for outlined button */
 
   /* === Hover / Active States === */
-  --mg-btn-hover-primary: #0066d6;                     /* Slightly darker blue for hover */
-  --mg-btn-hover-secondary: #1a2238;                   /* Darker navy hover */
-  --mg-btn-hover-inverted: #f1f3fe;                    /* Light tint hover for inverted */
-  --mg-btn-hover-outlined: rgba(15, 23, 42, 0.08);     /* Subtle navy tint on hover */
+  --mg-btn-hover-primary: #005bb5;                     /* Slightly darker blue for hover */
+  --mg-btn-hover-secondary: #e2e5f5;                   /* Darker navy hover */
+  --mg-btn-hover-inverted: #0f172a;                    /* Light tint hover for inverted */
+  --mg-btn-hover-outlined: rgba(0, 122, 255, 0.08);     /* Subtle navy tint on hover */
 
   /* === Search Bar Colors === */
   --mg-search-bg: var(--mg-color-surface-alt);        /* Light container background */
