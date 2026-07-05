@@ -1,0 +1,50 @@
+@use "sass:string";
+
+$phone: 360px;
+$tablet: 744px;
+$medium-desktop: 1024px;
+$large-desktop: 1440px;
+
+@mixin start-from($media, $orientation: false) {
+  @if $media == phone {
+    @if $orientation {
+      @media (max-width: ($tablet - 1)) and (orientation: $orientation) {
+        @content;
+      }
+    } @else {
+      @media (max-width: ($tablet - 1)) {
+        @content;
+      }
+    }
+  } @else if $media == tablet {
+    @if $orientation {
+      @media (min-width: $tablet) and (orientation: string.unquote($orientation)) {
+        @content;
+      }
+    } @else {
+      @media (min-width: $tablet) {
+        @content;
+      }
+    }
+  } @else if $media == medium-desktop {
+    @if $orientation {
+      @media (min-width: $medium-desktop) and (orientation: string.unquote($orientation)) {
+        @content;
+      }
+    } @else {
+      @media (min-width: $medium-desktop) {
+        @content;
+      }
+    }
+  } @else if $media == large-desktop {
+    @if $orientation {
+      @media (min-width: $large-desktop) and (orientation: string.unquote($orientation)) {
+        @content;
+      }
+    } @else {
+      @media (min-width: $large-desktop) {
+        @content;
+      }
+    }
+  }
+}
