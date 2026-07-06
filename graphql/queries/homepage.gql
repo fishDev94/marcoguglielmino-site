@@ -1,0 +1,31 @@
+query homepage($slug: String!) {
+  homepageCollection(limit: 1, where: { slug: $slug }) {
+    items {
+      label
+      title
+      kicker
+      copy
+      ctaButton: ctaButtonsCollection {
+        items {
+          text
+          path
+          typeButton
+          isButtonStrong
+        }
+      }
+      heroBackground {
+        url
+        description
+      }
+      bodyContent: bodyContentCollection {
+        items {
+          title
+          slug
+          bodyDescription {
+            json
+          }
+        }
+      }
+    }
+  }
+}

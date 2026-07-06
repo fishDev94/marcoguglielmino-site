@@ -1,7 +1,7 @@
 <template>
   <div>
     <h1 class="my-text">
-      {{ test?.testCollection?.items[0]?.title }}
+      {{ data?.homepageCollection?.items[0]?.title }}
     </h1>
     <div class="button-content">
       <UIButton
@@ -31,15 +31,17 @@
 </template>
 
 <script setup lang="ts">
-const { data: test } = await useAsyncGql({
-  operation: "test",
-  variables: { title: "test-test" },
+const { data } = await useAsyncGql({
+  operation: "homepage",
+  variables: { slug: "homepage" },
   options: {
     getCachedData(key, nuxtApp) {
       return nuxtApp.payload.data[key] || nuxtApp.static.data[key]
     }
   }
 })
+
+console.log("data", data)
 </script>
 
 <style lang="scss" scoped>
