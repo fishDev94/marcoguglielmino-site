@@ -1,7 +1,7 @@
 <template>
   <div>
     <h1 class="my-text">
-      {{ data?.homepageCollection?.items[0]?.title }}
+      {{ homepageData?.title }}
     </h1>
     <div class="button-content">
       <UIButton
@@ -27,21 +27,14 @@
       </UIButton>
     </div>
     <UISearchBar />
+    <RichTextRenderer
+      :custom-rich-text-json="bodyDescription"
+    />
   </div>
 </template>
 
 <script setup lang="ts">
-const { data } = await useAsyncGql({
-  operation: "homepage",
-  variables: { slug: "homepage" },
-  options: {
-    getCachedData(key, nuxtApp) {
-      return nuxtApp.payload.data[key] || nuxtApp.static.data[key]
-    }
-  }
-})
-
-console.log("data", data)
+const { homepageData, bodyDescription } = await useAsyncHomepageData()
 </script>
 
 <style lang="scss" scoped>

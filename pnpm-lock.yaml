@@ -8,6 +8,12 @@ importers:
 
   .:
     dependencies:
+      '@contentful/rich-text-html-renderer':
+        specifier: ^17.2.2
+        version: 17.2.2
+      '@contentful/rich-text-types':
+        specifier: ^17.2.7
+        version: 17.2.7
       '@nuxt/image':
         specifier: 2.0.0
         version: 2.0.0(db0@0.3.4)(ioredis@5.10.1)(magicast@0.5.3)(srvx@0.11.15)
@@ -593,6 +599,14 @@ packages:
   '@commitlint/types@21.2.0':
     resolution: {integrity: sha512-7zVFCDB2reMvJH5dmbKnOQPjZEvjdJTH8jc0U/PIPU1r3/+vf5pD1HlfitV2MWsWXrvu7u39iY1lyLUPOaN0Gw==}
     engines: {node: '>=22.12.0'}
+
+  '@contentful/rich-text-html-renderer@17.2.2':
+    resolution: {integrity: sha512-Ps5SGrlrgvzJw7n7rawj6RLlv7eZnpDcGrnr8G+0FyOVsvh8y9azwyuQ4MVshgZUUJ02Z2Tc07YiTFYRFCFrlg==}
+    engines: {node: '>=20.0.0'}
+
+  '@contentful/rich-text-types@17.2.7':
+    resolution: {integrity: sha512-aIdozk8vk5gsYcallOrwEiL6+GSlMXZorDOmiVELfpbVaXMJPJPlf2CBw3LUzviAqCw0UPQcKHHCwG7SdY7u5w==}
+    engines: {node: '>=20.0.0'}
 
   '@conventional-changelog/git-client@2.7.0':
     resolution: {integrity: sha512-j7A8/LBEQ+3rugMzPXoKYzyUPpw/0CBQCyvtTR7Lmu4olG4yRC/Tfkq79Mr3yuPs0SUitlO2HwGP3gitMJnRFw==}
@@ -9013,6 +9027,12 @@ snapshots:
     dependencies:
       conventional-commits-parser: 7.0.0
       picocolors: 1.1.1
+
+  '@contentful/rich-text-html-renderer@17.2.2':
+    dependencies:
+      '@contentful/rich-text-types': 17.2.7
+
+  '@contentful/rich-text-types@17.2.7': {}
 
   '@conventional-changelog/git-client@2.7.0(conventional-commits-parser@6.4.0)':
     dependencies:

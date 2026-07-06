@@ -13,6 +13,8 @@
     "typecheck": "nuxt typecheck"
   },
   "dependencies": {
+    "@contentful/rich-text-html-renderer": "^17.2.2",
+    "@contentful/rich-text-types": "^17.2.7",
     "@nuxt/image": "2.0.0",
     "@nuxt/ui": "^4.9.0",
     "@nuxtjs/i18n": "^10.4.0",
