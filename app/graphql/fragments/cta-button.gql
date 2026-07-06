@@ -1,0 +1,6 @@
+fragment CtaButton on CtaButton {
+  text
+  path
+  typeButton
+  isButtonStrong
+}

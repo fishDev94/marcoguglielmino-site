@@ -1,0 +1,19 @@
+fragment Homepage on Homepage {
+      label
+      title
+      kicker
+      copy
+      ctaButton: ctaButtonsCollection {
+        items {
+          ...CtaButton
+        }
+      }
+      heroBackground {
+        url
+      }
+      bodyContent: bodyContentCollection {
+        items {
+          ...ContentBlock
+        }
+      }
+}

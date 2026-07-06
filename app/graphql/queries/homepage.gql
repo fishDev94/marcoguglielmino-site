@@ -1,0 +1,7 @@
+query homepage($slug: String!) {
+  homepageCollection(limit: 1, where: { slug: $slug }) {
+    items {
+      ...Homepage
+    }
+  }
+}

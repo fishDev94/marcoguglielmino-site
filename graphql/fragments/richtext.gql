@@ -1,0 +1,3 @@
+fragment RichTextBody on ContentBlockBodyDescription {
+  json
+}

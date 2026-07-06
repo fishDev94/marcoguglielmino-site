@@ -1,0 +1,15 @@
+fragment ContentBlock on ContentBlock {
+  sys {
+    id
+  }
+  title
+  slug
+  bodyDescription {
+    ...RichTextBody
+  }
+  cards: cardsCollection {
+    items {
+    ...AboutCard
+    }
+  }
+}

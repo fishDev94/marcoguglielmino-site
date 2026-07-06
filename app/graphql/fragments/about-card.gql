@@ -1,0 +1,6 @@
+fragment AboutCard on AboutCard {
+  cardTitle
+  cardDescription
+  iconCard
+  type
+}
