@@ -1,7 +1,0 @@
-query test($title: String!) {
-  testCollection(where: { title: $title }, limit: 1) {
-    items {
-      title
-    }
-  }
-}
