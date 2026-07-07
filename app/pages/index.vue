@@ -35,6 +35,8 @@
 
 <script setup lang="ts">
 const { homepageData, bodyDescription } = await useAsyncHomepageData()
+
+console.log("test")
 </script>
 
 <style lang="scss" scoped>
