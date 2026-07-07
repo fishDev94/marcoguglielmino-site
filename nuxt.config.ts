@@ -1,6 +1,5 @@
 // https://nuxt.com/docs/api/configuration/nuxt-config
 export default defineNuxtConfig({
-
   modules: [
     "@nuxt/eslint",
     "@nuxt/ui",
@@ -8,7 +7,8 @@ export default defineNuxtConfig({
     "@nuxtjs/mdc",
     "@vercel/analytics",
     "nuxt-graphql-client",
-    "@nuxt/image"
+    "@nuxt/image",
+    "nuxt-svgo-loader"
   ],
 
   devtools: {
@@ -86,7 +86,6 @@ export default defineNuxtConfig({
     },
     documentPaths: ["./graphql"]
   },
-
   eslint: {
     config: {
       stylistic: {
@@ -94,5 +93,8 @@ export default defineNuxtConfig({
         braceStyle: "1tbs"
       }
     }
+  },
+  i18n: {
+    strategy: "no_prefix"
   }
 })
