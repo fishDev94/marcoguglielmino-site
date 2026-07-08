@@ -110,6 +110,13 @@ $body-map: (
     "weight": 600,
     "letterSpacing": 0.05em,
   ),
+  4: (
+    "family": var(--mg-font-body),
+    "size": 12px,
+    "line-height": 1,
+    "weight": 600,
+    "letterSpacing": 0.05em,
+  ),
 );
 
 /// @name body

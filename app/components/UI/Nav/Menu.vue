@@ -19,6 +19,11 @@ const items = computed<NavigationMenuItem[]>(() => [
     class: "font-bold not-focus:text-white aria-[current=page]:text-(--ui-primary)"
   },
   {
+    label: "Records",
+    to: "/records",
+    class: "font-bold not-focus:text-white aria-[current=page]:text-(--ui-primary)"
+  },
+  {
     label: "Blog",
     to: "/blog",
     class: "font-bold not-focus:text-white aria-[current=page]:text-(--ui-primary)"

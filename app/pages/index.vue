@@ -35,6 +35,10 @@
 
 <script setup lang="ts">
 const { homepageData, bodyDescription } = await useAsyncHomepageData()
+
+definePageMeta({
+  name: "home"
+})
 </script>
 
 <style lang="scss" scoped>

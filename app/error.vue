@@ -1,6 +1,6 @@
 <template>
   <NuxtLayout name="default">
-    <main class="min-h-[calc(100vh-64px)] flex flex-col justify-center items-center relative overflow-hidden">
+    <main class="min-h-[calc(100vh-64px-72px)] flex flex-col justify-center items-center relative overflow-hidden">
       <!-- Background Decorative Element: Subtle Track Lane -->
       <div class="absolute inset-0 z-0 pointer-events-none opacity-10">
         <svg
@@ -102,7 +102,3 @@
     </main>
   </NuxtLayout>
 </template>
-
-<script lang="ts" setup>
-
-</script>

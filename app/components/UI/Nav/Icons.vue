@@ -2,7 +2,7 @@
   <div class="mg-nav-icons">
     <NuxtLink
       class="mg-nav-icons__link"
-      to="https://www.strava.com/athletes/32887406"
+      :to="{ name: 'strava' }"
     >
       <UIcon
         name="i-mdi-run"
