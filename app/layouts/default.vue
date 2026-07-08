@@ -1,6 +1,21 @@
 <template>
-  <div>
-    <UITopNavBar />
-    <slot />
+  <div class="mg-default-layout">
+    <UINavTop />
+    <div class="mg-default-layout__content">
+      <slot />
+    </div>
+    <UINavBottom />
   </div>
 </template>
+
+<style lang="scss" scoped>
+  .mg-default-layout {
+    display: flex;
+    flex-direction: column;
+    height: 100dvh;
+
+    &__content {
+      flex-grow: 1;
+    }
+  }
+</style>
