@@ -6,6 +6,7 @@
 
 @theme {
     --font-sans: var(--mg-font-body);
+    --font-montserrat: var(--mg-headline-font-family);
 }
 
 :root {
