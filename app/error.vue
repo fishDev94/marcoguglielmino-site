@@ -49,7 +49,7 @@
           </h1>
         </div>
         <!-- Supporting Message -->
-        <div class="max-w-2xl mb-stack-lg mb-4">
+        <div class="max-w-2xl mb-stack-lg mb-8">
           <h2 class="font-headline-lg text-headline-lg mb-4 text-(--ui-secondary) text-4xl font-bold">
             Oops! Sembra che tu sia uscito fuori pista.
           </h2>
@@ -77,14 +77,17 @@
       </div>
       <!-- Athletic Data Card Style Accent -->
       <div class="hidden lg:block absolute bottom-24 right-12 animate-pulse">
-        <div class="bg-white border border-split-gray/20 rounded-lg p-4 shadow-xl flex items-center gap-4">
+        <div class="bg-white border border-(--mg-btn-text-secondary)/20 rounded-lg p-4 shadow-xl flex items-center gap-4">
           <div
-            class="w-12 h-12 rounded-full bg-velocity-cyan/20 flex items-center justify-center text-velocity-cyan"
+            class="w-12 h-12 rounded-lg bg-[#00E5FF]/20 flex items-center justify-center text-[#00E5FF]"
           >
             <span
-              class="material-symbols-outlined"
+              class="material-symbols-outlined flex items-center justify-center"
               data-icon="timer"
-            >timer</span>
+            ><UIcon
+              name="i-material-symbols-timer-outline"
+              class="size-6"
+            /></span>
           </div>
           <div>
             <p class="font-label-bold text-[10px] uppercase text-split-gray">
