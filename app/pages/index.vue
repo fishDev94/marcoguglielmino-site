@@ -3,7 +3,7 @@
     <h1 class="my-text">
       {{ homepageData?.title }}
     </h1>
-    <!-- <div class="button-content">
+    <div class="button-content">
       <UIButton
         type="primary"
         is-strong
@@ -25,17 +25,18 @@
       >
         Outlined Light
       </UIButton>
-    </div> -->
+    </div>
     <UISearchBar />
     <RichTextRenderer
       :custom-rich-text-json="bodyDescription"
     />
     <NuxtLink to="error">error page</NuxtLink>
+    <AboutCardList :data="aboutCardList" />
   </div>
 </template>
 
 <script setup lang="ts">
-const { homepageData, bodyDescription } = await useAsyncHomepageData()
+const { homepageData, bodyDescription, aboutCardList } = await useAsyncHomepageData()
 
 definePageMeta({
   name: "home"
