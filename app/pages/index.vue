@@ -1,5 +1,5 @@
 <template>
-  <div>
+  <div class="mg-homepage">
     <h1 class="my-text">
       {{ homepageData?.title }}
     </h1>
@@ -30,6 +30,7 @@
     <RichTextRenderer
       :custom-rich-text-json="bodyDescription"
     />
+    <NuxtLink to="error">error page</NuxtLink>
   </div>
 </template>
 
@@ -42,6 +43,10 @@ definePageMeta({
 </script>
 
 <style lang="scss" scoped>
+.mg-homepage {
+  padding: 16px;
+}
+
 .my-text {
   @include heading(1);
 }

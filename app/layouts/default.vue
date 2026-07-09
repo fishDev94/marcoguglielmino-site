@@ -1,10 +1,10 @@
 <template>
   <div class="mg-default-layout">
-    <UINavTop />
+    <UINavbarTop />
     <div class="mg-default-layout__content">
       <slot />
     </div>
-    <UINavBottom />
+    <UINavbarBottom />
   </div>
 </template>
 

@@ -7,9 +7,9 @@
       <UILogo />
       <h1 class="mg-top-nav-bar__title" />
     </NuxtLink>
-    <UINavMenu />
+    <UINavbarTopMenu />
     <UIAvatar />
-    <UINavIcons />
+    <UINavbarTopNavigationIcons />
   </nav>
 </template>
 
@@ -24,6 +24,10 @@
   width: 100%;
   background-color: var(--mg-color-secondary);
   padding-inline: var(--mg-navbar-padding-mobile-x);
+  min-height: 64px;
+  position: sticky;
+  top: 0;
+  z-index: 1;
 
   &__left {
     display: flex;
