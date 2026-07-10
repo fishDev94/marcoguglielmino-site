@@ -1,8 +1,12 @@
 <template>
   <div class="mg-homepage">
-    <h1 class="my-text">
-      {{ homepageData?.title }}
-    </h1>
+    <Hero
+      :src="homepageData.heroBackground?.url || ''"
+      :title="homepageData.title || ''"
+      :kicker="homepageData.kicker || ''"
+      :copy="homepageData.copy || ''"
+      :cta-buttons="homepageData.ctaButton?.items || []"
+    />
     <!-- <div class="button-content">
       <UIButton
         type="primary"
@@ -27,10 +31,10 @@
       </UIButton>
     </div> -->
     <UISearchBar />
-    <RichTextRenderer
+    <!-- <RichTextRenderer
       :custom-rich-text-json="bodyDescription"
-    />
-    <NuxtLink to="error">error page</NuxtLink>
+    /> -->
+    <!-- <NuxtLink to="error">error page</NuxtLink> -->
     <AboutCardList :data="aboutCardList" />
   </div>
 </template>
@@ -45,11 +49,6 @@ definePageMeta({
 
 <style lang="scss" scoped>
 .mg-homepage {
-  padding: 16px;
-}
-
-.my-text {
-  @include heading(1);
 }
 
 .button-content {

@@ -16,8 +16,10 @@
 </template>
 
 <script setup lang="ts">
+export type ButtonType = "primary" | "secondary" | "inverted" | "outlined" | "outlined-light"
+
 const { type = "primary", isStrong = false } = defineProps<{
-  type?: "primary" | "secondary" | "inverted" | "outlined" | "outlined-light"
+  type?: ButtonType
   isStrong?: boolean
 }>()
 
