@@ -1,5 +1,13 @@
 <template>
-  <h1>strava</h1>
+  <div>
+    <h1>strava</h1>
+    <p v-if="activitiesLoading">
+      Loading
+    </p>
+    <p v-else>
+      Ready!
+    </p>
+  </div>
 </template>
 
 <script lang="ts" setup>
@@ -8,9 +16,12 @@ definePageMeta({
 })
 
 const { getActivities, getActivity } = useStravaActivities()
-const { data: activities } = await getActivities()
-const { data: activity } = await getActivity("19252195258")
+const { data: activities, pending: activitiesLoading } = useAsyncData(() => getActivities())
+const { data: activity, pending: activityLoading } = useAsyncData(() => getActivity("19252195258"))
 
-console.log("activities ===>", activities.value)
-console.log("activity ===>", activity.value)
+watch(activitiesLoading, (newVal) => {
+  if (!newVal) {
+    console.log("finish call", activities.value)
+  }
+})
 </script>
