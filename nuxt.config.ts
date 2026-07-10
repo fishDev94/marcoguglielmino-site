@@ -53,7 +53,11 @@ export default defineNuxtConfig({
 
   runtimeConfig: {
     ctfSpaceId: "",
-    ctfCdaAccessToken: ""
+    ctfCdaAccessToken: "",
+    stravaClientSecret: "",
+    stravaRefreshToken: "",
+    stravaClientID: "",
+    stravaAccessToken: ""
   },
 
   routeRules: {
@@ -96,5 +100,9 @@ export default defineNuxtConfig({
   },
   i18n: {
     strategy: "no_prefix"
+  },
+  image: {
+    provider: process.env.VERCEL_ENV ? "vercel" : "ipx",
+    format: ["webp", "jpg"]
   }
 })

@@ -3,7 +3,7 @@
     <h1 class="my-text">
       {{ homepageData?.title }}
     </h1>
-    <div class="button-content">
+    <!-- <div class="button-content">
       <UIButton
         type="primary"
         is-strong
@@ -25,7 +25,7 @@
       >
         Outlined Light
       </UIButton>
-    </div>
+    </div> -->
     <UISearchBar />
     <RichTextRenderer
       :custom-rich-text-json="bodyDescription"
