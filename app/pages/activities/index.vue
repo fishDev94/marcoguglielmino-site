@@ -7,6 +7,13 @@
     <p v-else>
       Ready!
     </p>
+    <div>
+      <StravaActivityCard
+        v-for="activity in activitiesList"
+        :key="activity.id"
+        :activity
+      />
+    </div>
   </div>
 </template>
 
@@ -17,7 +24,8 @@ definePageMeta({
 
 const { getActivities, getActivity } = useStravaActivities()
 const { data: activities, pending: activitiesLoading } = useAsyncData(() => getActivities())
-const { data: activity, pending: activityLoading } = useAsyncData(() => getActivity("19252195258"))
+// const { data: activity, pending: activityLoading } = useAsyncData(() => getActivity("19252195258"))
+const activitiesList = computed(() => activities.value?.data.value)
 
 watch(activitiesLoading, (newVal) => {
   if (!newVal) {
