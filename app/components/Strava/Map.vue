@@ -99,7 +99,7 @@ onBeforeUnmount(() => {
   position: absolute;
   bottom: 12px;
   left: 12px;
-  z-index: 10;
+  z-index: 8;
 }
 
 :deep(.leaflet-container) {
