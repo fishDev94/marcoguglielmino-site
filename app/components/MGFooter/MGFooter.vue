@@ -1,7 +1,7 @@
 <template>
   <footer class="mg-footer">
-    <header class="mg-footer__header">
-      <h3 class="mg-footer__title">
+    <div class="mg-footer__header">
+      <h3 class="mg-footer__title uppercase">
         {{ footerData.mainTitle }}
       </h3>
       <p class="mg-footer__copy lg:hidden">
@@ -10,10 +10,10 @@
       <p class="mg-footer__copyright--desktop hidden md:block">
         {{ footerData.copyright }}
       </p>
-    </header>
-    <section>
+    </div>
+    <nav aria-label="Footer navigation">
       <UFooterColumns :columns />
-    </section>
+    </nav>
     <USeparator
       color="info"
       class="mb-8 lg:hidden"
@@ -60,6 +60,8 @@ footerData.value.socialLinks?.items.forEach((item) => {
 
     @include start-from(medium-desktop) {
       display: flex;
+      align-items: center;
+      justify-content: center;
       gap: 64px;
       padding-block: 1.5rem;
     }
