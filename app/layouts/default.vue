@@ -4,6 +4,7 @@
     <div class="mg-default-layout__content">
       <slot />
     </div>
+    <MGFooter />
     <UINavbarBottom />
   </div>
 </template>

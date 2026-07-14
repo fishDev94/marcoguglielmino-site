@@ -36,7 +36,6 @@
     /> -->
     <!-- <NuxtLink to="error">error page</NuxtLink> -->
     <AboutCardList :data="aboutCardList" />
-    <MGFooter />
   </div>
 </template>
 
