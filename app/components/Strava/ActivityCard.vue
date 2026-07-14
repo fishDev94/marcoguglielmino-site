@@ -54,11 +54,11 @@ interface StravaActivity {
   average_temp?: number
 }
 
-const props = defineProps<{
+const { activity } = defineProps<{
   activity: StravaActivity
 }>()
 
-const isWeightTraining = computed(() => props.activity.type === "WeightTraining")
+const isWeightTraining = computed(() => activity.type === "WeightTraining")
 </script>
 
 <style lang="scss" scoped>

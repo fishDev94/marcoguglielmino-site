@@ -40,7 +40,7 @@ const items = computed<NavigationMenuItem[]>(() => [
     .mg-nav-menu {
         display: none;
 
-        @include start-from(medium-desktop) {
+        @include start-from(tablet) {
             display: unset;
         }
     }

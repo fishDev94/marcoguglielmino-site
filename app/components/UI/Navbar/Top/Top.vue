@@ -34,12 +34,12 @@
     gap: 16px;
     cursor: pointer;
 
-    @include start-from(medium-desktop) {
+    @include start-from(tablet) {
     gap: 24px;
   }
   }
 
-  @include start-from(medium-desktop) {
+  @include start-from(tablet) {
     padding-inline: var(--mg-navbar-padding-desktop-x);
     gap: 24px;
   }
@@ -55,7 +55,7 @@
       content: "Marco G.";
     }
 
-    @include start-from(medium-desktop) {
+    @include start-from(tablet) {
       @include heading(3);
 
       text-transform: none;

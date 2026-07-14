@@ -1,18 +1,26 @@
 <template>
   <div>
     <h1>strava</h1>
-    <p v-if="activitiesLoading">
+    <p v-if="isActivitiesLoading">
       Loading
     </p>
     <p v-else>
       Ready!
     </p>
     <div>
-      <StravaActivityCard
-        v-for="activity in activitiesList"
-        :key="activity.id"
-        :activity
-      />
+      <template v-if="isActivitiesLoading">
+        <StravaActivityCardSkeleton
+          v-for="n in 9"
+          :key="`skeleton-card+${n}`"
+        />
+      </template>
+      <template v-else>
+        <StravaActivityCard
+          v-for="activity in activitiesList"
+          :key="activity.id"
+          :activity
+        />
+      </template>
     </div>
   </div>
 </template>
@@ -22,14 +30,8 @@ definePageMeta({
   name: "strava"
 })
 
-const { getActivities, getActivity } = useStravaActivities()
-const { data: activities, pending: activitiesLoading } = useAsyncData(() => getActivities())
-// const { data: activity, pending: activityLoading } = useAsyncData(() => getActivity("19252195258"))
-const activitiesList = computed(() => activities.value?.data.value)
+const { getActivities } = useStravaActivities()
+const { data: activities, pending: isActivitiesLoading } = getActivities()
 
-watch(activitiesLoading, (newVal) => {
-  if (!newVal) {
-    console.log("finish call", activities.value)
-  }
-})
+const activitiesList = computed(() => activities.value)
 </script>

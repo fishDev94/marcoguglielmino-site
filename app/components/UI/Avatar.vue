@@ -20,7 +20,7 @@ const { src, title } = await useAsyncAvatarData()
     width: 32px;
     height: 32px;
 
-    @include start-from(medium-desktop) {
+    @include start-from(tablet) {
         display: none;
     }
 }

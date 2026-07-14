@@ -38,7 +38,7 @@ const isLight = computed(() => type === "light")
     color: var(--mg-btn-text-primary);
     box-shadow: 0 0 8px color-mix(in srgb, var(--mg-color-secondary) 15%, transparent);
 
-    @include start-from(medium-desktop) {
+    @include start-from(tablet) {
         width: 400px;
         padding: 32px;
         align-items: flex-start;
@@ -63,7 +63,7 @@ const isLight = computed(() => type === "light")
         align-items: center;
         gap: 12px;
 
-        @include start-from(medium-desktop) {
+        @include start-from(tablet) {
             flex-direction: column;
             align-items: flex-start
         }
@@ -72,7 +72,7 @@ const isLight = computed(() => type === "light")
     &__title {
         @include heading(4);
 
-        @include start-from(medium-desktop) {
+        @include start-from(tablet) {
             @include heading(3);
         }
     }

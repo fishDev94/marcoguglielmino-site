@@ -1,35 +1,41 @@
-const getActivities = async () => {
-  const { data, pending, error } = await useFetch("/api/activities/", {
+const getActivities = () => {
+  const { data, pending, error } = useFetch("/api/activities/", {
+    lazy: true,
     getCachedData(key, nuxtApp) {
       return nuxtApp.payload.data[key] || nuxtApp.static.data[key]
     }
   })
 
-  if (error.value) {
-    showError(createError({
-      statusCode: error.value.statusCode || 500,
-      statusMessage: error.value.statusMessage || "Fetch error",
-      message: error.value.message
-    }))
-  }
+  watch(error, (err) => {
+    if (err) {
+      showError(createError({
+        statusCode: err.statusCode || 500,
+        statusMessage: err.statusMessage || "Fetch error",
+        message: err.message
+      }))
+    }
+  })
 
   return { data, pending, error }
 }
 
-const getActivity = async (activityId: string) => {
-  const { data, pending, error } = await useFetch(`/api/activities/${activityId}`, {
+const getActivity = (activityId: string) => {
+  const { data, pending, error } = useFetch(`/api/activities/${activityId}`, {
+    lazy: true,
     getCachedData(key, nuxtApp) {
       return nuxtApp.payload.data[key] || nuxtApp.static.data[key]
     }
   })
 
-  if (error.value) {
-    showError(createError({
-      statusCode: error.value.statusCode || 500,
-      statusMessage: error.value.statusMessage || "Fetch error",
-      message: error.value.message
-    }))
-  }
+  watch(error, (err) => {
+    if (err) {
+      showError(createError({
+        statusCode: err.statusCode || 500,
+        statusMessage: err.statusMessage || "Fetch error",
+        message: err.message
+      }))
+    }
+  })
 
   return { data, pending, error }
 }
