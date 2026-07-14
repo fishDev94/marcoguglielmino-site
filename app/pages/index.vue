@@ -5,7 +5,7 @@
       :title="homepageData.title || ''"
       :kicker="homepageData.kicker || ''"
       :copy="homepageData.copy || ''"
-      :cta-buttons="homepageData.ctaButton?.items || []"
+      :cta-buttons
     />
     <!-- <div class="button-content">
       <UIButton
@@ -36,11 +36,19 @@
     /> -->
     <!-- <NuxtLink to="error">error page</NuxtLink> -->
     <AboutCardList :data="aboutCardList" />
+    <MGFooter />
   </div>
 </template>
 
 <script setup lang="ts">
-const { homepageData, bodyDescription, aboutCardList } = await useAsyncHomepageData()
+import type { CtaButtonFragment } from "#gql"
+
+const {
+  homepageData,
+  // bodyDescription,
+  aboutCardList } = await useAsyncHomepageData()
+
+const ctaButtons = computed(() => homepageData.value.ctaButton?.items as CtaButtonFragment[])
 
 definePageMeta({
   name: "home"

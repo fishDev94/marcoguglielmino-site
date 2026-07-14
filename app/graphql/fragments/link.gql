@@ -1,0 +1,5 @@
+fragment Link on Link {
+    title
+    url
+    isExternal
+}
