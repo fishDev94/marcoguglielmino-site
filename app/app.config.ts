@@ -26,6 +26,19 @@ export default defineAppConfig({
           }
         }
       }
+    },
+    card: {
+      slots: {
+        root: "rounded-lg overflow-hidden",
+        header: "p-2 sm:px-2",
+        title: "text-highlighted font-semibold",
+        description: "mt-1 text-muted text-sm",
+        body: "p-2 sm:p-2",
+        footer: "p-2 sm:px-2"
+      },
+      defaultVariants: {
+        variant: "outline"
+      }
     }
   }
 })
