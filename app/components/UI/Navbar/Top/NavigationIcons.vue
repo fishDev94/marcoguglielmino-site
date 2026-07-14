@@ -30,7 +30,7 @@ const isActive = computed(() => route.path === "/gallery")
 .mg-nav-icons {
   display: none;
 
-  @include start-from(medium-desktop) {
+  @include start-from(tablet) {
       display: flex;
       gap: 16px;
   }

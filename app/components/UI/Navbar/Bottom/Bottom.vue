@@ -21,7 +21,7 @@
         bottom: 0;
         z-index: 9;
 
-        @include start-from(medium-desktop) {
+        @include start-from(tablet) {
             display: none;
         }
     }

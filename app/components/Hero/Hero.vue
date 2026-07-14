@@ -58,7 +58,7 @@ const buttons = computed(() => ctaButtons as Array<{ typeButton: ButtonType } & 
         position: relative;
         height: 460px;
 
-        @include start-from(medium-desktop) {
+        @include start-from(tablet) {
             height: 640px;
         }
     }
@@ -90,7 +90,7 @@ const buttons = computed(() => ctaButtons as Array<{ typeButton: ButtonType } & 
         padding: 16px;
         margin-bottom: 32px;
 
-        @include start-from(medium-desktop) {
+        @include start-from(tablet) {
             gap: 0;
             justify-content: center;
             padding: 24px;
@@ -106,7 +106,7 @@ const buttons = computed(() => ctaButtons as Array<{ typeButton: ButtonType } & 
         color: var(--mg-btn-text-primary);
         display: none;
 
-        @include start-from(medium-desktop) {
+        @include start-from(tablet) {
             display: unset;
         }
     }
@@ -119,7 +119,7 @@ const buttons = computed(() => ctaButtons as Array<{ typeButton: ButtonType } & 
         color: var(--mg-btn-text-primary);
         text-transform: uppercase;
 
-        @include start-from(medium-desktop) {
+        @include start-from(tablet) {
             @include heading(1);
 
             color: var(--mg-color-accent);
@@ -130,7 +130,7 @@ const buttons = computed(() => ctaButtons as Array<{ typeButton: ButtonType } & 
     &__copy {
         display: none;
 
-        @include start-from(medium-desktop) {
+        @include start-from(tablet) {
             @include body(2);
 
             font-weight: 600;

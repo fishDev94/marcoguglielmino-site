@@ -14,7 +14,7 @@
         width: max-content;
         padding: 0.5rem 1rem;
 
-        @include start-from(medium-desktop) {
+        @include start-from(tablet) {
             margin-bottom: 24px;
         }
     }

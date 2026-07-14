@@ -4,7 +4,7 @@
       <h3 class="mg-footer__title uppercase">
         {{ footerData.mainTitle }}
       </h3>
-      <p class="mg-footer__copy lg:hidden">
+      <p class="mg-footer__copy md:hidden">
         {{ footerData.copy }}
       </p>
       <p class="mg-footer__copyright--desktop hidden md:block">
@@ -16,7 +16,7 @@
     </nav>
     <USeparator
       color="info"
-      class="mb-8 lg:hidden"
+      class="mb-8 md:hidden"
     />
     <section class="mg-footer__bottom">
       <p class="mg-footer__copyright">
@@ -58,7 +58,7 @@ footerData.value.socialLinks?.items.forEach((item) => {
     width: 100%;
     padding: 3rem 1.5rem;
 
-    @include start-from(medium-desktop) {
+    @include start-from(tablet) {
       display: flex;
       align-items: center;
       justify-content: center;
@@ -69,7 +69,7 @@ footerData.value.socialLinks?.items.forEach((item) => {
     &__header {
       margin-bottom: 32px;
 
-      @include start-from(medium-desktop) {
+      @include start-from(tablet) {
         max-width: 35%;
       }
     }
@@ -80,7 +80,7 @@ footerData.value.socialLinks?.items.forEach((item) => {
       color: var(--mg-btn-text-primary);
       margin-bottom: 8px;
 
-      @include start-from(medium-desktop) {
+      @include start-from(tablet) {
         margin-bottom: 16px;
       }
     }
@@ -97,7 +97,7 @@ footerData.value.socialLinks?.items.forEach((item) => {
       display: flex;
       justify-content: center;
 
-      @include start-from(medium-desktop) {
+      @include start-from(tablet) {
         display: none;
       }
     }
