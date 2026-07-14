@@ -2,6 +2,7 @@
   <div class="mg-homepage">
     <Hero
       :src="homepageData.heroBackground?.url || ''"
+      :label="homepageData.label || ''"
       :title="homepageData.title || ''"
       :kicker="homepageData.kicker || ''"
       :copy="homepageData.copy || ''"

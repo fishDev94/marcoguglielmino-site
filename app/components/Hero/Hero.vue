@@ -11,6 +11,7 @@
       />
       <div class="mg-hero__overlay" />
       <div class="mg-hero__text-content">
+        <HeroLabel>{{ label }}</HeroLabel>
         <h1 class="mg-hero__title">
           {{ title }}:
         </h1>
@@ -39,10 +40,11 @@
 import type { CtaButtonFragment } from "#gql"
 import type { ButtonType } from "../UI/Button.vue"
 
-const { src = "", ctaButtons = [] } = defineProps<{
+const { src = "", label = "", copy = "", ctaButtons = [] } = defineProps<{
   title: string
   kicker: string
   src?: string
+  label?: string
   copy?: string
   ctaButtons?: CtaButtonFragment[]
 }>()
