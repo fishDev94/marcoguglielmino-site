@@ -1,5 +1,5 @@
 ---
-name: Elite Performance Track
+name: Born to Run
 colors:
   surface: '#f9f9ff'
   surface-dim: '#d8d9e5'
