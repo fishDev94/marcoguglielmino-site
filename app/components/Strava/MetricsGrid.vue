@@ -2,10 +2,10 @@
   <div class="metrics-grid">
     <!-- Se è pesi, mostriamo Suffer Score invece di Distanza -->
     <div class="metric-item">
-      <span class="label">{{ isWeightTraining ? 'SUFFER SCORE' : 'DISTANZA' }}</span>
+      <span class="label">{{ sufferDistanceLabel }}</span>
       <p class="value">
-        <span class="number">{{ isWeightTraining ? (sufferScore || 0) : formattedDistance(distance) }}</span>
-        <span class="unit">{{ isWeightTraining ? '' : 'km' }}</span>
+        <span class="number">{{ sufferDistanceValue }}</span>
+        <span class="unit">{{ sufferDistanceUnit }}</span>
       </p>
     </div>
 
@@ -13,12 +13,12 @@
 
     <!-- Se è pesi, mostriamo Temp o Heartrate invece di Passo -->
     <div class="metric-item">
-      <span class="label">{{ isWeightTraining ? 'BPM MEDI' : 'PASSO' }}</span>
+      <span class="label">{{ paceHRLabel }}</span>
       <p class="value">
         <span class="number">
-          {{ isWeightTraining ? Math.round(averageHeartrate || 0) : formattedPace(averageSpeed) }}
+          {{ paceHRValue }}
         </span>
-        <span class="unit">{{ isWeightTraining ? 'bpm' : '/km' }}</span>
+        <span class="unit">{{ paceHRUnit }}</span>
       </p>
     </div>
 
@@ -43,7 +43,13 @@ interface Props {
   distance: number
 }
 
-defineProps<Props>()
+const { isWeightTraining, sufferScore, distance, averageHeartrate, averageSpeed } = defineProps<Props>()
+const sufferDistanceLabel = computed(() => isWeightTraining ? "SUFFER SCORE" : "DISTANZA")
+const sufferDistanceValue = computed(() => isWeightTraining ? (sufferScore || 0) : formattedDistance(distance))
+const sufferDistanceUnit = computed(() => isWeightTraining ? "" : "km")
+const paceHRLabel = computed(() => isWeightTraining ? "BPM MEDI" : "PASSO")
+const paceHRValue = computed(() => isWeightTraining ? Math.round(averageHeartrate || 0) : formattedPace(averageSpeed))
+const paceHRUnit = computed(() => isWeightTraining ? "bpm" : "/km")
 </script>
 
 <style lang="scss" scoped>

@@ -1,7 +1,13 @@
 <template>
-  <div
+  <NuxtLink
     class="strava-card"
     :class="{ 'is-gym': isWeightTraining }"
+    :to="{
+      name: 'activity-page',
+      params: {
+        activityId: activity.id
+      }
+    }"
   >
     <!-- Header -->
     <StravaHeader
@@ -33,29 +39,14 @@
       :suffer-score="activity.suffer_score || 0"
       :distance="activity.distance"
     />
-  </div>
+  </NuxtLink>
 </template>
 
 <script setup lang="ts">
-interface StravaActivity {
-  name: string
-  distance: number
-  moving_time: number
-  start_date_local: string
-  type: string
-  average_speed: number
-  map?: {
-    summary_polyline: string
-  }
-  pr_count?: number
-  suffer_score?: number
-  average_heartrate?: number
-  max_heartrate?: number
-  average_temp?: number
-}
+import type { StravaActivityBase } from "@@/types/strava"
 
 const { activity } = defineProps<{
-  activity: StravaActivity
+  activity: StravaActivityBase
 }>()
 
 const isWeightTraining = computed(() => activity.type === "WeightTraining")
@@ -63,6 +54,7 @@ const isWeightTraining = computed(() => activity.type === "WeightTraining")
 
 <style lang="scss" scoped>
 .strava-card {
+  display: block;
   background-color: #ffffff;
   border: 1px solid var(--mg-color-outline);
   border-radius: 4px;
