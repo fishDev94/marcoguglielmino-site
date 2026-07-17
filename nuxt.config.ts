@@ -46,7 +46,6 @@ export default defineNuxtConfig({
     }
   },
   css: ["~/assets/css/main.css"],
-
   ui: {
     colorMode: false
   },
@@ -79,11 +78,11 @@ export default defineNuxtConfig({
   "graphql-client": {
     clients: {
       default: {
-        host: `https://graphql.contentful.com/content/v1/spaces/${process.env.CTF_CDA_SPACE_ID}/environments/master`,
+        host: process.env.GRAPHQL_CLIENT_CLIENTS_DEFAULT as string,
         token: {
           type: "Bearer",
           name: "Authorization",
-          value: process.env.CTF_CDA_ACCESS_TOKEN
+          value: process.env.GRAPHQL_CLIENT_CLIENTS_DEFAULT_TOKEN
         },
         retainToken: true
       }

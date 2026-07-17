@@ -18,14 +18,14 @@
 </template>
 
 <script lang="ts" setup>
-import type { AboutCardFragment, ContentBlockFragment } from "#gql"
+import type { AboutCardDataFragment, ContentBlockDataFragment } from "#gql"
 
 const { contentData } = defineProps<{
-  contentData: ContentBlockFragment
+  contentData: ContentBlockDataFragment
 }>()
 
 const contentCardList = computed(() => {
-  return contentData.cards?.items as Array<{ type: "light" | "dark" } & AboutCardFragment>
+  return contentData.cards?.items as Array<{ type: "light" | "dark" } & AboutCardDataFragment>
 })
 </script>
 

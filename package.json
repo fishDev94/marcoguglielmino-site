@@ -4,7 +4,7 @@
   "type": "module",
   "scripts": {
     "prepare": "husky",
-    "build": "nuxt build",
+    "build": "NITRO_DEBUG=1 nuxi build",
     "dev": "nuxt dev",
     "preview": "nuxt preview",
     "postinstall": "nuxt prepare",
@@ -56,5 +56,9 @@
   "lint-staged": {
     "**/*.{js,ts,vue}": "npx oxlint --fix"
   },
-  "packageManager": "pnpm@11.9.0"
+  "packageManager": "pnpm@11.9.0",
+  "overrides": {
+    "**/@graphql-tools/load": "8.0.2",
+    "**/@graphql-tools/git-loader": "8.0.0"
+  }
 }

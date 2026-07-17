@@ -1,4 +1,4 @@
-fragment CtaButton on CtaButton {
+fragment CtaButtonData on CtaButton {
   text
   path
   typeButton

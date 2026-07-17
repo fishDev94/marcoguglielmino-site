@@ -1,4 +1,4 @@
-fragment ContentBlock on ContentBlock {
+fragment ContentBlockData on ContentBlock {
   sys {
     id
   }
@@ -9,7 +9,7 @@ fragment ContentBlock on ContentBlock {
   }
   cards: cardsCollection {
     items {
-    ...AboutCard
+    ...AboutCardData
     }
   }
 }

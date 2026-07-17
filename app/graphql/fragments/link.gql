@@ -1,4 +1,4 @@
-fragment Link on Link {
+fragment LinkData on Link {
     title
     url
     isExternal

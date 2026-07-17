@@ -1,4 +1,4 @@
-import type { FooterFragment } from "#gql"
+import type { FooterDataFragment } from "#gql"
 
 export const useAsyncFooterData = async () => {
   const { data, pending, error } = await useAsyncGql({
@@ -10,7 +10,7 @@ export const useAsyncFooterData = async () => {
     }
   })
 
-  const footerData = computed(() => data.value.footerCollection?.items[0] as FooterFragment)
+  const footerData = computed(() => data.value.footerCollection?.items[0] as FooterDataFragment)
   const internalLinks = computed(() => footerData.value.navigationLinks?.items)
   const externalLinks = computed(() => footerData.value.socialLinks?.items)
 

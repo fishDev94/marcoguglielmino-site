@@ -1,4 +1,4 @@
-fragment Avatar on Avatar {
+fragment AvatarImage on Avatar {
     avatarImage {
         url
         title
