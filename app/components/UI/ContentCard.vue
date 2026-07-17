@@ -1,15 +1,15 @@
 <template>
-  <section :class="['mg-about-card', { 'mg-about-card--light': isLight }]">
-    <div class="mg-about-card__header">
+  <section :class="['mg-content-card', { 'mg-content-card--light': isLight }]">
+    <div class="mg-content-card__header">
       <UIcon
         :name="icon"
-        :class="['mg-about-card__icon', 'size-8', { 'mg-about-card__icon--light': isLight }]"
+        :class="['mg-content-card__icon', 'size-8', { 'mg-content-card__icon--light': isLight }]"
       />
-      <h3 class="mg-about-card__title">
+      <h3 class="mg-content-card__title">
         {{ title }}
       </h3>
     </div>
-    <p class="mg-about-card__body">
+    <p class="mg-content-card__body">
       {{ description }}
     </p>
   </section>
@@ -27,7 +27,7 @@ const isLight = computed(() => type === "light")
 </script>
 
 <style lang="scss" scoped>
-.mg-about-card {
+.mg-content-card {
     display: flex;
     flex-direction: column;
     gap: 16px;
@@ -39,8 +39,8 @@ const isLight = computed(() => type === "light")
     box-shadow: 0 0 8px color-mix(in srgb, var(--mg-color-secondary) 15%, transparent);
 
     @include start-from(tablet) {
-        width: 400px;
-        padding: 32px;
+        width: 380px;
+        padding: 24px;
         align-items: flex-start;
     }
 

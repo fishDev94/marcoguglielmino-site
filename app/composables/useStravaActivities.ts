@@ -14,7 +14,7 @@ const getActivities = () => {
         message: err.message
       }))
     }
-  })
+  }, { immediate: true })
 
   return { data, pending, error }
 }
@@ -35,7 +35,7 @@ const getActivity = (activityId: string) => {
         message: err.message
       }))
     }
-  })
+  }, { immediate: true })
 
   return { data, pending, error }
 }

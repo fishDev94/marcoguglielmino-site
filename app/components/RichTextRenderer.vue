@@ -54,7 +54,7 @@ const renderNode = (node: RichTextNode, index: number): VNodeChild => {
     case BLOCKS.DOCUMENT:
       return h("div", renderNodes((node as Document).content))
     case BLOCKS.PARAGRAPH:
-      return h("p", { class: "mb-4 last:mb-0" }, renderNodes((node as Block).content))
+      return h("p", { class: "mg-body__text" }, renderNodes((node as Block).content))
     case BLOCKS.HEADING_1:
       return h("h1", { class: "text-3xl font-semibold mb-4" }, renderNodes((node as Block).content))
     case BLOCKS.HEADING_2:
@@ -98,3 +98,26 @@ const renderedContent = computed(() => {
   return h("div", { class: "prose max-w-none" }, renderNodes(props.customRichTextJson.content))
 })
 </script>
+
+<style lang="scss" scoped>
+.mg-body {
+  &__text {
+    @include body(1);
+
+    margin-bottom: 16px;
+
+    &:last-child {
+      margin-bottom: 0;
+
+    }
+
+    strong {
+      font-weight: 700;
+    }
+
+    em {
+      font-style: italic;
+    }
+  }
+}
+</style>
