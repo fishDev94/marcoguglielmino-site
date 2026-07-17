@@ -1,3 +1,5 @@
+const isVercel = process.env.VERCEL_ENV !== undefined
+
 // https://nuxt.com/docs/api/configuration/nuxt-config
 export default defineNuxtConfig({
   modules: [
@@ -94,7 +96,8 @@ export default defineNuxtConfig({
   "graphql-client": {
     clients: {
       default: {
-        host: `https://graphql.contentful.com/content/v1/spaces/${process.env.CTF_CDA_SPACE_ID}/environments/master`,
+        host: isVercel ? "" : `https://graphql.contentful.com/content/v1/spaces/${process.env.CTF_CDA_SPACE_ID}/environments/master`,
+        schema: isVercel ? "./graphql/schema.graphql" : undefined,
         token: {
           type: "Bearer",
           name: "Authorization",
