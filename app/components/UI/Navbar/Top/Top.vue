@@ -1,40 +1,33 @@
 <template>
-  <nav class="mg-top-nav-bar">
-    <NuxtLayout name="content-wrapper">
-      <div class="mg-top-nav-bar__content h-16">
-        <NuxtLink
-          class="mg-top-nav-bar__left"
-          to="/"
-        >
-          <UILogo />
-          <h1 class="mg-top-nav-bar__title" />
-        </NuxtLink>
-        <UINavbarTopMenu />
-        <UIAvatar />
-        <UINavbarTopNavigationIcons />
-      </div>
-    </NuxtLayout>
+  <nav class="mg-top-nav-bar h-16">
+    <NuxtLink
+      class="mg-top-nav-bar__left"
+      to="/"
+    >
+      <UILogo />
+      <h1 class="mg-top-nav-bar__title" />
+    </NuxtLink>
+    <UINavbarTopMenu />
+    <UIAvatar />
+    <UINavbarTopNavigationIcons />
   </nav>
 </template>
 
+<script lang="ts" setup>
+</script>
+
 <style scoped lang="scss">
 .mg-top-nav-bar {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
   width: 100%;
   background-color: var(--mg-color-secondary);
+  padding-inline: var(--mg-navbar-padding-mobile-x);
   min-height: 64px;
   position: sticky;
   top: 0;
   z-index: 9;
-
-  &__content {
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-
-    @include start-from(tablet) {
-      gap: 24px;
-    }
-  }
 
   &__left {
     display: flex;
@@ -42,8 +35,13 @@
     cursor: pointer;
 
     @include start-from(tablet) {
-      gap: 24px;
-    }
+    gap: 24px;
+  }
+  }
+
+  @include start-from(tablet) {
+    padding-inline: var(--mg-navbar-padding-desktop-x);
+    gap: 24px;
   }
 
   &__title {

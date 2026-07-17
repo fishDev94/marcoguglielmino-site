@@ -6,8 +6,8 @@
         <svg
           class="w-full h-full"
           height="100%"
-          preserveAspectRatio="none"
-          viewBox="0 0 1000 1000"
+          preserveaspectratio="none"
+          viewbox="0 0 1000 1000"
           width="100%"
         >
           <path

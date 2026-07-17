@@ -1,4 +1,4 @@
-import type { AboutCardFragment, ContentBlockFragment } from "#gql"
+import type { AboutCardFragment } from "#gql"
 
 export const useAsyncHomepageData = async () => {
   const { data } = await useAsyncGql({
@@ -15,8 +15,8 @@ export const useAsyncHomepageData = async () => {
     return getHomePageData(data.value)
   })
 
-  const contentBlocks = computed<ContentBlockFragment[]>(() => {
-    return homepageData.value?.bodyContent?.items as ContentBlockFragment[]
+  const bodyDescription = computed(() => {
+    return homepageData.value?.bodyContent?.items[0]?.bodyDescription?.json
   })
 
   const aboutCardList = computed(() => {
@@ -25,7 +25,7 @@ export const useAsyncHomepageData = async () => {
 
   return {
     homepageData,
-    contentBlocks,
+    bodyDescription,
     aboutCardList
   }
 }
