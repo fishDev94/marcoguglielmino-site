@@ -53,6 +53,8 @@ export default defineNuxtConfig({
   runtimeConfig: {
     ctfSpaceId: "",
     ctfCdaAccessToken: "",
+    graphqlClientClientsDefault: "",
+    graphqlClientClientsDefaultToken: "",
     stravaClientSecret: "",
     stravaRefreshToken: "",
     stravaClientID: "",
