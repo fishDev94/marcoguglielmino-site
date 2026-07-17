@@ -13,7 +13,7 @@
   .mg-default-layout {
     display: flex;
     flex-direction: column;
-    height: 100dvh;
+    min-height: 100dvh;
 
     &__content {
       flex-grow: 1;
