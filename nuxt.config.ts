@@ -52,8 +52,6 @@ export default defineNuxtConfig({
   },
 
   runtimeConfig: {
-    ctfSpaceId: "",
-    ctfCdaAccessToken: "",
     stravaClientSecret: "",
     stravaRefreshToken: "",
     stravaClientID: "",
@@ -79,13 +77,13 @@ export default defineNuxtConfig({
   "graphql-client": {
     clients: {
       default: {
-        host: `https://graphql.contentful.com/content/v1/spaces/${process.env.CTF_CDA_SPACE_ID}/environments/master`,
+        host: "",
+        retainToken: true,
         token: {
           type: "Bearer",
           name: "Authorization",
-          value: process.env.CTF_CDA_ACCESS_TOKEN
-        },
-        retainToken: true
+          value: ""
+        }
       }
     },
     documentPaths: ["./graphql"]
