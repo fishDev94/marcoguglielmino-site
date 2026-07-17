@@ -84,11 +84,11 @@ export default defineNuxtConfig({
     codegen: !process.env.VERCEL,
     clients: {
       default: {
-        host: "https://graphql.contentful.com/content/v1/spaces/",
+        host: process.env.NUXT_GRAPHQL_CLIENT_CLIENTS_DEFAULT as string,
         token: {
           type: "Bearer",
           name: "Authorization",
-          value: ""
+          value: process.env.NUXT_GRAPHQL_CLIENT_CLIENTS_DEFAULT_TOKEN
         },
         retainToken: true
       }
