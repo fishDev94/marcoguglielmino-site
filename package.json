@@ -12,6 +12,9 @@
     "format": "eslint . --fix",
     "typecheck": "nuxt typecheck"
   },
+  "engines": {
+    "node": ">=22.0.0"
+  },
   "dependencies": {
     "@contentful/rich-text-html-renderer": "17.2.2",
     "@contentful/rich-text-types": "17.2.7",
