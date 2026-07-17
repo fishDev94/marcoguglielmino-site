@@ -77,7 +77,7 @@ export default defineNuxtConfig({
   "graphql-client": {
     clients: {
       default: {
-        host: "",
+        host: "https://graphql.contentful.com/content/v1/spaces/5ye49326jqzh/environments/master",
         retainToken: true,
         token: {
           type: "Bearer",
