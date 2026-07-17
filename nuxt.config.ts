@@ -1,7 +1,3 @@
-import { fileURLToPath } from "node:url"
-
-const isVercel = process.env.VERCEL_ENV !== undefined
-
 // https://nuxt.com/docs/api/configuration/nuxt-config
 export default defineNuxtConfig({
   modules: [
@@ -56,6 +52,8 @@ export default defineNuxtConfig({
   },
 
   runtimeConfig: {
+    ctfSpaceId: "",
+    ctfCdaAccessToken: "",
     stravaClientSecret: "",
     stravaRefreshToken: "",
     stravaClientID: "",
@@ -78,28 +76,10 @@ export default defineNuxtConfig({
       }
     }
   },
-  // "graphql-client": {
-  //   codegen: {
-  //     disableOnBuild: true
-  //   },
-  //   clients: {
-  //     default: {
-  //       host: "",
-  //       retainToken: true,
-  //       token: {
-  //         type: "Bearer",
-  //         name: "Authorization",
-  //         value: ""
-  //       }
-  //     }
-  //   },
-  //   documentPaths: ["./graphql"]
-  // },
   "graphql-client": {
     clients: {
       default: {
-        host: isVercel ? "" : `https://graphql.contentful.com/content/v1/spaces/${process.env.CTF_CDA_SPACE_ID}/environments/master`,
-        schema: isVercel ? fileURLToPath(new URL("./graphql/schema.graphql", import.meta.url)) : undefined,
+        host: `https://graphql.contentful.com/content/v1/spaces/${process.env.CTF_CDA_SPACE_ID}/environments/master`,
         token: {
           type: "Bearer",
           name: "Authorization",
