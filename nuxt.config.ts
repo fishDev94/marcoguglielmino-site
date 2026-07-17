@@ -77,6 +77,7 @@ export default defineNuxtConfig({
     }
   },
   "graphql-client": {
+    codegen: !process.env.VERCEL,
     clients: {
       default: {
         host: `https://graphql.contentful.com/content/v1/spaces/${process.env.CTF_CDA_SPACE_ID}/environments/master`,
