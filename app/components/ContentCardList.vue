@@ -12,10 +12,10 @@
 </template>
 
 <script lang="ts" setup>
-import type { AboutCardFragment } from "#gql"
+import type { AboutCardDataFragment } from "#gql"
 
 defineProps<{
-  data: Array<{ type: "dark" | "light" } & AboutCardFragment>
+  data: Array<{ type: "dark" | "light" } & AboutCardDataFragment>
 }>()
 </script>
 

@@ -1,4 +1,4 @@
-fragment AboutCard on AboutCard {
+fragment AboutCardData on AboutCard {
   cardTitle
   cardDescription
   iconCard

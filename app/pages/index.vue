@@ -41,14 +41,14 @@
 </template>
 
 <script setup lang="ts">
-import type { CtaButtonFragment } from "#gql"
+import type { CtaButtonDataFragment } from "#gql"
 
 const {
   homepageData,
   contentBlocks
 } = await useAsyncHomepageData()
 
-const ctaButtons = computed(() => homepageData.value.ctaButton?.items as CtaButtonFragment[])
+const ctaButtons = computed(() => homepageData.value.ctaButton?.items as CtaButtonDataFragment[])
 
 definePageMeta({
   name: "home"

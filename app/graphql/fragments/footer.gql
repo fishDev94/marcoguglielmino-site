@@ -3,12 +3,12 @@ fragment FooterData on Footer {
     copy
     navigationLinks: navigationLinksCollection {
         items {
-        ...Link
+        ...LinkData
         }
     }
     socialLinks: socialLinksCollection {
         items {
-        ...Link
+        ...LinkData
         }
     }
     copyright

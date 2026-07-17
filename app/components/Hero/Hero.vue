@@ -39,7 +39,7 @@
 </template>
 
 <script lang="ts" setup>
-import type { CtaButtonFragment } from "#gql"
+import type { CtaButtonDataFragment } from "#gql"
 import type { ButtonType } from "../UI/Button.vue"
 
 const {
@@ -53,11 +53,11 @@ const {
   src?: string
   label?: string
   copy?: string
-  ctaButtons?: CtaButtonFragment[]
+  ctaButtons?: CtaButtonDataFragment[]
 }>()
 const loading = ref(false)
 const buttons = computed(
-  () => ctaButtons as Array<{ typeButton: ButtonType } & CtaButtonFragment>
+  () => ctaButtons as Array<{ typeButton: ButtonType } & CtaButtonDataFragment>
 )
 </script>
 
