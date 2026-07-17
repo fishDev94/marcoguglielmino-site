@@ -1,4 +1,4 @@
-fragment Footer on Footer {
+fragment FooterData on Footer {
     mainTitle
     copy
     navigationLinks: navigationLinksCollection {
