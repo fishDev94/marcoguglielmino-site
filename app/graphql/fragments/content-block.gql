@@ -3,13 +3,25 @@ fragment ContentBlockData on ContentBlock {
     id
   }
   title
+  contentAlignment
+  carousel: carouselCollection(limit: 10) {
+    items {
+      __typename
+      ... on Entry {
+        ... on RecordCard {
+          ...RecordCardData
+        }
+      }
+    }
+  }
   slug
   bodyDescription {
     ...RichTextBody
   }
-  cards: cardsCollection {
+  background
+  cards: cardsCollection(limit: 3) {
     items {
-    ...AboutCardData
+      ...AboutCardData
     }
   }
 }

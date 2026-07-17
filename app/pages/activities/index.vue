@@ -15,11 +15,13 @@
         />
       </template>
       <template v-else>
-        <StravaActivityCard
-          v-for="activity in activitiesList"
-          :key="activity.id"
-          :activity
-        />
+        <UICarousel>
+          <StravaActivityCard
+            v-for="activity in activitiesList"
+            :key="activity.id"
+            :activity
+          />
+        </UICarousel>
       </template>
     </div>
   </div>
