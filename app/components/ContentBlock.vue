@@ -1,13 +1,19 @@
 <template>
   <section class="mg-content-block">
-    <article class="mg-content-block__main-content">
-      <h2 class="mg-content-block__title uppercase">
-        <span class="mg-content-block__line hidden md:block" />
-        {{ contentData.title }}
-      </h2>
-      <RichTextRenderer :custom-rich-text-json="contentData.bodyDescription?.json" />
-    </article>
-    <ContentCardList :data="contentCardList" />
+    <NuxtLayout
+      name="content-wrapper"
+    >
+      <article class="mg-content-block__main">
+        <div class="mg-content-block__text-content">
+          <h2 class="mg-content-block__title uppercase">
+            <span class="mg-content-block__line hidden md:block" />
+            {{ contentData.title }}
+          </h2>
+          <RichTextRenderer :custom-rich-text-json="contentData.bodyDescription?.json" />
+        </div>
+        <ContentCardList :data="contentCardList" />
+      </article>
+    </NuxtLayout>
   </section>
 </template>
 
@@ -25,14 +31,17 @@ const contentCardList = computed(() => {
 
 <style lang=scss scoped>
 .mg-content-block {
-    display: flex;
-    flex-direction: column;
-    gap: 24px;
-    padding: 24px 16px;
+    &__main {
+        display: flex;
+        flex-direction: column;
+        gap: 24px;
+        padding-block: 24px;
+        margin: 0 auto;
 
-    @include start-from(tablet) {
-        padding: 38px 24px;
-        flex-direction: row;
+        @include start-from(tablet) {
+            padding-block: 38px;
+            flex-direction: row;
+        }
     }
 
     &__line {
@@ -61,7 +70,7 @@ const contentCardList = computed(() => {
         }
     }
 
-    &__main-content {
+    &__text-content {
         display: flex;
         flex-direction: column;
         gap: 24px;
