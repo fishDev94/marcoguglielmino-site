@@ -1,3 +1,5 @@
+import { fileURLToPath } from "node:url"
+
 const isVercel = process.env.VERCEL_ENV !== undefined
 
 // https://nuxt.com/docs/api/configuration/nuxt-config
@@ -97,7 +99,7 @@ export default defineNuxtConfig({
     clients: {
       default: {
         host: isVercel ? "" : `https://graphql.contentful.com/content/v1/spaces/${process.env.CTF_CDA_SPACE_ID}/environments/master`,
-        schema: isVercel ? "./graphql/schema.graphql" : undefined,
+        schema: isVercel ? fileURLToPath(new URL("./graphql/schema.graphql", import.meta.url)) : undefined,
         token: {
           type: "Bearer",
           name: "Authorization",
