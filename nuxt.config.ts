@@ -84,11 +84,11 @@ export default defineNuxtConfig({
     codegen: !process.env.VERCEL,
     clients: {
       default: {
-        host: process.env.NUXT_GRAPHQL_CLIENT_CLIENTS_DEFAULT as string,
+        host: process.env.GRAPHQL_CLIENT_CLIENTS_DEFAULT as string,
         token: {
           type: "Bearer",
           name: "Authorization",
-          value: process.env.NUXT_GRAPHQL_CLIENT_CLIENTS_DEFAULT_TOKEN
+          value: process.env.GRAPHQL_CLIENT_CLIENTS_DEFAULT_TOKEN
         },
         retainToken: true
       }
