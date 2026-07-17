@@ -81,7 +81,6 @@ export default defineNuxtConfig({
     }
   },
   "graphql-client": {
-    codegen: !process.env.VERCEL,
     clients: {
       default: {
         host: process.env.GRAPHQL_CLIENT_CLIENTS_DEFAULT as string,
