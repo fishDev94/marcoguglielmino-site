@@ -74,19 +74,33 @@ export default defineNuxtConfig({
       }
     }
   },
+  // "graphql-client": {
+  //   codegen: {
+  //     disableOnBuild: true
+  //   },
+  //   clients: {
+  //     default: {
+  //       host: "",
+  //       retainToken: true,
+  //       token: {
+  //         type: "Bearer",
+  //         name: "Authorization",
+  //         value: ""
+  //       }
+  //     }
+  //   },
+  //   documentPaths: ["./graphql"]
+  // },
   "graphql-client": {
-    codegen: {
-      disableOnBuild: true
-    },
     clients: {
       default: {
-        host: "",
-        retainToken: true,
+        host: `https://graphql.contentful.com/content/v1/spaces/${process.env.CTF_CDA_SPACE_ID}/environments/master`,
         token: {
           type: "Bearer",
           name: "Authorization",
-          value: ""
-        }
+          value: process.env.CTF_CDA_ACCESS_TOKEN
+        },
+        retainToken: true
       }
     },
     documentPaths: ["./graphql"]

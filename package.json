@@ -8,7 +8,7 @@
     "dev": "nuxt dev",
     "generate": "nuxt generate",
     "preview": "nuxt preview",
-    "postinstall": "nuxt build && nuxt prepare",
+    "postinstall": "nuxt prepare",
     "lint": "eslint .",
     "format": "eslint . --fix",
     "typecheck": "nuxt typecheck"
