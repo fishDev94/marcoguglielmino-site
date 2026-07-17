@@ -31,12 +31,12 @@
         Outlined Light
       </UIButton>
     </div> -->
-    <UISearchBar />
-    <!-- <RichTextRenderer
-      :custom-rich-text-json="bodyDescription"
-    /> -->
-    <!-- <NuxtLink to="error">error page</NuxtLink> -->
-    <AboutCardList :data="aboutCardList" />
+    <!-- <UISearchBar /> -->
+    <ContentBlock
+      v-for="(contentBlock, idx) in contentBlocks"
+      :key="contentBlock?.slug || `${idx}+content-block-home`"
+      :content-data="contentBlock"
+    />
   </div>
 </template>
 
@@ -45,8 +45,8 @@ import type { CtaButtonFragment } from "#gql"
 
 const {
   homepageData,
-  // bodyDescription,
-  aboutCardList } = await useAsyncHomepageData()
+  contentBlocks
+} = await useAsyncHomepageData()
 
 const ctaButtons = computed(() => homepageData.value.ctaButton?.items as CtaButtonFragment[])
 
@@ -56,8 +56,7 @@ definePageMeta({
 </script>
 
 <style lang="scss" scoped>
-.mg-homepage {
-}
+.mg-homepage {}
 
 .button-content {
   display: flex;

@@ -1,6 +1,6 @@
 <template>
-  <div class="mg-about-card-list">
-    <UIAboutCard
+  <div class="mg-content-card-list">
+    <UIContentCard
       v-for="(cardData, id) in data"
       :key="'about-card-data'+id"
       :title="cardData.cardTitle || ''"
@@ -20,9 +20,9 @@ defineProps<{
 </script>
 
 <style lang="scss" scoped>
-    .mg-about-card-list {
+    .mg-content-card-list {
         display: flex;
         flex-direction: column;
-        gap: 16px;
+        gap: 24px;
     }
 </style>
