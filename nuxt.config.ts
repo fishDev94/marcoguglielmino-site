@@ -84,11 +84,11 @@ export default defineNuxtConfig({
     codegen: !process.env.VERCEL,
     clients: {
       default: {
-        host: `https://graphql.contentful.com/content/v1/spaces/${process.env.CTF_CDA_SPACE_ID}/environments/master`,
+        host: "https://graphql.contentful.com/content/v1/spaces/",
         token: {
           type: "Bearer",
           name: "Authorization",
-          value: process.env.CTF_CDA_ACCESS_TOKEN
+          value: ""
         },
         retainToken: true
       }
