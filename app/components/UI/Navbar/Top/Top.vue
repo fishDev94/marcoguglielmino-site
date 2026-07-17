@@ -17,8 +17,6 @@
   </nav>
 </template>
 
-<script lang="ts" setup></script>
-
 <style scoped lang="scss">
 .mg-top-nav-bar {
   width: 100%;
