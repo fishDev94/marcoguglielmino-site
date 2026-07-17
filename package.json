@@ -6,8 +6,9 @@
     "prepare": "husky",
     "build": "nuxt build",
     "dev": "nuxt dev",
+    "generate": "nuxt generate",
     "preview": "nuxt preview",
-    "postinstall": "nuxt prepare",
+    "postinstall": "nuxt build && nuxt prepare",
     "lint": "eslint .",
     "format": "eslint . --fix",
     "typecheck": "nuxt typecheck"
