@@ -88,7 +88,7 @@ export default defineNuxtConfig({
         retainToken: true
       }
     },
-    documentPaths: ["./graphql"]
+    documentPaths: ["./graphql/**/*.graphql", "./graphql/**/*.gql"]
   },
   eslint: {
     config: {
