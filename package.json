@@ -58,7 +58,7 @@
   },
   "packageManager": "pnpm@11.9.0",
   "overrides": {
-    "@graphql-tools/load": "8.0.2",
-    "@graphql-tools/git-loader": "8.0.0"
+    "**/@graphql-tools/load": "8.0.2",
+    "**/@graphql-tools/git-loader": "8.0.0"
   }
 }
