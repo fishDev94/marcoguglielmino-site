@@ -63,11 +63,6 @@ export default defineNuxtConfig({
     "/": { prerender: true }
   },
   compatibilityDate: "2026-06-30",
-  nitro: {
-    prerender: {
-      failOnError: false
-    }
-  },
 
   vite: {
     css: {
