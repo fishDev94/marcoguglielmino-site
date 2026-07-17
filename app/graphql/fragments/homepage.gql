@@ -1,4 +1,4 @@
-fragment Homepage on Homepage {
+fragment HomepageData on Homepage {
       label
       title
       kicker
