@@ -28,7 +28,8 @@ interface Props {
   cardData: Omit<RecordCardDataFragment, "__typename">
 }
 
-defineProps<Props>()
+const { cardData } = defineProps<Props>()
+console.log(cardData)
 </script>
 
 <style lang="scss" scoped>
@@ -42,7 +43,6 @@ defineProps<Props>()
   display: flex;
   flex-direction: column;
   gap: 16px;
-  margin: 8px 0;
   width: 280px;
   align-items: center;
   text-align: center;
@@ -50,6 +50,7 @@ defineProps<Props>()
   @include start-from(tablet) {
     align-items: flex-start;
     text-align: left;
+    margin: 8px 0;
   }
 
   &:hover {

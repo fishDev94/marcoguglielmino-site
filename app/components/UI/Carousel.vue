@@ -1,46 +1,42 @@
 <template>
-  <NuxtLayout
-    name="content-wrapper"
-  >
-    <div class="mg-carousel">
-      <div
-        v-if="shouldShowArrows"
-        class="mg-carousel__button-container"
-      >
-        <UButton
-          :class="[
-            'mg-carousel__button-container__arrow-left',
-            'rounded-full',
-            { 'arrow-visible': isPrevDisabled }
-          ]"
-          icon="lucide:chevron-left"
-          size="md"
-          variant="solid"
-          color="primary"
-          :disabled="isPrevDisabled"
-          @click="handleScroll()"
-        />
-        <UButton
-          :class="[
-            'mg-carousel__button-container__arrow-right',
-            'rounded-full',
-            { 'arrow-visible': isNextDisabled }
-          ]"
-          icon="lucide:chevron-right"
-          size="md"
-          color="primary"
-          :disabled="isNextDisabled"
-          @click="handleScroll('right')"
-        />
-      </div>
-      <div
-        ref="scollable-content"
-        class="mg-carousel__scollable-content grid"
-      >
-        <slot />
-      </div>
+  <div class="mg-carousel">
+    <div
+      v-if="shouldShowArrows"
+      class="mg-carousel__button-container"
+    >
+      <UButton
+        :class="[
+          'mg-carousel__button-container__arrow-left',
+          'rounded-full',
+          { 'arrow-visible': isPrevDisabled }
+        ]"
+        icon="lucide:chevron-left"
+        size="md"
+        variant="solid"
+        color="primary"
+        :disabled="isPrevDisabled"
+        @click="handleScroll()"
+      />
+      <UButton
+        :class="[
+          'mg-carousel__button-container__arrow-right',
+          'rounded-full',
+          { 'arrow-visible': isNextDisabled }
+        ]"
+        icon="lucide:chevron-right"
+        size="md"
+        color="primary"
+        :disabled="isNextDisabled"
+        @click="handleScroll('right')"
+      />
     </div>
-  </NuxtLayout>
+    <div
+      ref="scollable-content"
+      class="mg-carousel__scollable-content grid"
+    >
+      <slot />
+    </div>
+  </div>
 </template>
 
 <script lang="ts" setup>
