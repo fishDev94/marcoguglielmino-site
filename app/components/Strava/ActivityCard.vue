@@ -1,5 +1,5 @@
 <template>
-  <NuxtLink
+  <NuxtLinkLocale
     class="strava-card"
     :class="{ 'is-gym': isWeightTraining }"
     :to="{
@@ -39,7 +39,7 @@
       :suffer-score="activity.suffer_score || 0"
       :distance="activity.distance"
     />
-  </NuxtLink>
+  </NuxtLinkLocale>
 </template>
 
 <script setup lang="ts">

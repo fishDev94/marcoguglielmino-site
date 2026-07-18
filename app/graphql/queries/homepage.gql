@@ -1,5 +1,5 @@
-query homepage($slug: String!) {
-  homepageCollection(limit: 1, where: { slug: $slug }) {
+query homepage($slug: String!, $locale: String) {
+  homepageCollection(limit: 1, where: { slug: $slug }, locale: $locale) {
     items {
       ...HomepageData
     }

@@ -1,5 +1,5 @@
 <template>
-  <NuxtLink
+  <NuxtLinkLocale
     class="mg-navbar-button"
     :to="{ name: page }"
   >
@@ -12,7 +12,7 @@
         {{ page }}
       </p>
     </div>
-  </NuxtLink>
+  </NuxtLinkLocale>
 </template>
 
 <script lang="ts" setup>

@@ -155,6 +155,7 @@ const buttons = computed(
   &__cta-buttons {
     display: flex;
     gap: 16px;
+    width: max-content;
   }
 }
 </style>

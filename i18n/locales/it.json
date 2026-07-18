@@ -1,0 +1,11 @@
+{
+    "strava": {
+        "activities": {
+            "last": {
+                "title": "Attività recenti",
+                "description": "Dati real-time dalle ultime sessioni di allenamento",
+                "link": "Vedi tutte le attività"
+            }
+        }
+    }
+}

@@ -25,11 +25,10 @@
 import type { RecordCardDataFragment } from "#gql"
 
 interface Props {
-  cardData: Omit<RecordCardDataFragment, "__typename">
+  cardData: RecordCardDataFragment
 }
 
-const { cardData } = defineProps<Props>()
-console.log(cardData)
+defineProps<Props>()
 </script>
 
 <style lang="scss" scoped>

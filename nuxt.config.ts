@@ -100,7 +100,12 @@ export default defineNuxtConfig({
     }
   },
   i18n: {
-    strategy: "no_prefix"
+    defaultLocale: "it",
+    locales: [
+      { code: "it", language: "it-IT", name: "Italian", file: "it.json" },
+      { code: "en", language: "en-GB", name: "English", file: "en.json" }
+    ],
+    trailingSlash: true
   },
   image: {
     provider: process.env.VERCEL_ENV ? "vercel" : "ipx",

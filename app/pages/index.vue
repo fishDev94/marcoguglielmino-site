@@ -8,35 +8,12 @@
       :copy="homepageData.copy || ''"
       :cta-buttons
     />
-    <!-- <div class="button-content">
-      <UIButton
-        type="primary"
-        is-strong
-      >
-        Primary
-      </UIButton>
-      <UIButton type="secondary">
-        Secondary
-      </UIButton>
-      <UIButton type="inverted">
-        Inverted
-      </UIButton>
-      <UIButton type="outlined">
-        Outlined
-      </UIButton>
-      <UIButton
-        type="outlined-light"
-        is-strong
-      >
-        Outlined Light
-      </UIButton>
-    </div> -->
-    <!-- <UISearchBar /> -->
     <ContentBlock
       v-for="(contentBlock, idx) in contentBlocks"
       :key="contentBlock?.slug || `${idx}+content-block-home`"
       :content-data="contentBlock"
     />
+    <StravaLastActivities />
   </div>
 </template>
 

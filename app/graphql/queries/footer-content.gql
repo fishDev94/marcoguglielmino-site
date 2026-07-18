@@ -1,5 +1,5 @@
-query footer {
-    footerCollection(limit: 1) {
+query footer($locale: String) {
+    footerCollection(limit: 1, locale: $locale) {
         items {
             ...FooterData
         }

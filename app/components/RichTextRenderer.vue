@@ -5,7 +5,7 @@
 <script setup lang="ts">
 import { computed, h, type VNodeChild } from "vue"
 import { BLOCKS, INLINES, MARKS, type Document, type Block, type Inline, type Text } from "@contentful/rich-text-types"
-import NuxtLink from "#components"
+import NuxtLinkLocale from "#components"
 
 const props = defineProps<{
   customRichTextJson?: Document | null
@@ -72,7 +72,7 @@ const renderNode = (node: RichTextNode, index: number): VNodeChild => {
     case INLINES.HYPERLINK: {
       const hyperlinkNode = node as HyperlinkNode
       return h(
-        NuxtLink,
+        NuxtLinkLocale,
         {
           key: index,
           to: hyperlinkNode.data?.uri ?? "#",

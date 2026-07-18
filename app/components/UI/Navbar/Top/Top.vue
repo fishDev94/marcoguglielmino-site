@@ -2,13 +2,13 @@
   <nav class="mg-top-nav-bar">
     <NuxtLayout name="content-wrapper">
       <div class="mg-top-nav-bar__content h-16">
-        <NuxtLink
+        <NuxtLinkLocale
           class="mg-top-nav-bar__left"
           to="/"
         >
           <UILogo />
           <h1 class="mg-top-nav-bar__title" />
-        </NuxtLink>
+        </NuxtLinkLocale>
         <UINavbarTopMenu />
         <UIAvatar />
         <UINavbarTopNavigationIcons />
@@ -24,7 +24,7 @@
   min-height: 64px;
   position: sticky;
   top: 0;
-  z-index: 9;
+  z-index: 11;
 
   &__content {
     display: flex;
