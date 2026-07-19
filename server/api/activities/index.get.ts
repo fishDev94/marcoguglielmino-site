@@ -1,11 +1,6 @@
 export default defineEventHandler(async (event) => {
-  let query: Record<string, unknown> = {}
-
-  try {
-    query = getQuery(event) as Record<string, unknown>
-  } catch (err) {
-    console.warn("[GET Strava Activities with Query]: ", err)
-  }
+  const queryString = (event.path || "").split("?")[1] || ""
+  const query = Object.fromEntries(new URLSearchParams(queryString))
 
   const accessToken = await getStravaAccessToken()
   return await fetchStravaActivities(accessToken, query)

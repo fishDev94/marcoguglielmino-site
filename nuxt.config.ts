@@ -50,7 +50,6 @@ export default defineNuxtConfig({
 
   routeRules: {
     "/": { prerender: true },
-    "/it/": { prerender: true },
     "/en/": { prerender: true }
   },
   compatibilityDate: "2026-06-30",
