@@ -17,12 +17,15 @@
 
 <script lang="ts" setup>
 const route = useRoute()
+
 const { page } = defineProps<{
   page: string
 }>()
 
 const isActive = computed(() => {
-  return route.name === page
+  const routeNameWithoutLocale = String(route.name).split("_")[0]
+
+  return routeNameWithoutLocale === page
 })
 const name = computed(() => {
   if (page === "home") {
