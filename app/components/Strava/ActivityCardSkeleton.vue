@@ -30,6 +30,10 @@
     padding: 16px;
     margin-bottom: 16px;
     box-shadow: 0 2px 8px rgba(0, 0, 0, 0.04);
-    max-width: 420px;
+    width: 100%;
+
+    @include start-from(tablet) {
+    width: 320px;
+  }
 }
 </style>

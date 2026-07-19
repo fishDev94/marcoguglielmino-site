@@ -1,10 +1,15 @@
-import type { StravaActivitySummary, StravaActivityDetail, StravaTokenResponse } from "@@/types/strava"
+import type {
+  StravaActivitySummary,
+  StravaActivityDetail,
+  StravaTokenResponse
+} from "@@/types/strava"
 import { Redis } from "@upstash/redis"
 
 const redis = Redis.fromEnv()
 
 export async function getStravaAccessToken() {
-  const { stravaClientID, stravaClientSecret, stravaRefreshToken } = useRuntimeConfig()
+  const { stravaClientID, stravaClientSecret, stravaRefreshToken }
+    = useRuntimeConfig()
 
   let refreshToken = await redis.get("strava_refresh_token")
 
@@ -36,18 +41,28 @@ export async function getStravaAccessToken() {
   return accessToken
 }
 
-export async function fetchStravaActivities(accessToken: string) {
+export async function fetchStravaActivities(
+  accessToken: string,
+  query?: { page?: number, per_page?: number }
+) {
   return await $fetch<StravaActivitySummary[]>(
     "https://www.strava.com/api/v3/athlete/activities",
     {
       headers: {
         Authorization: `Bearer ${accessToken}`
+      },
+      query: {
+        page: query?.page || 1,
+        per_page: query?.per_page || 30
       }
     }
   )
 }
 
-export async function fetchStravaActivityById(accessToken: string, activityId?: string) {
+export async function fetchStravaActivityById(
+  accessToken: string,
+  activityId?: string
+) {
   return await $fetch<StravaActivityDetail>(
     `https://www.strava.com/api/v3/activities/${activityId}`,
     {

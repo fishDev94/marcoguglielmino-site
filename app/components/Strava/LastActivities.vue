@@ -18,15 +18,39 @@
       <p class="mg-last-activities__description">
         {{ $t("strava.activities.last.description") }}
       </p>
+      <div class="mg-last-activities__body">
+        <UICarousel>
+          <template v-if="isLoading">
+            <StravaActivityCardSkeleton
+              v-for="n in LAST_ACTIVITIES_PER_PAGE"
+              :key="`skeleton-card+${n}`"
+              class="mg-last-activities__card"
+            />
+          </template>
+          <template v-else>
+            <StravaActivityCard
+              v-for="(activity, i) in activities"
+              :key="`activity-card-${activity.id}+${i}`"
+              class="mg-last-activities__card"
+              :activity
+            />
+          </template>
+        </UICarousel>
+      </div>
     </NuxtLayout>
   </div>
 </template>
 
-<script lang="ts" setup></script>
+<script lang="ts" setup>
+import { LAST_ACTIVITIES_PER_PAGE } from "~/constants"
+
+const { getActivities } = useStravaActivities()
+
+const { data: activities, pending: isLoading } = getActivities({ per_page: LAST_ACTIVITIES_PER_PAGE })
+</script>
 
 <style lang="scss" scoped>
 .mg-last-activities {
-    height: 300px;
     padding-block: 24px;
 
     &__header {
@@ -80,6 +104,18 @@
         &>p {
             width: max-content;
         }
+    }
+
+    &__body {
+      margin-top: 16px;
+    }
+
+    &__card {
+      min-width: 0;
+
+      @include start-from(tablet) {
+        margin-block: 4px;
+      }
     }
 }
 </style>

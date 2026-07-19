@@ -13,7 +13,7 @@
       :key="contentBlock?.slug || `${idx}+content-block-home`"
       :content-data="contentBlock"
     />
-    <StravaLastActivities />
+    <LazyStravaLastActivities />
   </div>
 </template>
 
@@ -31,12 +31,3 @@ definePageMeta({
   name: "home"
 })
 </script>
-
-<style lang="scss" scoped>
-.mg-homepage {}
-
-.button-content {
-  display: flex;
-  gap: 4px;
-}
-</style>

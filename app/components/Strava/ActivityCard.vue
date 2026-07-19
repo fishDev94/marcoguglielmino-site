@@ -61,9 +61,13 @@ const isWeightTraining = computed(() => activity.type === "WeightTraining")
   padding: 16px;
   margin-bottom: 16px;
   box-shadow: 0 2px 8px rgba(0, 0, 0, 0.04);
-  max-width: 420px;
+  width: 100%;
   cursor: pointer;
   transition: transform 0.2s ease;
+
+  @include start-from(tablet) {
+    width: 320px;
+  }
 
   &:hover {
     transform: translateY(-2px);

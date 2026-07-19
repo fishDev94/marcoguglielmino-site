@@ -3,9 +3,7 @@ export const onWindowResize = (callback: () => void) => {
     window.addEventListener("resize", callback)
   })
 
-  onBeforeRouteLeave((_1, _2, next) => {
+  onBeforeRouteLeave((_1, _2) => {
     window.removeEventListener("resize", callback)
-
-    next()
   })
 }
