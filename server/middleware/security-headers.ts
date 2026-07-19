@@ -10,6 +10,7 @@ export default defineEventHandler((event) => {
     "img-src 'self' data: https://images.ctfassets.net https://*.tile.openstreetmap.org",
     "font-src 'self' https://fonts.gstatic.com",
     "connect-src 'self' https://images.ctfassets.net https://*.tile.openstreetmap.org https://vercel.live https://vitals.vercel-insights.com",
+    "frame-src https://vercel.live",
     "frame-ancestors 'none'"
   ].join("; "))
 
