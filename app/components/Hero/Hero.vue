@@ -70,7 +70,7 @@ const buttons = computed(
 
 // Preload LCP image so it's discoverable from the HTML immediately
 if (src) {
-  const resolvedImage = img(src, { format: "webp", quality: 75, width: 1200 }, { provider: "contentful" })
+  const resolvedImage = img(src, { format: "webp", quality: 75, width: 1200 })
   useHead({
     link: [
       {
