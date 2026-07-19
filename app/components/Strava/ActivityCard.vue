@@ -19,12 +19,14 @@
 
     <!-- Main Content (Map or Heart Rate View) -->
     <div class="content-container">
-      <StravaMap
-        v-if="activity.map?.summary_polyline"
-        :polyline-data="activity.map.summary_polyline"
-      />
+      <ClientOnly>
+        <StravaMap
+          v-if="activity.map?.summary_polyline"
+          :polyline-data="activity.map.summary_polyline"
+        />
+      </ClientOnly>
       <StravaInfo
-        v-else
+        v-if="!activity.map?.summary_polyline"
         :average-heartrate="activity.average_heartrate"
         :max-heartrate="activity.max_heartrate || 0"
       />

@@ -1,9 +1,9 @@
 <template>
   <div class="mg-default-layout">
     <UINavbarTop />
-    <div class="mg-default-layout__content">
+    <main class="mg-default-layout__content">
       <slot />
-    </div>
+    </main>
     <MGFooter />
     <UINavbarBottom />
   </div>

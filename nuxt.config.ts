@@ -28,7 +28,14 @@ export default defineNuxtConfig({
         }
       ],
       link: [
-        { rel: "icon", type: "image/svg+xml", href: "/logo.svg" }
+        { rel: "icon", type: "image/svg+xml", href: "/logo.svg" },
+        {
+          rel: "preload",
+          as: "image",
+          type: "image/webp",
+          href: "https://images.ctfassets.net/5ye49326jqzh/4RWc2Y4nmOdCEazj9fzUmz/c944ce5805fe112c5e66a142b10b45e8/screen.png?fm=webp&q=75&w=1200",
+          fetchpriority: "high"
+        }
       ]
     }
   },
@@ -51,6 +58,11 @@ export default defineNuxtConfig({
   routeRules: {
     "/": { prerender: true },
     "/en/": { prerender: true }
+  },
+
+  sourcemap: {
+    server: true,
+    client: true
   },
   compatibilityDate: "2026-06-30",
 
@@ -122,11 +134,13 @@ export default defineNuxtConfig({
     trailingSlash: true
   },
   image: {
+    providers: {
+      contentful: {
+        baseURL: "https://images.ctfassets.net/"
+      }
+    },
     provider: process.env.VERCEL_ENV ? "vercel" : "ipx",
     format: ["webp", "jpg"],
-    contentful: {
-      baseURL: "https://images.ctfassets.net/"
-    },
     // The screen sizes predefined by `@nuxt/image`:
     screens: {
       xs: 320,

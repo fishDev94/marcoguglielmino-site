@@ -3,9 +3,9 @@
     <NuxtLayout name="content-wrapper">
       <header class="mg-last-activities__header">
         <div class="mg-last-activities__title-section">
-          <h1 class="mg-last-activities__title uppercase md:capitalize">
+          <h2 class="mg-last-activities__title uppercase md:capitalize">
             {{ $t("strava.activities.last.title") }}
-          </h1>
+          </h2>
         </div>
         <NuxtLinkLocale
           class="mg-last-activities__link"
