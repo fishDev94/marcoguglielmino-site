@@ -1,9 +1,15 @@
 <template>
   <div class="mg-avatar rounded-lg">
-    <img
+    <NuxtImg
+      provider="contentful"
       :src
       :alt="title"
-    >
+      width="32"
+      height="32"
+      format="webp"
+      quality="75"
+      loading="lazy"
+    />
   </div>
 </template>
 

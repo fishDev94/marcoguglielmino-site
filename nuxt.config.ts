@@ -28,20 +28,7 @@ export default defineNuxtConfig({
         }
       ],
       link: [
-        { rel: "icon", type: "image/svg+xml", href: "/logo.svg" },
-        {
-          rel: "preconnect",
-          href: "https://fonts.googleapis.com"
-        },
-        {
-          rel: "preconnect",
-          href: "https://fonts.gstatic.com",
-          crossorigin: "anonymous"
-        },
-        {
-          rel: "stylesheet",
-          href: "https://fonts.googleapis.com/css2?family=Inter:ital,opsz,wght@0,14..32,100..900;1,14..32,100..900&family=Montserrat:ital,wght@0,100..900;1,100..900&display=swap"
-        }
+        { rel: "icon", type: "image/svg+xml", href: "/logo.svg" }
       ]
     }
   },
@@ -99,16 +86,55 @@ export default defineNuxtConfig({
       }
     }
   },
+
+  fonts: {
+    defaults: {
+      weights: [400, 500, 600, 700, 800, 900],
+      styles: ["normal", "italic"]
+    },
+    families: [
+      {
+        name: "Montserrat",
+        provider: "google"
+      },
+      {
+        name: "Inter",
+        provider: "google"
+      }
+    ]
+  },
   i18n: {
-    defaultLocale: "it",
     locales: [
-      { code: "it", language: "it-IT", name: "Italian", file: "it.json" },
-      { code: "en", language: "en-GB", name: "English", file: "en.json" }
+      {
+        code: "it",
+        name: "Italian",
+        language: "it-IT",
+        file: "it.json"
+      },
+      { code: "en",
+        name: "English",
+        language: "en-GB",
+        file: "en.json"
+      }
     ],
+    defaultLocale: "it",
     trailingSlash: true
   },
   image: {
     provider: process.env.VERCEL_ENV ? "vercel" : "ipx",
-    format: ["webp", "jpg"]
+    format: ["webp", "jpg"],
+    contentful: {
+      baseURL: "https://images.ctfassets.net/"
+    },
+    // The screen sizes predefined by `@nuxt/image`:
+    screens: {
+      xs: 320,
+      sm: 640,
+      md: 768,
+      lg: 1024,
+      xl: 1280,
+      xxl: 1536,
+      "2xl": 1536
+    }
   }
 })

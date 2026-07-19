@@ -1,13 +1,17 @@
 <template>
   <div class="mg-hero">
-    <HeroLoading v-if="loading" />
-    <div
-      v-else
-      class="mg-hero__content"
-    >
+    <div class="mg-hero__content">
       <NuxtImg
         class="mg-hero__background"
+        provider="contentful"
         :src
+        sizes="100vw sm:500px lg:800px xl:1200px"
+        format="webp"
+        quality="75"
+        loading="eager"
+        fetchpriority="high"
+        alt="Hero background"
+        :placeholder="`data:image/svg+xml;base64,${toBase64(shimmer())}`"
       />
       <div class="mg-hero__overlay" />
       <NuxtLayout
@@ -58,10 +62,26 @@ const {
   copy?: string
   ctaButtons?: CtaButtonDataFragment[]
 }>()
-const loading = ref(false)
+
+const img = useImage()
 const buttons = computed(
   () => ctaButtons as Array<{ typeButton: ButtonType } & CtaButtonDataFragment>
 )
+
+// Preload LCP image so it's discoverable from the HTML immediately
+if (src) {
+  const resolvedImage = img(src, { format: "webp", quality: 75, width: 1200 }, { provider: "contentful" })
+  useHead({
+    link: [
+      {
+        rel: "preload",
+        as: "image",
+        href: resolvedImage,
+        fetchpriority: "high"
+      }
+    ]
+  })
+}
 </script>
 
 <style lang="scss" scoped>
