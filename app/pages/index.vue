@@ -19,6 +19,11 @@
 
 <script setup lang="ts">
 import type { CtaButtonDataFragment } from "#gql"
+import type { InstagramReel } from "~~/types/instagram"
+
+const { data: reels } = await useFetch<InstagramReel[]>("/api/instagram/reels")
+
+console.log("reels", reels.value)
 
 const {
   homepageData,

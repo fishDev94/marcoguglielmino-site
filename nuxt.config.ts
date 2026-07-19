@@ -52,7 +52,11 @@ export default defineNuxtConfig({
     stravaClientSecret: "",
     stravaRefreshToken: "",
     stravaClientID: "",
-    stravaAccessToken: ""
+    stravaAccessToken: "",
+    instagram: {
+      userId: "", // page id
+      token: "" // System User Token
+    }
   },
 
   routeRules: {
