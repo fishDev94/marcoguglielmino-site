@@ -1,4 +1,7 @@
 export default defineEventHandler((event) => {
+  // Skip during prerendering (no response headers available)
+  if (import.meta.prerender) return
+
   // Content Security Policy
   setHeader(event, "Content-Security-Policy", [
     "default-src 'self'",

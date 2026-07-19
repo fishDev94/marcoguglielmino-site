@@ -108,11 +108,15 @@ export default defineNuxtConfig({
     families: [
       {
         name: "Montserrat",
-        provider: "google"
+        provider: "google",
+        weights: [400, 500, 600, 700, 800, 900],
+        global: true
       },
       {
         name: "Inter",
-        provider: "google"
+        provider: "google",
+        weights: [400, 500, 600, 700, 800, 900],
+        global: true
       }
     ]
   },
