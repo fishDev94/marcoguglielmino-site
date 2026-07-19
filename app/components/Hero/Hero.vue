@@ -10,7 +10,10 @@
         :src
       />
       <div class="mg-hero__overlay" />
-      <NuxtLayout name="content-wrapper">
+      <NuxtLayout
+        class="mg-hero__container"
+        name="content-wrapper"
+      >
         <div class="mg-hero__text-content">
           <HeroLabel>{{ label }}</HeroLabel>
           <h1 class="mg-hero__title">
@@ -97,8 +100,7 @@ const buttons = computed(
     display: flex;
     flex-direction: column;
     gap: 16px;
-    position: absolute;
-    bottom: 0;
+    position: relative;
     z-index: 1;
     margin-bottom: 32px;
 
@@ -106,7 +108,7 @@ const buttons = computed(
       gap: 0;
       justify-content: center;
       height: 100%;
-      bottom: unset;
+      margin: 0;
     }
   }
 
@@ -155,7 +157,16 @@ const buttons = computed(
   &__cta-buttons {
     display: flex;
     gap: 16px;
-    width: max-content;
   }
 }
+
+:deep(.mg-hero__container) {
+    display: flex;
+    flex-wrap: wrap;
+    align-content: flex-end;
+
+    @include start-from(tablet) {
+      display: block;
+    }
+  }
 </style>
