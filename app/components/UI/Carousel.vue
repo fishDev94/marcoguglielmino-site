@@ -1,46 +1,42 @@
 <template>
-  <NuxtLayout
-    name="content-wrapper"
-  >
-    <div class="mg-carousel">
-      <div
-        v-if="shouldShowArrows"
-        class="mg-carousel__button-container"
-      >
-        <UButton
-          :class="[
-            'mg-carousel__button-container__arrow-left',
-            'rounded-full',
-            { 'arrow-visible': isPrevDisabled }
-          ]"
-          icon="lucide:chevron-left"
-          size="md"
-          variant="solid"
-          color="primary"
-          :disabled="isPrevDisabled"
-          @click="handleScroll()"
-        />
-        <UButton
-          :class="[
-            'mg-carousel__button-container__arrow-right',
-            'rounded-full',
-            { 'arrow-visible': isNextDisabled }
-          ]"
-          icon="lucide:chevron-right"
-          size="md"
-          color="primary"
-          :disabled="isNextDisabled"
-          @click="handleScroll('right')"
-        />
-      </div>
-      <div
-        ref="scollable-content"
-        class="mg-carousel__scollable-content grid"
-      >
-        <slot />
-      </div>
+  <div class="mg-carousel">
+    <div
+      v-if="shouldShowArrows"
+      class="mg-carousel__button-container"
+    >
+      <UButton
+        :class="[
+          'mg-carousel__button-container__arrow-left',
+          'rounded-full',
+          { 'arrow-visible': isPrevDisabled }
+        ]"
+        icon="lucide:chevron-left"
+        size="md"
+        variant="solid"
+        color="primary"
+        :disabled="isPrevDisabled"
+        @click="handleScroll()"
+      />
+      <UButton
+        :class="[
+          'mg-carousel__button-container__arrow-right',
+          'rounded-full',
+          { 'arrow-visible': isNextDisabled }
+        ]"
+        icon="lucide:chevron-right"
+        size="md"
+        color="primary"
+        :disabled="isNextDisabled"
+        @click="handleScroll('right')"
+      />
     </div>
-  </NuxtLayout>
+    <div
+      ref="scollable-content"
+      class="mg-carousel__scollable-content grid"
+    >
+      <slot />
+    </div>
+  </div>
 </template>
 
 <script lang="ts" setup>
@@ -77,19 +73,24 @@ const { isNextDisabled, isPrevDisabled, shouldShowArrows, handleScroll }
 
   &__scollable-content {
     grid-auto-flow: column;
-    grid-auto-columns: max-content;
+    grid-auto-columns: calc(100% - 18px);
     gap: 16px;
     overflow-x: auto;
     -webkit-overflow-scrolling: touch;
     scroll-snap-type: x mandatory;
     scrollbar-width: none;
     scroll-behavior: smooth;
-    margin-inline: auto;
     max-width: 100%;
-    width: fit-content;
+    width: 100%;
+
+    @include start-from(tablet) {
+      grid-auto-columns: max-content;
+      width: fit-content;
+      margin-inline: auto;
+    }
 
     & > * {
-      scroll-snap-align: center;
+      scroll-snap-align: start;
     }
 
     &::-webkit-scrollbar {

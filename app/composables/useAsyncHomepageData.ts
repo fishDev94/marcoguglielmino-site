@@ -3,7 +3,7 @@ import type { AboutCardDataFragment, ContentBlockDataFragment, HomepageDataFragm
 export const useAsyncHomepageData = async () => {
   const { data } = await useAsyncGql({
     operation: "homepage",
-    variables: { slug: "homepage" },
+    variables: { slug: "homepage", locale: useCurrentLang() },
     options: {
       getCachedData(key, nuxtApp) {
         return nuxtApp.payload.data[key] || nuxtApp.static.data[key]

@@ -1,6 +1,6 @@
 <template>
   <div class="mg-nav-icons">
-    <NuxtLink
+    <NuxtLinkLocale
       class="mg-nav-icons__link"
       :to="{ name: 'strava' }"
     >
@@ -8,8 +8,8 @@
         name="i-mdi-run"
         class="mg-nav-icons__icon size-6 text-white"
       />
-    </NuxtLink>
-    <NuxtLink
+    </NuxtLinkLocale>
+    <NuxtLinkLocale
       class="mg-nav-icons__link"
       :to="{ name: 'gallery' }"
     >
@@ -17,7 +17,7 @@
         name="i-boxicons-camera"
         :class="['mg-nav-icons__icon', 'size-6', { 'text-(--ui-primary)': isActive, 'text-white': !isActive }]"
       />
-    </NuxtLink>
+    </NuxtLinkLocale>
   </div>
 </template>
 

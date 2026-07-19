@@ -75,7 +75,7 @@ export const useScrollable = <T extends HTMLElement>(
     updateScrollValue()
   })
 
-  onBeforeRouteLeave((_1, _2, next) => {
+  onBeforeRouteLeave((_1, _2) => {
     if (element.value) {
       if ("onscrollend" in window) {
         element.value.removeEventListener("scrollend", updateScrollValue)
@@ -83,8 +83,6 @@ export const useScrollable = <T extends HTMLElement>(
         element.value.removeEventListener("scroll", scrollEnd)
       }
     }
-
-    next()
   })
 
   return { isNextDisabled, isPrevDisabled, shouldShowArrows, handleScroll }

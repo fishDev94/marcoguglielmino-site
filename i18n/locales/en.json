@@ -1,0 +1,11 @@
+{
+    "strava": {
+        "activities": {
+            "last": {
+                "title": "Recent activities",
+                "description": "Real-time data from your latest workouts",
+                "link": "View all activities"
+            }
+        }
+    }
+}

@@ -2,13 +2,17 @@
   <nav class="mg-top-nav-bar">
     <NuxtLayout name="content-wrapper">
       <div class="mg-top-nav-bar__content h-16">
-        <NuxtLink
+        <NuxtLinkLocale
           class="mg-top-nav-bar__left"
           to="/"
+          aria-label="Marco Guglielmino - Home"
         >
           <UILogo />
-          <h1 class="mg-top-nav-bar__title" />
-        </NuxtLink>
+          <h1 class="mg-top-nav-bar__title">
+            <span class="mg-top-nav-bar__title-short">Marco G.</span>
+            <span class="mg-top-nav-bar__title-full">Marco Guglielmino</span>
+          </h1>
+        </NuxtLinkLocale>
         <UINavbarTopMenu />
         <UIAvatar />
         <UINavbarTopNavigationIcons />
@@ -24,7 +28,7 @@
   min-height: 64px;
   position: sticky;
   top: 0;
-  z-index: 9;
+  z-index: 11;
 
   &__content {
     display: flex;
@@ -53,8 +57,8 @@
     font-style: italic;
     color: var(--mg-btn-text-primary);
 
-    &:before {
-      content: "Marco G.";
+    .mg-top-nav-bar__title-full {
+      display: none;
     }
 
     @include start-from(tablet) {
@@ -62,8 +66,12 @@
 
       text-transform: none;
 
-      &:before {
-        content: "Marco Guglielmino";
+      .mg-top-nav-bar__title-short {
+        display: none;
+      }
+
+      .mg-top-nav-bar__title-full {
+        display: inline;
       }
     }
   }

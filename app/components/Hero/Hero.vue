@@ -1,16 +1,23 @@
 <template>
   <div class="mg-hero">
-    <HeroLoading v-if="loading" />
-    <div
-      v-else
-      class="mg-hero__content"
-    >
+    <div class="mg-hero__content">
       <NuxtImg
         class="mg-hero__background"
+        provider="contentful"
         :src
+        sizes="100vw sm:500px lg:800px xl:1200px"
+        format="webp"
+        quality="75"
+        loading="eager"
+        fetchpriority="high"
+        alt="Hero background"
+        :placeholder="`data:image/svg+xml;base64,${toBase64(shimmer())}`"
       />
       <div class="mg-hero__overlay" />
-      <NuxtLayout name="content-wrapper">
+      <NuxtLayout
+        class="mg-hero__container"
+        name="content-wrapper"
+      >
         <div class="mg-hero__text-content">
           <HeroLabel>{{ label }}</HeroLabel>
           <h1 class="mg-hero__title">
@@ -55,10 +62,26 @@ const {
   copy?: string
   ctaButtons?: CtaButtonDataFragment[]
 }>()
-const loading = ref(false)
+
+const img = useImage()
 const buttons = computed(
   () => ctaButtons as Array<{ typeButton: ButtonType } & CtaButtonDataFragment>
 )
+
+// Preload LCP image so it's discoverable from the HTML immediately
+if (src) {
+  const resolvedImage = img(src, { format: "webp", quality: 75, width: 1200 })
+  useHead({
+    link: [
+      {
+        rel: "preload",
+        as: "image",
+        href: resolvedImage,
+        fetchpriority: "high"
+      }
+    ]
+  })
+}
 </script>
 
 <style lang="scss" scoped>
@@ -97,8 +120,7 @@ const buttons = computed(
     display: flex;
     flex-direction: column;
     gap: 16px;
-    position: absolute;
-    bottom: 0;
+    position: relative;
     z-index: 1;
     margin-bottom: 32px;
 
@@ -106,7 +128,7 @@ const buttons = computed(
       gap: 0;
       justify-content: center;
       height: 100%;
-      bottom: unset;
+      margin: 0;
     }
   }
 
@@ -157,4 +179,14 @@ const buttons = computed(
     gap: 16px;
   }
 }
+
+:deep(.mg-hero__container) {
+    display: flex;
+    flex-wrap: wrap;
+    align-content: flex-end;
+
+    @include start-from(tablet) {
+      display: block;
+    }
+  }
 </style>

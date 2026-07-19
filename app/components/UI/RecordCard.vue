@@ -25,7 +25,7 @@
 import type { RecordCardDataFragment } from "#gql"
 
 interface Props {
-  cardData: Omit<RecordCardDataFragment, "__typename">
+  cardData: RecordCardDataFragment
 }
 
 defineProps<Props>()
@@ -42,7 +42,6 @@ defineProps<Props>()
   display: flex;
   flex-direction: column;
   gap: 16px;
-  margin: 8px 0;
   width: 280px;
   align-items: center;
   text-align: center;
@@ -50,6 +49,7 @@ defineProps<Props>()
   @include start-from(tablet) {
     align-items: flex-start;
     text-align: left;
+    margin: 8px 0;
   }
 
   &:hover {

@@ -34,10 +34,11 @@
         v-if="contentData.carousel?.items.length"
         class="mg-content-block__carousel-section"
       >
-        <UIRecordCard
-          v-for="(cardData, i) in contentCarouselCardList"
-          :key="`record-card+${i}`"
-          :card-data="cardData!"
+        <component
+          :is="COMPONENTS_MAP[cardData?.__typename]"
+          v-for="(cardData, i) in validContentCarouselCardList"
+          :key="`${cardData?.__typename}-card+${i}`"
+          :card-data
         />
       </UICarousel>
     </NuxtLayout>
@@ -46,6 +47,11 @@
 
 <script lang="ts" setup>
 import type { AboutCardDataFragment, ContentBlockDataFragment } from "#gql"
+import { COMPONENTS_MAP } from "~/constants/components"
+
+type CardWithTypename = {
+  __typename: keyof typeof COMPONENTS_MAP
+}
 
 const { contentData } = defineProps<{
   contentData: ContentBlockDataFragment
@@ -57,9 +63,12 @@ const contentCardList = computed(() => {
   >
 })
 
-const contentCarouselCardList = computed(() => {
-  return contentData.carousel?.items
-})
+const validContentCarouselCardList = computed(() =>
+  contentData.carousel?.items.filter(
+    (cardData): cardData is typeof cardData & CardWithTypename =>
+      cardData?.__typename !== undefined
+  )
+)
 </script>
 
 <style lang="scss" scoped>

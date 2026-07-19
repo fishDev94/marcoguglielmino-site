@@ -1,5 +1,5 @@
 <template>
-  <NuxtLink
+  <NuxtLinkLocale
     class="strava-card"
     :class="{ 'is-gym': isWeightTraining }"
     :to="{
@@ -19,12 +19,14 @@
 
     <!-- Main Content (Map or Heart Rate View) -->
     <div class="content-container">
-      <StravaMap
-        v-if="activity.map?.summary_polyline"
-        :polyline-data="activity.map.summary_polyline"
-      />
+      <ClientOnly>
+        <StravaMap
+          v-if="activity.map?.summary_polyline"
+          :polyline-data="activity.map.summary_polyline"
+        />
+      </ClientOnly>
       <StravaInfo
-        v-else
+        v-if="!activity.map?.summary_polyline"
         :average-heartrate="activity.average_heartrate"
         :max-heartrate="activity.max_heartrate || 0"
       />
@@ -39,7 +41,7 @@
       :suffer-score="activity.suffer_score || 0"
       :distance="activity.distance"
     />
-  </NuxtLink>
+  </NuxtLinkLocale>
 </template>
 
 <script setup lang="ts">
@@ -61,9 +63,13 @@ const isWeightTraining = computed(() => activity.type === "WeightTraining")
   padding: 16px;
   margin-bottom: 16px;
   box-shadow: 0 2px 8px rgba(0, 0, 0, 0.04);
-  max-width: 420px;
+  width: 100%;
   cursor: pointer;
   transition: transform 0.2s ease;
+
+  @include start-from(tablet) {
+    width: 320px;
+  }
 
   &:hover {
     transform: translateY(-2px);

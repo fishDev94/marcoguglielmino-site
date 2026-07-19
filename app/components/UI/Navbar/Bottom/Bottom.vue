@@ -19,7 +19,7 @@
         box-shadow: 0 0 10px 1px color-mix(in srgb, var(--mg-color-secondary) 15%, transparent);
         position: sticky;
         bottom: 0;
-        z-index: 9;
+        z-index: 11;
 
         @include start-from(tablet) {
             display: none;

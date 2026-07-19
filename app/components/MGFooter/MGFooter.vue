@@ -1,5 +1,8 @@
 <template>
-  <footer class="mg-footer">
+  <footer
+    v-if="footerData"
+    class="mg-footer"
+  >
     <div class="mg-footer__header">
       <h3 class="mg-footer__title uppercase">
         {{ footerData.mainTitle }}
@@ -31,24 +34,29 @@ import type { FooterColumn } from "@nuxt/ui"
 
 const { footerData } = await useAsyncFooterData()
 
-const columns: FooterColumn[] = [
-  { label: "Navigation", children: [] },
-  { label: "Social", children: [] }]
+const columns = computed<FooterColumn[]>(() => {
+  if (!footerData.value) return []
 
-footerData.value.navigationLinks?.items.forEach((item) => {
-  columns[0]?.children?.push({
-    label: item?.title as string,
-    to: item?.url as string,
-    target: item?.isExternal ? "_blank" : null
-  })
-})
+  const nav: FooterColumn = { label: "Navigation", children: [] }
+  const social: FooterColumn = { label: "Social", children: [] }
 
-footerData.value.socialLinks?.items.forEach((item) => {
-  columns[1]?.children?.push({
-    label: item?.title as string,
-    to: item?.url as string,
-    target: item?.isExternal ? "_blank" : null
+  footerData.value.navigationLinks?.items.forEach((item) => {
+    nav.children?.push({
+      label: item?.title as string,
+      to: item?.url as string,
+      target: item?.isExternal ? "_blank" : null
+    })
   })
+
+  footerData.value.socialLinks?.items.forEach((item) => {
+    social.children?.push({
+      label: item?.title as string,
+      to: item?.url as string,
+      target: item?.isExternal ? "_blank" : null
+    })
+  })
+
+  return [nav, social]
 })
 </script>
 
