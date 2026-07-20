@@ -71,6 +71,10 @@ export const useScrollable = <T extends HTMLElement>(
     }
   })
 
+  onUpdated(() => {
+    updateScrollValue()
+  })
+
   onWindowResize(() => {
     updateScrollValue()
   })
