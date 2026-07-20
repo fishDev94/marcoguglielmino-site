@@ -6,3 +6,4 @@ export const DEBOUNCE_TIME = 100
 
 // PAGE DATA
 export const LAST_ACTIVITIES_PER_PAGE = 4
+export const REEL_CARD_COUNT = 6

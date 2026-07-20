@@ -54,7 +54,7 @@ interface Props {
 const {
   sectionName,
   linkTo = undefined,
-  isLoading = false,
+  isLoading = true,
   skeletonCard = ActivityCardSkeleton,
   itemCount = LAST_ACTIVITIES_PER_PAGE,
   carouselItemSize = undefined

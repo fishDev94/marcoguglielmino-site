@@ -28,8 +28,9 @@
     </TopSection>
     <TopSection
       section-name="instagram"
-      :item-count="LAST_ACTIVITIES_PER_PAGE"
+      :item-count="REEL_CARD_COUNT"
       :is-loading="isReelsDataLoading"
+      :skeleton-card="InstagramReelCardSkeleton"
       background="secondary-dark"
       carousel-item-size="320px"
     >
@@ -43,7 +44,8 @@
 </template>
 
 <script setup lang="ts">
-import { LAST_ACTIVITIES_PER_PAGE } from "~/constants"
+import { LAST_ACTIVITIES_PER_PAGE, REEL_CARD_COUNT } from "~/constants"
+import InstagramReelCardSkeleton from "~/components/Instagram/ReelCardSkeleton.vue"
 
 import type { CtaButtonDataFragment } from "#gql"
 
@@ -51,7 +53,7 @@ definePageMeta({
   name: "home"
 })
 
-const { reels, isReelsDataLoading } = useInstagramReelData()
+const { reels, isReelsDataLoading } = useInstagramReelData(ref(REEL_CARD_COUNT))
 const { getActivities } = useStravaActivities()
 
 const { data: activities, pending: isLoadingStravaData } = getActivities({ per_page: LAST_ACTIVITIES_PER_PAGE })
