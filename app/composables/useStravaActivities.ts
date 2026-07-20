@@ -16,8 +16,8 @@ const getActivities = (query?: { page?: number, per_page?: number }) => {
       if (err) {
         showError(
           createError({
-            statusCode: err.statusCode || 500,
-            statusMessage: err.statusMessage || "Fetch error",
+            statusCode: err.status || 500,
+            statusMessage: err.statusText || "Fetch error",
             message: err.message
           })
         )

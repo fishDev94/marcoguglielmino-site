@@ -13,21 +13,19 @@
       :key="contentBlock?.slug || `${idx}+content-block-home`"
       :content-data="contentBlock"
     />
-    <LazyStravaLastActivities />
+    <StravaLastActivities />
+    <InstagramTopReels />
   </div>
 </template>
 
 <script setup lang="ts">
-import type { CtaButtonDataFragment } from "#gql"
-
-const {
-  homepageData,
-  contentBlocks
-} = await useAsyncHomepageData()
-
-const ctaButtons = computed(() => homepageData.value.ctaButton?.items as CtaButtonDataFragment[])
-
 definePageMeta({
   name: "home"
 })
+
+const {
+  homepageData,
+  contentBlocks,
+  ctaButtons
+} = await useAsyncHomepageData()
 </script>

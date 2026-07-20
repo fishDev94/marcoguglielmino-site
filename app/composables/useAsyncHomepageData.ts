@@ -1,4 +1,4 @@
-import type { AboutCardDataFragment, ContentBlockDataFragment, HomepageDataFragment } from "#gql"
+import type { AboutCardDataFragment, ContentBlockDataFragment, CtaButtonDataFragment, HomepageDataFragment } from "#gql"
 
 export const useAsyncHomepageData = async () => {
   const { data } = await useAsyncGql({
@@ -23,9 +23,12 @@ export const useAsyncHomepageData = async () => {
     return homepageData.value.bodyContent?.items[0]?.cards?.items as Array<{ type: "light" | "dark" } & AboutCardDataFragment>
   })
 
+  const ctaButtons = computed(() => homepageData.value.ctaButton?.items as CtaButtonDataFragment[])
+
   return {
     homepageData,
     contentBlocks,
-    aboutCardList
+    aboutCardList,
+    ctaButtons
   }
 }

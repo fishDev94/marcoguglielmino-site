@@ -52,12 +52,16 @@ export default defineNuxtConfig({
     stravaClientSecret: "",
     stravaRefreshToken: "",
     stravaClientID: "",
-    stravaAccessToken: ""
+    stravaAccessToken: "",
+    instagram: {
+      userId: "", // page id
+      token: "" // System User Token
+    }
   },
 
   routeRules: {
-    "/": { prerender: true },
-    "/en/": { prerender: true }
+    "/": { isr: 3600 },
+    "/en/": { isr: 3600 }
   },
 
   sourcemap: {
@@ -65,6 +69,44 @@ export default defineNuxtConfig({
     client: true
   },
   compatibilityDate: "2026-06-30",
+
+  nitro: {
+    routeRules: {
+      "/**": {
+        headers: {
+          "Content-Security-Policy": [
+            "default-src 'self'",
+            "script-src 'self' 'unsafe-inline' 'unsafe-eval' https://vercel.live https://va.vercel-scripts.com",
+            "style-src 'self' 'unsafe-inline' https://fonts.googleapis.com",
+            "img-src 'self' data: https://images.ctfassets.net https://*.tile.openstreetmap.org https://*.cdninstagram.com;",
+            "font-src 'self' https://fonts.gstatic.com",
+            [
+              "connect-src",
+              "'self'",
+              "https://*.cdninstagram.com",
+              "https://graphql.contentful.com",
+              "https://images.ctfassets.net",
+              "https://*.tile.openstreetmap.org",
+              "https://vercel.live",
+              "wss://*.pusher.com",
+              "https://vitals.vercel-insights.com",
+              // Nuxt Icon / Iconify
+              "https://api.iconify.design",
+              "https://cdn.jsdelivr.net",
+              "https://unpkg.com"
+            ].join(" "),
+            "frame-src https://vercel.live",
+            "frame-ancestors 'none'"
+          ].join("; "),
+
+          "Cross-Origin-Opener-Policy": "same-origin",
+          "X-Frame-Options": "DENY",
+          "X-Content-Type-Options": "nosniff",
+          "Referrer-Policy": "strict-origin-when-cross-origin"
+        }
+      }
+    }
+  },
 
   vite: {
     css: {
