@@ -1,7 +1,10 @@
 import type { InstagramReel } from "@@/types/instagram"
 // server/api/instagram/reels.get.ts
-export default defineEventHandler(async () => {
+export default defineEventHandler(async (event) => {
   const config = useRuntimeConfig()
+
+  const query = getQuery(event)
+  const limit = query.itemCount ? Number.parseInt(query.itemCount as string, 10) : 6
 
   const IG_USER_ID = config.instagram.userId
   const TOKEN = config.instagram.token
@@ -21,7 +24,7 @@ export default defineEventHandler(async () => {
   // 2. Filtra solo i Reel
   const reels = res.data.filter(
     m => m.media_product_type === "REELS"
-  )
+  ).slice(0, limit)
 
   return reels
 })

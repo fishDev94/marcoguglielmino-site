@@ -46,13 +46,12 @@
 import { LAST_ACTIVITIES_PER_PAGE } from "~/constants"
 
 import type { CtaButtonDataFragment } from "#gql"
-import type { InstagramReel } from "~~/types/instagram"
 
 definePageMeta({
   name: "home"
 })
 
-const { data: reels, pending: isReelsDataLoading } = useFetch<InstagramReel[]>("/api/instagram/reels")
+const { reels, isReelsDataLoading } = useInstagramReelData()
 const { getActivities } = useStravaActivities()
 
 const { data: activities, pending: isLoadingStravaData } = getActivities({ per_page: LAST_ACTIVITIES_PER_PAGE })
