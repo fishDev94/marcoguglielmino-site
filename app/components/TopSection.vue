@@ -21,16 +21,7 @@
       </p>
       <div class="mg-top-section__body">
         <UICarousel :carousel-item-size="carouselItemSize">
-          <template v-if="isLoading">
-            <component
-              :is="skeletonCard"
-              v-for="n in itemCount"
-              :key="`${n}+loading-card`"
-            />
-          </template>
-          <template v-else>
-            <slot />
-          </template>
+          <slot />
         </UICarousel>
       </div>
     </NuxtLayout>
@@ -38,15 +29,9 @@
 </template>
 
 <script lang="ts" setup>
-import { LAST_ACTIVITIES_PER_PAGE } from "~/constants/index.ts"
-import ActivityCardSkeleton from "./Strava/ActivityCardSkeleton.vue"
-
 interface Props {
   sectionName: string
   linkTo?: string
-  isLoading?: boolean
-  skeletonCard?: Component
-  itemCount?: number
   background: "default-white" | "secondary-dark" | "surface-light-grey"
   carouselItemSize?: string
 }
@@ -54,9 +39,6 @@ interface Props {
 const {
   sectionName,
   linkTo = undefined,
-  isLoading = true,
-  skeletonCard = ActivityCardSkeleton,
-  itemCount = LAST_ACTIVITIES_PER_PAGE,
   carouselItemSize = undefined
 } = defineProps<Props>()
 const i18nModuleName = computed(() => `top_sections.${sectionName}`)

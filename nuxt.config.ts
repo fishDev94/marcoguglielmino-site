@@ -60,8 +60,8 @@ export default defineNuxtConfig({
   },
 
   routeRules: {
-    "/": { prerender: true },
-    "/en/": { prerender: true }
+    "/": { isr: 3600 },
+    "/en/": { isr: 3600 }
   },
 
   sourcemap: {

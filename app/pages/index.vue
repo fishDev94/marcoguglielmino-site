@@ -16,26 +16,35 @@
     <TopSection
       section-name="strava"
       link-to="strava"
-      :item-count="LAST_ACTIVITIES_PER_PAGE"
-      :is-loading="isLoadingStravaData"
       background="default-white"
     >
-      <StravaActivityCard
-        v-for="(activity, i) in activities"
-        :key="`activity-card-${activity.id}+${i}`"
-        :activity
-      />
+      <template v-if="isLoadingStravaData">
+        <StravaActivityCardSkeleton
+          v-for="n in LAST_ACTIVITIES_PER_PAGE"
+          :key="`${n}+strava-skeleton`"
+        />
+      </template>
+      <template v-else>
+        <StravaActivityCard
+          v-for="(activity, i) in activities"
+          :key="`activity-card-${activity.id}+${i}`"
+          :activity
+        />
+      </template>
     </TopSection>
     <TopSection
       section-name="instagram"
-      :item-count="REEL_CARD_COUNT"
-      :is-loading="isReelsDataLoading"
-      :skeleton-card="InstagramReelCardSkeleton"
       background="secondary-dark"
       carousel-item-size="320px"
     >
+      <InstagramReelCardSkeleton
+        v-for="n in REEL_CARD_COUNT"
+        v-show="isReelsDataLoading"
+        :key="`${n}+reel-skeleton`"
+      />
       <InstagramReelCard
-        v-for="reel in reels"
+        v-for="reel in reels ?? []"
+        v-show="!isReelsDataLoading"
         :key="`${reel.id}+instagram-reel-card`"
         :reel
       />
@@ -46,6 +55,7 @@
 <script setup lang="ts">
 import { LAST_ACTIVITIES_PER_PAGE, REEL_CARD_COUNT } from "~/constants"
 import InstagramReelCardSkeleton from "~/components/Instagram/ReelCardSkeleton.vue"
+import StravaActivityCardSkeleton from "~/components/Strava/ActivityCardSkeleton.vue"
 
 import type { CtaButtonDataFragment } from "#gql"
 
