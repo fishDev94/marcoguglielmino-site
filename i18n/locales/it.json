@@ -1,11 +1,13 @@
 {
+  "top_sections": {
     "strava": {
-        "activities": {
-            "last": {
-                "title": "Attività recenti",
-                "description": "Dati real-time dalle ultime sessioni di allenamento",
-                "link": "Vedi tutte le attività"
-            }
-        }
+      "title": "Attività recenti",
+      "description": "Dati real-time dalle ultime sessioni di allenamento",
+      "link": "Vedi tutte le attività"
+    },
+    "instagram": {
+      "title": "Momenti",
+      "description": "Segui il dietro le quinte su Instagram"
     }
+  }
 }

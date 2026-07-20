@@ -33,6 +33,7 @@
     <div
       ref="scollable-content"
       class="mg-carousel__scollable-content grid"
+      :style="scrollableContentStyle"
     >
       <slot />
     </div>
@@ -42,6 +43,12 @@
 <script lang="ts" setup>
 import { FIRST_ELEMENT, INIT_REF_NUMBER } from "@/constants"
 
+interface Props {
+  carouselItemSize?: string
+}
+
+const { carouselItemSize } = defineProps<Props>()
+
 const scrollableContent = useTemplateRef("scollable-content")
 const cardWidth = computed(
   () =>
@@ -50,6 +57,12 @@ const cardWidth = computed(
 )
 const { isNextDisabled, isPrevDisabled, shouldShowArrows, handleScroll }
   = useScrollable(scrollableContent, cardWidth)
+
+const scrollableContentStyle = computed(() =>
+  carouselItemSize
+    ? { '--carousel-item-size': carouselItemSize } as Record<string, string>
+    : undefined
+)
 </script>
 
 <style lang="scss" scoped>
@@ -73,7 +86,7 @@ const { isNextDisabled, isPrevDisabled, shouldShowArrows, handleScroll }
 
   &__scollable-content {
     grid-auto-flow: column;
-    grid-auto-columns: calc(100% - 18px);
+    grid-auto-columns: var(--carousel-item-size, calc(100% - 18px));
     gap: 16px;
     overflow-x: auto;
     -webkit-overflow-scrolling: touch;

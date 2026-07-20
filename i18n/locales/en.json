@@ -1,11 +1,13 @@
 {
+  "top_sections": {
     "strava": {
-        "activities": {
-            "last": {
-                "title": "Recent activities",
-                "description": "Real-time data from your latest workouts",
-                "link": "View all activities"
-            }
-        }
+      "title": "Recent activities",
+      "description": "Real-time data from your latest workouts",
+      "link": "View all activities"
+    },
+    "instagram": {
+      "title": "Moments",
+      "description": "Follow the behind-the-scenes action on Instagram"
     }
+  }
 }
