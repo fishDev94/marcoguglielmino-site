@@ -21,9 +21,13 @@
 import type { CtaButtonDataFragment } from "#gql"
 import type { InstagramReel } from "~~/types/instagram"
 
-const { data: reels } = await useFetch<InstagramReel[]>("/api/instagram/reels")
+const { data: reels, pending } = useFetch<InstagramReel[]>("/api/instagram/reels")
 
-console.log("reels", reels.value)
+watch(pending, (val) => {
+  if (!val) {
+    console.log("reels", reels.value)
+  }
+})
 
 const {
   homepageData,
