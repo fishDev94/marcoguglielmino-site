@@ -37,17 +37,19 @@
       background="secondary-dark"
       carousel-item-size="320px"
     >
-      <InstagramReelCardSkeleton
-        v-for="n in REEL_CARD_COUNT"
-        v-show="isReelsDataLoading"
-        :key="`${n}+reel-skeleton`"
-      />
-      <InstagramReelCard
-        v-for="reel in reels ?? []"
-        v-show="!isReelsDataLoading"
-        :key="`${reel.id}+instagram-reel-card`"
-        :reel
-      />
+      <template v-if="isReelsDataLoading">
+        <InstagramReelCardSkeleton
+          v-for="n in REEL_CARD_COUNT"
+          :key="`${n}+reel-skeleton`"
+        />
+      </template>
+      <template v-else>
+        <InstagramReelCard
+          v-for="reel in reels"
+          :key="`${reel.id}+instagram-reel-card`"
+          :reel
+        />
+      </template>
     </TopSection>
   </div>
 </template>
