@@ -29,7 +29,7 @@
             />
           </template>
           <template v-else>
-            <slot class="mg-top-section__card" />
+            <slot />
           </template>
         </UICarousel>
       </div>

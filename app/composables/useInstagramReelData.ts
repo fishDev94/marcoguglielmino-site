@@ -5,7 +5,7 @@ export const useInstagramReelData = (itemCount = ref(6)) => {
     query: {
       itemCount: itemCount.value
     },
-    server: false
+    lazy: true
   })
 
   return {

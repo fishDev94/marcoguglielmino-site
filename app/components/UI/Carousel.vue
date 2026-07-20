@@ -1,7 +1,7 @@
 <template>
   <div class="mg-carousel">
     <div
-      v-if="shouldShowArrows"
+      v-show="shouldShowArrows"
       class="mg-carousel__button-container"
     >
       <UButton
@@ -60,7 +60,7 @@ const { isNextDisabled, isPrevDisabled, shouldShowArrows, handleScroll }
 
 const scrollableContentStyle = computed(() =>
   carouselItemSize
-    ? { '--carousel-item-size': carouselItemSize } as Record<string, string>
+    ? { "--carousel-item-size": carouselItemSize } as Record<string, string>
     : undefined
 )
 </script>
