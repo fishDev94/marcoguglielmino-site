@@ -88,6 +88,7 @@ export default defineNuxtConfig({
               "https://images.ctfassets.net",
               "https://*.tile.openstreetmap.org",
               "https://vercel.live",
+              "wss://*.pusher.com",
               "https://vitals.vercel-insights.com",
               // Nuxt Icon / Iconify
               "https://api.iconify.design",
