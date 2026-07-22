@@ -9,5 +9,23 @@
       "title": "Moments",
       "description": "Follow the behind-the-scenes action on Instagram"
     }
+  },
+  "time_ago": {
+    "just_now": "Just now",
+    "minutes": "{count} minute ago | {count} minutes ago",
+    "hours": "{count} hour ago | {count} hours ago",
+    "days": "{count} day ago | {count} days ago",
+    "months": "{count} month ago | {count} months ago",
+    "years": "{count} year ago | {count} years ago"
+  },
+  "reel_viewer": {
+    "reels": "Reels",
+    "close": "Close Modal",
+    "play": "Play",
+    "pause": "Pause",
+    "mute": "Mute",
+    "unmute": "Unmute",
+    "view_on_instagram": "View on Instagram",
+    "close_reel": "Close Reel"
   }
 }

@@ -9,5 +9,23 @@
       "title": "Momenti",
       "description": "Segui il dietro le quinte su Instagram"
     }
+  },
+  "time_ago": {
+    "just_now": "Pochi secondi fa",
+    "minutes": "{count} minuto fa | {count} minuti fa",
+    "hours": "{count} ora fa | {count} ore fa",
+    "days": "{count} giorno fa | {count} giorni fa",
+    "months": "{count} mese fa | {count} mesi fa",
+    "years": "{count} anno fa | {count} anni fa"
+  },
+  "reel_viewer": {
+    "reels": "Reels",
+    "close": "Chiudi Modal",
+    "play": "Avvia",
+    "pause": "Pausa",
+    "mute": "Disattiva audio",
+    "unmute": "Attiva audio",
+    "view_on_instagram": "Vedi su Instagram",
+    "close_reel": "Chiudi Reel"
   }
 }

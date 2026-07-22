@@ -1,5 +1,8 @@
 <template>
-  <div class="mg-reel-card">
+  <NuxtLink
+    :to="{ query: { ...$route.query, r_id: reel.id } }"
+    class="mg-reel-card block"
+  >
     <div class="overlay-gradient" />
     <NuxtImg
       class="mg-reel-card__thumbnail"
@@ -14,7 +17,7 @@
         {{ reel.caption }}
       </p>
     </div>
-  </div>
+  </NuxtLink>
 </template>
 
 <script lang="ts" setup>

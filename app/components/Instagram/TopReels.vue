@@ -18,6 +18,12 @@
       />
     </template>
   </TopSection>
+
+  <!-- Reel Modal -->
+  <InstagramReelViewer
+    v-if="reels"
+    :reels
+  />
 </template>
 
 <script lang="ts" setup>
