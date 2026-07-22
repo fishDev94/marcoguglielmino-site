@@ -29,7 +29,7 @@
             >
               <video
                 ref="videoRef"
-                :src="selectedReel.media_url"
+                :src="proxyVideoUrl(selectedReel.media_url)"
                 loop
                 autoplay
                 :muted="isMuted"

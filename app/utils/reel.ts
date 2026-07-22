@@ -29,3 +29,13 @@ export const formatTimeAgo = (dateString: string, t: (key: string, count?: numbe
   const years = Math.floor(days / 365)
   return t("time_ago.years", years)
 }
+
+/**
+ * Returns a proxied URL for Instagram CDN videos.
+ * This routes the video through our server to avoid IP/geo-lock 500 errors
+ * when Instagram CDN rejects requests from a different IP than the one that
+ * originally fetched the media_url from the Graph API.
+ */
+export const proxyVideoUrl = (mediaUrl: string): string => {
+  return `/api/instagram/video?url=${encodeURIComponent(mediaUrl)}`
+}

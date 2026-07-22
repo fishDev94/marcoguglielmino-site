@@ -53,7 +53,7 @@
               <!-- Video -->
               <video
                 :ref="(el: HTMLVideoElement) => setVideoRef(el, reel.id)"
-                :src="reel.media_url"
+                :src="proxyVideoUrl(reel.media_url)"
                 loop
                 autoplay
                 :muted="isMuted"
