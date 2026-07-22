@@ -59,11 +59,6 @@ export default defineNuxtConfig({
     }
   },
 
-  routeRules: {
-    "/": { isr: 3600 },
-    "/en/": { isr: 3600 }
-  },
-
   sourcemap: {
     server: true,
     client: true
@@ -80,6 +75,7 @@ export default defineNuxtConfig({
             "style-src 'self' 'unsafe-inline' https://fonts.googleapis.com",
             "img-src 'self' data: https://images.ctfassets.net https://*.tile.openstreetmap.org https://*.cdninstagram.com;",
             "font-src 'self' https://fonts.gstatic.com",
+            "media-src 'self' data: https://*.cdninstagram.com https://*.fbcdn.net;",
             [
               "connect-src",
               "'self'",
