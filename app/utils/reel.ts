@@ -31,11 +31,11 @@ export const formatTimeAgo = (dateString: string, t: (key: string, count?: numbe
 }
 
 /**
- * Returns a proxied URL for Instagram CDN videos.
- * This routes the video through our server to avoid IP/geo-lock 500 errors
- * when Instagram CDN rejects requests from a different IP than the one that
- * originally fetched the media_url from the Graph API.
+ * Returns a proxied URL for Instagram reel videos.
+ * The proxy endpoint fetches a fresh media_url from the Graph API
+ * (signed for the server's own IP) and streams the video to the client.
+ * This avoids IP/geo-lock 500 errors from Instagram CDN.
  */
-export const proxyVideoUrl = (mediaUrl: string): string => {
-  return `/api/instagram/video?url=${encodeURIComponent(mediaUrl)}`
+export const proxyVideoUrl = (reelId: string): string => {
+  return `/api/instagram/video?id=${encodeURIComponent(reelId)}`
 }

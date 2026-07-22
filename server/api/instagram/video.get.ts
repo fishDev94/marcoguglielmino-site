@@ -1,33 +1,49 @@
 // server/api/instagram/video.get.ts
-// Proxies Instagram CDN video URLs through our server to avoid IP/geo-lock issues
+// Fetches a fresh media_url from the Graph API for a given reel ID,
+// then streams the video to the client. This ensures the CDN URL is
+// signed for the SAME IP that will download it (this serverless instance).
 export default defineEventHandler(async (event) => {
   const query = getQuery(event)
-  const url = query.url as string | undefined
+  const mediaId = query.id as string | undefined
 
-  if (!url) {
-    throw createError({ statusCode: 400, statusMessage: "Missing 'url' query parameter" })
+  if (!mediaId) {
+    throw createError({ statusCode: 400, statusMessage: "Missing 'id' query parameter" })
   }
 
-  // Validate that the URL points to a known Instagram/Facebook CDN
-  const allowedHosts = [
-    "cdninstagram.com",
-    "fbcdn.net"
-  ]
-
-  let parsedUrl: URL
-  try {
-    parsedUrl = new URL(url)
-  } catch {
-    throw createError({ statusCode: 400, statusMessage: "Invalid URL" })
+  // Validate: Instagram media IDs are numeric strings
+  if (!/^\d+$/.test(mediaId)) {
+    throw createError({ statusCode: 400, statusMessage: "Invalid media ID format" })
   }
 
-  const isAllowed = allowedHosts.some(host => parsedUrl.hostname.endsWith(host))
-  if (!isAllowed) {
-    throw createError({ statusCode: 403, statusMessage: "URL not allowed" })
+  const config = useRuntimeConfig()
+  const TOKEN = config.instagram.token
+
+  if (!TOKEN) {
+    throw createError({ statusCode: 500, statusMessage: "Missing Instagram token" })
   }
 
-  // Fetch the video from Instagram CDN server-side
-  const response = await fetch(url, {
+  // 1. Get a fresh media_url from the Graph API (signed for THIS server's IP)
+  const mediaData = await $fetch<{ media_url: string, id: string }>(
+    `https://graph.facebook.com/v25.0/${mediaId}`,
+    {
+      query: {
+        fields: "media_url",
+        access_token: TOKEN
+      }
+    }
+  ).catch((err) => {
+    throw createError({
+      statusCode: 502,
+      statusMessage: `Graph API error: ${err?.data?.error?.message || err.message || "Unknown"}`
+    })
+  })
+
+  if (!mediaData?.media_url) {
+    throw createError({ statusCode: 404, statusMessage: "No media_url returned for this ID" })
+  }
+
+  // 2. Immediately fetch the video from the CDN (same IP that just got the URL)
+  const response = await fetch(mediaData.media_url, {
     headers: {
       "User-Agent": "Mozilla/5.0 (compatible; NuxtProxy/1.0)"
     }
@@ -40,7 +56,7 @@ export default defineEventHandler(async (event) => {
     })
   }
 
-  // Forward content type and cache headers
+  // 3. Stream back to client
   const contentType = response.headers.get("content-type") || "video/mp4"
   const contentLength = response.headers.get("content-length")
 
@@ -50,6 +66,5 @@ export default defineEventHandler(async (event) => {
     ...(contentLength && { "Content-Length": contentLength })
   })
 
-  // Stream the response body
   return response.body
 })
