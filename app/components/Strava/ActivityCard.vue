@@ -9,7 +9,6 @@
       }
     }"
   >
-    <!-- Header -->
     <StravaHeader
       :activity-name="activity.name"
       :pr-count="activity.pr_count || 0"
@@ -17,7 +16,6 @@
       :start-date-local="activity.start_date_local"
     />
 
-    <!-- Main Content (Map or Heart Rate View) -->
     <div class="content-container">
       <ClientOnly>
         <StravaMap
@@ -32,7 +30,6 @@
       />
     </div>
 
-    <!-- Metrics Grid -->
     <StravaMetricsGrid
       :is-weight-training
       :average-heartrate="activity.average_heartrate || 0"
@@ -57,7 +54,7 @@ const isWeightTraining = computed(() => activity.type === "WeightTraining")
 <style lang="scss" scoped>
 .strava-card {
   display: block;
-  background-color: #ffffff;
+  background-color: var(--mg-btn-bg-inverted);
   border: 1px solid var(--mg-color-outline);
   border-radius: 4px;
   padding: 16px;
@@ -69,6 +66,7 @@ const isWeightTraining = computed(() => activity.type === "WeightTraining")
 
   @include start-from(tablet) {
     width: 320px;
+    margin-block: 4px;
   }
 
   &:hover {
