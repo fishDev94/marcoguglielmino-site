@@ -5,10 +5,31 @@
 <script setup lang="ts">
 import { computed, h, type VNodeChild } from "vue"
 import { BLOCKS, INLINES, MARKS, type Document, type Block, type Inline, type Text } from "@contentful/rich-text-types"
-import NuxtLinkLocale from "#components"
+import { NuxtLinkLocale, NuxtImg, StravaActivityWidget } from "#components"
+
+interface AssetBlock {
+  sys: { id: string }
+  url: string
+  title: string
+}
+
+interface EntryBlock {
+  __typename: string
+  sys: { id: string }
+  title: string
+  activityId: string
+}
 
 const props = defineProps<{
   customRichTextJson?: Document | null
+  links?: {
+    assets?: {
+      block?: AssetBlock[]
+    }
+    entries?: {
+      block?: EntryBlock[]
+    }
+  }
 }>()
 
 type RichTextNode = Block | Inline | Text
@@ -67,6 +88,52 @@ const renderNode = (node: RichTextNode, index: number): VNodeChild => {
       return h("ol", { class: "list-decimal pl-6 mb-4" }, renderNodes((node as Block).content))
     case BLOCKS.LIST_ITEM:
       return h("li", renderNodes((node as Block).content))
+    case BLOCKS.EMBEDDED_ASSET: {
+      const embeddedAssetNode = node
+      const targetId = embeddedAssetNode.data?.target?.sys?.id
+
+      // Cerca l'asset corrispondente dentro l'array dei links scaricati via GraphQL
+      const assetList = props.links?.assets?.block ?? []
+      const matchedAsset = assetList.find(asset => asset.sys.id === targetId)
+
+      if (!matchedAsset?.url) return null
+
+      // Formatta l'URL nel caso inizi con //
+      const formattedUrl = matchedAsset.url.startsWith("//")
+        ? `https:${matchedAsset.url}`
+        : matchedAsset.url
+
+      return h(
+        NuxtImg as Component,
+        {
+          key: index,
+          src: formattedUrl,
+          alt: matchedAsset.title || "",
+          class: "my-6 rounded-lg w-full object-cover" // Puoi aggiungere le tue classi CSS qui
+        }
+      )
+    }
+    case BLOCKS.EMBEDDED_ENTRY: {
+      const embeddedEntryNode = node
+      const targetId = embeddedEntryNode.data?.target?.sys?.id
+
+      // Cerchiamo la entry completa nei links passati dalle props
+      const entryList = props.links?.entries?.block ?? []
+      const matchedEntry = entryList.find(entry => entry.sys.id === targetId)
+
+      // LOG dei dati completi restituiti da GraphQL!
+      console.log("Nodo JSON (solo ID):", embeddedEntryNode)
+      console.log("Entry Completa da GraphQL:", matchedEntry)
+
+      if (!matchedEntry) return null
+
+      // Esempio se è StravaActivity:
+      if (matchedEntry.__typename === "StravaActivity") {
+        return h(StravaActivityWidget, { key: index, activityId: matchedEntry.activityId })
+      }
+
+      return null
+    }
     case BLOCKS.QUOTE:
       return h("blockquote", { class: "border-l-4 pl-4 italic mb-4" }, renderNodes((node as Block).content))
     case INLINES.HYPERLINK: {

@@ -1,0 +1,6 @@
+fragment PerformanceCardData on PerformanceCard {
+    title
+    label
+    value
+    comparisonText
+}
