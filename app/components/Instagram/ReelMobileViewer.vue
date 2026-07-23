@@ -109,7 +109,7 @@ const muteButtonConfig = computed(() => {
     iconName: "i-material-symbols-volume-up-rounded"
   }
 
-  return isMuted ? muted : unMuted
+  return isMuted.value ? muted : unMuted
 })
 
 let urlDebounceTimer: ReturnType<typeof setTimeout> | null = null
