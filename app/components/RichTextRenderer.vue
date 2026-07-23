@@ -4,21 +4,9 @@
 
 <script setup lang="ts">
 import { computed, h, type VNodeChild } from "vue"
-import { BLOCKS, INLINES, MARKS, type Document, type Block, type Inline, type Text } from "@contentful/rich-text-types"
+import { BLOCKS, INLINES, MARKS, type Document, type Block, type Text } from "@contentful/rich-text-types"
 import { NuxtLinkLocale, NuxtImg, StravaActivityWidget } from "#components"
-
-interface AssetBlock {
-  sys: { id: string }
-  url: string
-  title: string
-}
-
-interface EntryBlock {
-  __typename: string
-  sys: { id: string }
-  title: string
-  activityId: string
-}
+import type { AssetBlock, EntryBlock, RichTextNode, HyperlinkNode } from "@@/types/contentful"
 
 const props = defineProps<{
   customRichTextJson?: Document | null
@@ -29,17 +17,8 @@ const props = defineProps<{
     entries?: {
       block?: EntryBlock[]
     }
-  }
+  } | null
 }>()
-
-type RichTextNode = Block | Inline | Text
-
-type HyperlinkNode = Inline & {
-  data?: {
-    uri?: string
-  }
-  content?: RichTextNode[]
-}
 
 const renderTextNode = (node: Text): VNodeChild => {
   if (!node.marks?.length) {
@@ -75,30 +54,27 @@ const renderNode = (node: RichTextNode, index: number): VNodeChild => {
     case BLOCKS.DOCUMENT:
       return h("div", renderNodes((node as Document).content))
     case BLOCKS.PARAGRAPH:
-      return h("p", { class: "mg-body__text" }, renderNodes((node as Block).content))
+      return h("p", { class: "mg-richtext__text" }, renderNodes((node as Block).content))
     case BLOCKS.HEADING_1:
-      return h("h1", { class: "text-3xl font-semibold mb-4" }, renderNodes((node as Block).content))
+      return h("h1", { class: "mg-richtext__heading-1" }, renderNodes((node as Block).content))
     case BLOCKS.HEADING_2:
-      return h("h2", { class: "text-2xl font-semibold mb-4" }, renderNodes((node as Block).content))
+      return h("h2", { class: "mg-richtext__heading-2" }, renderNodes((node as Block).content))
     case BLOCKS.HEADING_3:
-      return h("h3", { class: "text-xl font-semibold mb-4" }, renderNodes((node as Block).content))
+      return h("h3", { class: "mg-richtext__heading-3" }, renderNodes((node as Block).content))
     case BLOCKS.UL_LIST:
-      return h("ul", { class: "list-disc pl-6 mb-4" }, renderNodes((node as Block).content))
+      return h("ul", { class: "mg-richtext__ul" }, renderNodes((node as Block).content))
     case BLOCKS.OL_LIST:
-      return h("ol", { class: "list-decimal pl-6 mb-4" }, renderNodes((node as Block).content))
+      return h("ol", { class: "mg-richtext__ol" }, renderNodes((node as Block).content))
     case BLOCKS.LIST_ITEM:
-      return h("li", renderNodes((node as Block).content))
+      return h("li", { class: "mg-richtext__li" }, renderNodes((node as Block).content))
     case BLOCKS.EMBEDDED_ASSET: {
       const embeddedAssetNode = node
       const targetId = embeddedAssetNode.data?.target?.sys?.id
-
-      // Cerca l'asset corrispondente dentro l'array dei links scaricati via GraphQL
       const assetList = props.links?.assets?.block ?? []
       const matchedAsset = assetList.find(asset => asset.sys.id === targetId)
 
       if (!matchedAsset?.url) return null
 
-      // Formatta l'URL nel caso inizi con //
       const formattedUrl = matchedAsset.url.startsWith("//")
         ? `https:${matchedAsset.url}`
         : matchedAsset.url
@@ -109,27 +85,20 @@ const renderNode = (node: RichTextNode, index: number): VNodeChild => {
           key: index,
           src: formattedUrl,
           alt: matchedAsset.title || "",
-          class: "my-6 rounded-lg w-full object-cover" // Puoi aggiungere le tue classi CSS qui
+          class: "mg-richtext__img my-6 rounded-lg w-full object-cover"
         }
       )
     }
     case BLOCKS.EMBEDDED_ENTRY: {
       const embeddedEntryNode = node
       const targetId = embeddedEntryNode.data?.target?.sys?.id
-
-      // Cerchiamo la entry completa nei links passati dalle props
       const entryList = props.links?.entries?.block ?? []
       const matchedEntry = entryList.find(entry => entry.sys.id === targetId)
 
-      // LOG dei dati completi restituiti da GraphQL!
-      console.log("Nodo JSON (solo ID):", embeddedEntryNode)
-      console.log("Entry Completa da GraphQL:", matchedEntry)
-
       if (!matchedEntry) return null
 
-      // Esempio se è StravaActivity:
       if (matchedEntry.__typename === "StravaActivity") {
-        return h(StravaActivityWidget, { key: index, activityId: matchedEntry.activityId })
+        return h(StravaActivityWidget, { key: index, activityId: matchedEntry.activityId, class: "mg-richtext__strava-card" })
       }
 
       return null
@@ -167,7 +136,7 @@ const renderedContent = computed(() => {
 </script>
 
 <style lang="scss" scoped>
-.mg-body {
+.mg-richtext {
   &__text {
     @include body(1);
 
@@ -185,6 +154,37 @@ const renderedContent = computed(() => {
     em {
       font-style: italic;
     }
+  }
+
+  &__heading-1 {
+    @include heading(1);
+  }
+
+  &__heading-2 {
+    @include heading(2);
+  }
+
+  &__heading-3 {
+    @include heading(3);
+
+    margin-bottom: 12px;
+  }
+
+  &__img {
+    margin-top: 8px;
+    margin-bottom: 32px;
+  }
+
+  &__strava-card {
+    margin-top: 8px;
+    margin-bottom: 32px;
+  }
+
+  &__ul {
+    display: block;
+    list-style: disc outside none;
+    margin-bottom: 24px;
+    padding: 0 0 0 28px;
   }
 }
 </style>

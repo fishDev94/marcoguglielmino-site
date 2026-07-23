@@ -27,5 +27,10 @@
     "unmute": "Unmute",
     "view_on_instagram": "View on Instagram",
     "close_reel": "Close Reel"
+  },
+  "article": {
+    "equipment": {
+      "title": "Equipment"
+    }
   }
 }

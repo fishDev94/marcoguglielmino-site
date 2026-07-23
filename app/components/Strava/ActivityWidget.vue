@@ -1,5 +1,8 @@
 <template>
-  <StravaActivityCard :activity="data" />
+  <StravaActivityCard
+    :activity
+    type="full"
+  />
 </template>
 
 <script lang="ts" setup>
@@ -11,5 +14,5 @@ const { activityId } = defineProps<Props>()
 
 const { getActivity } = useStravaActivities()
 
-const { data } = getActivity(activityId)
+const { data: activity } = getActivity(activityId)
 </script>

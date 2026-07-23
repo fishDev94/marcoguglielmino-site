@@ -16,6 +16,7 @@
     --ui-secondary: var(--mg-color-secondary);
     --ui-tertiary: var(--mg-color-tertiary);
     --ui-neutral: var(--mg-color-neutral);
+    --ui-info: var(--mg-color-accent);
 
     --ui-error: var(--mg-color-error);
 }

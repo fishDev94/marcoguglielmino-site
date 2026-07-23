@@ -1,12 +1,42 @@
 <template>
-  <section>
-    <h1>{{ blogPostData.title }}</h1>
-    <RichTextRenderer
-      v-if="bodyDescription"
-      :custom-rich-text-json="bodyDescription.json"
-      :links="bodyDescription.links"
-    />
-  </section>
+  <NuxtLayout name="article-layout">
+    <template #main>
+      <article class="mg-blog-post">
+        <header class="mg-blog-post__header">
+          <div class="mg-blog-post__info-container">
+            <UBadge
+              v-if="isRecord"
+              class="mg-blog-post__badge rounded-full uppercase"
+              color="info"
+            >
+              {{ blogPostData.typeOfRecord }}
+            </UBadge>
+            <div class="mg-blog-post__location">
+              <span>{{ formatDate(blogPostData.eventDate, useCurrentLang()) }} • {{ blogPostData.location }}</span>
+            </div>
+          </div>
+          <h1 class="mg-blog-post__title">
+            {{ blogPostData.title }}
+          </h1>
+        </header>
+        <RichTextRenderer
+          v-if="bodyDescription"
+          :custom-rich-text-json="bodyDescription.json"
+          :links="bodyDescription.links"
+          class="mg-blog-post__body-text"
+        />
+      </article>
+    </template>
+    <template #right-side>
+      <UIEquipmentItemList
+        v-if="equipmentCollection"
+        :items="equipmentCollection"
+      />
+      <UIArticlePerformance
+        :data="performance"
+      />
+    </template>
+  </NuxtLayout>
 </template>
 
 <script lang="ts" setup>
@@ -14,15 +44,68 @@ const route = useRoute()
 
 const { slug } = route.params
 
-console.log("blog slug", slug)
-
 const {
   blogPostData,
-  isLoading,
-  galleryData,
+  // isLoading,
+  // galleryData,
   bodyDescription,
   equipmentCollection,
-  performance,
-  error
+  performance
+  // error
 } = await useAsyncBlogPostData(String(slug))
+
+const isRecord = computed(() => blogPostData.value.typeOfRecord !== "none")
 </script>
+
+<style lang="scss" scoped>
+  .mg-blog-post {
+    &__header {
+      display: flex;
+      flex-direction: column;
+      gap: 12px;
+      margin-bottom: 12px;
+
+      @include start-from(medium-desktop) {
+        gap: 16px;
+        margin-bottom: 16px;
+      }
+    }
+
+    &__info-container {
+      display: flex;
+      flex-direction: column;
+      gap: 12px;
+
+      @include start-from(medium-desktop) {
+        flex-direction: row;
+        align-items: center;
+        gap: 8px;
+      }
+    }
+
+    &__location {
+      @include body(3);
+
+      color: var(--mg-color-on-surface-variant);
+      opacity: 0.8;
+    }
+
+    &__badge {
+      @include body(4);
+
+      width: max-content;
+      padding: 6px 12px;
+      color: var(--mg-color-on-surface-variant);
+    }
+
+    &__title {
+      @include heading(2);
+    }
+
+    &__body-text {
+      :deep(p) {
+        margin-bottom: 24px;
+      }
+    }
+  }
+</style>

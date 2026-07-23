@@ -1,3 +1,20 @@
+import type {
+  BlogPostDataFragment,
+  EquipmentItemDataFragment,
+  PerformanceCardDataFragment
+} from "#gql"
+import type { AssetBlock, EntryBlock } from "~~/types/contentful"
+
+type BodyDescriptionType = {
+  links?: {
+    assets?: {
+      block?: AssetBlock[]
+    }
+    entries?: {
+      block?: EntryBlock[]
+    }
+  } | null
+} & BlogPostDataFragment["bodyDescription"]
 export const useAsyncBlogPostData = async (slug: string) => {
   const { data, pending, error } = await useAsyncGql({
     operation: "blogPost",
@@ -44,9 +61,16 @@ export const useAsyncBlogPostData = async (slug: string) => {
     return data.value.blogPostCollection.items[0]
   })
   const galleryData = computed(() => blogPostData.value.gallery?.items || [])
-  const bodyDescription = computed(() => blogPostData.value.bodyDescription)
-  const equipmentCollection = computed(() => blogPostData.value.equipment?.items || [])
-  const performance = computed(() => blogPostData.value.performance as PerformanceEntry)
+  const bodyDescription = computed(
+    () =>
+      blogPostData.value.bodyDescription as BodyDescriptionType
+  )
+  const equipmentCollection = computed(
+    () => blogPostData.value.equipment?.items as EquipmentItemDataFragment[]
+  )
+  const performance = computed(
+    () => blogPostData.value.performance as PerformanceCardDataFragment
+  )
 
   return {
     blogPostData,

@@ -1,3 +1,6 @@
+import type { NuxtError } from "#app"
+import type { StravaActivity } from "~~/types/strava"
+
 const getActivities = (query?: { page?: number, per_page?: number }) => {
   const { data, pending, error } = useFetch("/api/activities/", {
     lazy: true,
@@ -29,7 +32,7 @@ const getActivities = (query?: { page?: number, per_page?: number }) => {
   return { data, pending, error }
 }
 
-const getActivity = (activityId: string) => {
+const getActivity = <T extends StravaActivity>(activityId: string) => {
   const { data, pending, error } = useFetch(`/api/activities/${activityId}`, {
     lazy: true,
     getCachedData(key, nuxtApp) {
@@ -43,8 +46,8 @@ const getActivity = (activityId: string) => {
       if (err) {
         showError(
           createError({
-            statusCode: err.statusCode || 500,
-            statusMessage: err.statusMessage || "Fetch error",
+            statusCode: err.status || 500,
+            statusMessage: err.statusText || "Fetch error",
             message: err.message
           })
         )
@@ -53,7 +56,11 @@ const getActivity = (activityId: string) => {
     { immediate: true }
   )
 
-  return { data, pending, error }
+  return { data, pending, error } as {
+    data: Ref<T>
+    pending: Ref<boolean>
+    error: Ref<NuxtError<unknown>>
+  }
 }
 
 export const useStravaActivities = () => {

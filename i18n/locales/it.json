@@ -27,5 +27,10 @@
     "unmute": "Attiva audio",
     "view_on_instagram": "Vedi su Instagram",
     "close_reel": "Chiudi Reel"
+  },
+  "article": {
+    "equipment": {
+      "title": "Attrezzatura"
+    }
   }
 }
