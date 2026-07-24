@@ -23,7 +23,7 @@
 </template>
 
 <script setup lang="ts">
-import type { LightboxImage } from "@/composables/useImageViewer"
+import type { LightboxImage } from "@@/types/image-viewer"
 
 defineProps<{
   images: LightboxImage[]

@@ -7,7 +7,7 @@
       {{ title }}
     </h2>
 
-    <ArticleGalleryMosaic
+    <UIGalleryMosaic
       :images="images"
       @select="openViewer"
     />
@@ -49,7 +49,7 @@
 
 <script lang="ts" setup>
 import { breakpointsTailwind, useBreakpoints } from "@vueuse/core"
-import type { LightboxImage } from "@/composables/useImageViewer"
+import type { LightboxImage } from "@@/types/image-viewer"
 
 interface Props {
   title?: string
