@@ -1,6 +1,11 @@
 <template>
   <StravaActivityCard
+    v-if="activity"
     :activity
+    type="full"
+  />
+  <StravaActivityCardSkeleton
+    v-else
     type="full"
   />
 </template>

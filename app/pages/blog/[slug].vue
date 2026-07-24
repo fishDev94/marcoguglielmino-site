@@ -47,6 +47,10 @@
 <script lang="ts" setup>
 const route = useRoute()
 
+definePageMeta({
+  name: "blog-post-page"
+})
+
 const { slug } = route.params
 
 const {
@@ -88,8 +92,8 @@ useSeoMeta({
 useHead({
   title: seoTitle,
   meta: (blogPostData.value.tags?.length
-      ? [{ name: "keywords", content: blogPostData.value.tags.join(", ") }]
-      : [])
+    ? [{ name: "keywords", content: blogPostData.value.tags.join(", ") }]
+    : [])
 })
 </script>
 
