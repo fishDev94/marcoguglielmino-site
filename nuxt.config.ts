@@ -153,10 +153,6 @@ export default defineNuxtConfig({
     ]
   },
   i18n: {
-    bundle: {
-      runtimeOnly: true,
-      dropMessageCompiler: true
-    },
     locales: [
       {
         code: "it",
