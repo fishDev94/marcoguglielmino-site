@@ -1,4 +1,3 @@
-<!-- components/EquipmentCard.vue -->
 <template>
   <div class="mg-equipment-list">
     <h4 class="mg-equipment-list__title uppercase">
@@ -33,18 +32,16 @@ const { items = [] } = defineProps<Props>()
 
 <style lang="scss" scoped>
 .mg-equipment-list {
-  background-color: #0F172A; // track-navy
+  background-color: var(--mg-color-secondary);
   color: #FFFFFF;
   padding: 1.5rem;
   border-radius: 0.75rem;
   box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -4px rgba(0, 0, 0, 0.1);
 
   &__title {
-    font-family: 'Inter', sans-serif;
-    font-size: 14px;
-    font-weight: 600;
-    letter-spacing: 0.05em;
-    color: #00E5FF; // velocity-cyan
+    @include body(3);
+
+    color: var(--mg-color-accent);
     margin-bottom: 1rem;
     display: flex;
     align-items: center;
@@ -58,7 +55,7 @@ const { items = [] } = defineProps<Props>()
   &__list {
     display: flex;
     flex-direction: column;
-    gap: 1rem; // Spaziatura se ci sono più item nella lista
+    gap: 1rem;
   }
 }
 </style>

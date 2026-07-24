@@ -1,4 +1,3 @@
-<!-- components/EquipmentItem.vue -->
 <template>
   <div class="mg-equipment-item">
     <div class="mg-equipment-item__image-wrapper">
@@ -51,8 +50,8 @@ const {
   gap: 1rem;
 
   &__image-wrapper {
-    width: 4rem; // w-16
-    height: 4rem; // h-16
+    width: 4rem;
+    height: 4rem;
     background-color: rgba(255, 255, 255, 0.1);
     border-radius: 0.5rem;
     display: flex;
@@ -80,15 +79,15 @@ const {
   }
 
   &__name {
-    font-family: 'Inter', sans-serif;
-    font-size: 14px;
-    font-weight: 600;
-    line-height: 1.25;
+    @include body(3);
+
     color: var(--mg-btn-text-primary);
   }
 
   &__description {
-    font-size: 12px;
+    @include body(4);
+
+    font-weight: 400;
     opacity: 0.7;
     margin-top: 0.25rem;
   }

@@ -50,25 +50,22 @@ $mobile-padding: 24px;
   &__main-section {
     display: flex;
     flex-direction: column;
-    gap: 1.5rem; /* Corrisponde a space-y-stack-md */
+    gap: 1.5rem;
 
     @media (min-width: 1024px) {
-      grid-column: span 8 / span 8; /* Prende 8 colonne su 12 */
+      grid-column: span 8 / span 8;
     }
   }
 
   &__aside {
     display: flex;
     flex-direction: column;
-    gap: 2rem; /* Corrisponde a space-y-8 */
+    gap: 2rem;
 
     @media (min-width: 1024px) {
-      grid-column: span 4 / span 4; /* Prende 4 colonne su 12 */
-
-      /* Opzionale ma consigliato per i blog post:
-         mantiene la sidebar visibile durante lo scroll del contenuto principale */
+      grid-column: span 4 / span 4;
       position: sticky;
-      top: 6rem; /* Distanza dall'alto per non sovrapporsi all'header fisso */
+      top: 6rem;
       height: fit-content;
     }
   }
