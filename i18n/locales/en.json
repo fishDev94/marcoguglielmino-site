@@ -31,6 +31,18 @@
   "article": {
     "equipment": {
       "title": "Equipment"
+    },
+    "gallery": {
+      "title": "Visual Story",
+      "image_viewer": {
+        "close": "Close image viewer",
+        "previous": "Previous image",
+        "next": "Next image"
+      }
+    },
+    "socials": {
+      "ask_ai": "Summarize with AI",
+      "share": "Share"
     }
   }
 }

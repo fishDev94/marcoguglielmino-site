@@ -31,6 +31,18 @@
   "article": {
     "equipment": {
       "title": "Attrezzatura"
+    },
+    "gallery": {
+      "title": "Racconto Visivo",
+      "image_viewer": {
+        "close": "Chiudi visualizzatore immagine",
+        "previous": "Immagine precedente",
+        "next": "Immagine successiva"
+      }
+    },
+    "socials": {
+      "ask_ai": "Riassumi con l'AI",
+      "share": "Condividi"
     }
   }
 }

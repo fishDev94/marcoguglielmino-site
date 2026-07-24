@@ -8,7 +8,8 @@ export default defineNuxtConfig({
     "@vercel/analytics",
     "nuxt-graphql-client",
     "@nuxt/image",
-    "nuxt-svgo-loader"
+    "nuxt-svgo-loader",
+    "@stefanobartoletti/nuxt-social-share"
   ],
 
   devtools: {
@@ -28,14 +29,7 @@ export default defineNuxtConfig({
         }
       ],
       link: [
-        { rel: "icon", type: "image/svg+xml", href: "/logo.svg" },
-        {
-          rel: "preload",
-          as: "image",
-          type: "image/webp",
-          href: "https://images.ctfassets.net/5ye49326jqzh/4RWc2Y4nmOdCEazj9fzUmz/c944ce5805fe112c5e66a142b10b45e8/screen.png?fm=webp&q=75&w=1200",
-          fetchpriority: "high"
-        }
+        { rel: "icon", type: "image/svg+xml", href: "/logo.svg" }
       ]
     }
   },
@@ -159,6 +153,10 @@ export default defineNuxtConfig({
     ]
   },
   i18n: {
+    bundle: {
+      runtimeOnly: true,
+      dropMessageCompiler: true
+    },
     locales: [
       {
         code: "it",
@@ -166,7 +164,8 @@ export default defineNuxtConfig({
         language: "it-IT",
         file: "it.json"
       },
-      { code: "en",
+      {
+        code: "en",
         name: "English",
         language: "en-GB",
         file: "en.json"
@@ -193,5 +192,9 @@ export default defineNuxtConfig({
       xxl: 1536,
       "2xl": 1536
     }
+  },
+  socialShare: {
+    baseUrl: "https://www.marcoguglielmino.com",
+    styled: true
   }
 })

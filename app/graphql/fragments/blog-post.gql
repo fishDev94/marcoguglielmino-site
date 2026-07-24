@@ -1,5 +1,16 @@
 fragment BlogPostData on BlogPost {
   title
+  slug
+  seoTitle
+  seoDescription
+  tags
+  coverImage {
+    url
+    title
+    description
+    width
+    height
+  }
   eventDate
   location
   typeOfRecord
@@ -33,6 +44,7 @@ fragment BlogPostData on BlogPost {
   }
   gallery: galleryCollection {
     items {
+      title
       url
     }
   }

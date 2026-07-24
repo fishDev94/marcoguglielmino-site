@@ -25,6 +25,10 @@
           :links="bodyDescription.links"
           class="mg-blog-post__body-text"
         />
+        <UIGallery
+          :images="galleryData"
+          :title="$t('article.gallery.title')"
+        />
       </article>
     </template>
     <template #right-side>
@@ -35,6 +39,7 @@
       <UIArticlePerformance
         :data="performance"
       />
+      <ArticleSocialShare />
     </template>
   </NuxtLayout>
 </template>
@@ -47,7 +52,7 @@ const { slug } = route.params
 const {
   blogPostData,
   // isLoading,
-  // galleryData,
+  galleryData,
   bodyDescription,
   equipmentCollection,
   performance
@@ -55,6 +60,37 @@ const {
 } = await useAsyncBlogPostData(String(slug))
 
 const isRecord = computed(() => blogPostData.value.typeOfRecord !== "none")
+
+const seoTitle = computed(() => blogPostData.value.seoTitle || blogPostData.value.title || "")
+const seoDescription = computed(() => blogPostData.value.seoDescription || "")
+const coverImageUrl = computed(() => blogPostData.value.coverImage?.url || "")
+const coverImageAlt = computed(() => blogPostData.value.coverImage?.description || blogPostData.value.coverImage?.title || seoTitle.value)
+const coverImageWidth = computed(() => blogPostData.value.coverImage?.width || 1200)
+const coverImageHeight = computed(() => blogPostData.value.coverImage?.height || 630)
+
+useSeoMeta({
+  title: seoTitle,
+  description: seoDescription,
+  ogTitle: seoTitle,
+  ogDescription: seoDescription,
+  ogImage: coverImageUrl,
+  ogImageAlt: coverImageAlt,
+  ogImageWidth: coverImageWidth,
+  ogImageHeight: coverImageHeight,
+  ogType: "article",
+  twitterCard: "summary_large_image",
+  twitterTitle: seoTitle,
+  twitterDescription: seoDescription,
+  twitterImage: coverImageUrl,
+  twitterImageAlt: coverImageAlt
+})
+
+useHead({
+  title: seoTitle,
+  meta: (blogPostData.value.tags?.length
+      ? [{ name: "keywords", content: blogPostData.value.tags.join(", ") }]
+      : [])
+})
 </script>
 
 <style lang="scss" scoped>
@@ -103,6 +139,8 @@ const isRecord = computed(() => blogPostData.value.typeOfRecord !== "none")
     }
 
     &__body-text {
+      margin-bottom: 24px;
+
       :deep(p) {
         margin-bottom: 24px;
       }

@@ -42,8 +42,6 @@ const {
   shortDescription = "",
   imgSrc = ""
 } = defineProps<Props>()
-
-console.log(imgSrc)
 </script>
 
 <style lang="scss" scoped>
@@ -86,7 +84,7 @@ console.log(imgSrc)
     font-size: 14px;
     font-weight: 600;
     line-height: 1.25;
-    color: #FFFFFF;
+    color: var(--mg-btn-text-primary);
   }
 
   &__description {

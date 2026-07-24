@@ -4,6 +4,7 @@ import type {
   PerformanceCardDataFragment
 } from "#gql"
 import type { AssetBlock, EntryBlock } from "~~/types/contentful"
+import type { LightboxImage } from "@@/types/image-viewer"
 
 type BodyDescriptionType = {
   links?: {
@@ -15,6 +16,7 @@ type BodyDescriptionType = {
     }
   } | null
 } & BlogPostDataFragment["bodyDescription"]
+
 export const useAsyncBlogPostData = async (slug: string) => {
   const { data, pending, error } = await useAsyncGql({
     operation: "blogPost",
@@ -60,7 +62,17 @@ export const useAsyncBlogPostData = async (slug: string) => {
 
     return data.value.blogPostCollection.items[0]
   })
-  const galleryData = computed(() => blogPostData.value.gallery?.items || [])
+  const galleryData = computed<LightboxImage[]>(() => {
+    const items = blogPostData.value.gallery?.items || []
+
+    return items.map((item) => {
+      return {
+        id: item?.title || "",
+        title: item?.title || "",
+        url: item?.url || ""
+      }
+    })
+  })
   const bodyDescription = computed(
     () =>
       blogPostData.value.bodyDescription as BodyDescriptionType

@@ -23,6 +23,7 @@
     "@nuxt/ui": "4.9.0",
     "@nuxtjs/i18n": "10.4.0",
     "@nuxtjs/mdc": "0.22.1",
+    "@stefanobartoletti/nuxt-social-share": "^3.1.0",
     "@upstash/redis": "1.38.0",
     "@vercel/analytics": "2.0.1",
     "@vueuse/core": "14.3.0",
