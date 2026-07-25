@@ -1,10 +1,24 @@
 // https://nuxt.com/docs/api/configuration/nuxt-config
+
+const getBaseUrl = () => {
+  if (process.env.VERCEL_ENV === "production") {
+    return "https://www.marcoguglielmino.com"
+  }
+  if (process.env.VERCEL_URL) {
+    return `https://${process.env.VERCEL_URL}`
+  }
+  return "http://localhost:3000"
+}
+
+const baseUrl = getBaseUrl()
+
 export default defineNuxtConfig({
   modules: [
     "@nuxt/eslint",
     "@nuxt/ui",
     "@nuxtjs/i18n",
     "@nuxtjs/mdc",
+    "@nuxtjs/sitemap",
     "@vercel/analytics",
     "nuxt-graphql-client",
     "@nuxt/image",
@@ -34,6 +48,9 @@ export default defineNuxtConfig({
     }
   },
   css: ["~/assets/css/main.css"],
+  site: {
+    url: baseUrl
+  },
   ui: {
     colorMode: false
   },
@@ -168,7 +185,8 @@ export default defineNuxtConfig({
       }
     ],
     defaultLocale: "it",
-    trailingSlash: true
+    trailingSlash: true,
+    baseUrl
   },
   image: {
     providers: {
@@ -190,7 +208,7 @@ export default defineNuxtConfig({
     }
   },
   socialShare: {
-    baseUrl: "https://www.marcoguglielmino.com",
+    baseUrl,
     styled: true
   }
 })
