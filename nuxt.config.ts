@@ -18,12 +18,12 @@ export default defineNuxtConfig({
     "@nuxt/ui",
     "@nuxtjs/i18n",
     "@nuxtjs/mdc",
-    "@nuxtjs/sitemap",
     "@vercel/analytics",
     "nuxt-graphql-client",
     "@nuxt/image",
     "nuxt-svgo-loader",
-    "@stefanobartoletti/nuxt-social-share"
+    "@stefanobartoletti/nuxt-social-share",
+    "@nuxtjs/sitemap"
   ],
 
   devtools: {
@@ -77,7 +77,16 @@ export default defineNuxtConfig({
   compatibilityDate: "2026-06-30",
 
   nitro: {
+    compatibilityDate: {
+      vercel: "2025-07-14"
+    },
     routeRules: {
+      "/__sitemap__/**": {
+        isr: 3600
+      },
+      "/sitemap.xml": {
+        isr: 3600
+      },
       "/**": {
         headers: {
           "Content-Security-Policy": [
