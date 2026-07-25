@@ -3,6 +3,10 @@
     <template #main>
       <article class="mg-blog-post">
         <header class="mg-blog-post__header">
+          <UBreadcrumb
+            :items="breadcrumbItems"
+            :ui="{ link: 'text-xs md:text-sm' }"
+          />
           <div class="mg-blog-post__info-container">
             <UBadge
               v-if="isRecord"
@@ -14,6 +18,12 @@
             <div class="mg-blog-post__location">
               <span>{{ formatDate(blogPostData.eventDate, useCurrentLang()) }} • {{ blogPostData.location }}</span>
             </div>
+            <span
+              v-if="blogPostData.publishedData"
+              class="mg-blog-post__published"
+            >
+              {{ $t('article.published_on', { date: formatDate(blogPostData.publishedData, useCurrentLang()) }) }}
+            </span>
           </div>
           <h1 class="mg-blog-post__title">
             {{ blogPostData.title }}
@@ -28,6 +38,11 @@
         <UIGallery
           :images="galleryData"
           :title="$t('article.gallery.title')"
+        />
+        <USeparator />
+        <ArticlePaginator
+          :prev="navigation.prev"
+          :next="navigation.next"
         />
       </article>
     </template>
@@ -45,7 +60,24 @@
 </template>
 
 <script lang="ts" setup>
+import type { BreadcrumbItem } from "@nuxt/ui"
+
 const route = useRoute()
+
+const breadcrumbItems: BreadcrumbItem[] = [
+  {
+    label: "Home",
+    to: "/"
+  },
+  {
+    label: "Blog",
+    to: "/blog"
+  },
+  {
+    label: route.params.slug as string,
+    to: route.path
+  }
+]
 
 definePageMeta({
   name: "blog-post-page"
@@ -55,16 +87,14 @@ const { slug } = route.params
 
 const {
   blogPostData,
-  // isLoading,
   galleryData,
   bodyDescription,
   equipmentCollection,
-  performance
-  // error
+  performance,
+  navigation
 } = await useAsyncBlogPostData(String(slug))
 
 const isRecord = computed(() => blogPostData.value.typeOfRecord !== "none")
-
 const seoTitle = computed(() => blogPostData.value.seoTitle || blogPostData.value.title || "")
 const seoDescription = computed(() => blogPostData.value.seoDescription || "")
 const coverImageUrl = computed(() => blogPostData.value.coverImage?.url || "")
@@ -82,6 +112,7 @@ useSeoMeta({
   ogImageWidth: coverImageWidth,
   ogImageHeight: coverImageHeight,
   ogType: "article",
+  articlePublishedTime: blogPostData.value.publishedData || undefined,
   twitterCard: "summary_large_image",
   twitterTitle: seoTitle,
   twitterDescription: seoDescription,
@@ -128,6 +159,13 @@ useHead({
 
       color: var(--mg-color-on-surface-variant);
       opacity: 0.8;
+    }
+
+    &__published {
+      @include body(4);
+
+      color: var(--mg-color-neutral);
+      opacity: 0.7;
     }
 
     &__badge {

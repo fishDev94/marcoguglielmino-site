@@ -72,7 +72,7 @@ const { openViewer } = useImageViewer(imagesRef)
 
 <style lang="scss" scoped>
 .mg-gallery-section {
-  margin-bottom: 3rem;
+  margin-bottom: 1.5rem;
 
   &__title {
     @include heading(3);

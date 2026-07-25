@@ -4,6 +4,7 @@ fragment BlogPostData on BlogPost {
   seoTitle
   seoDescription
   tags
+  publishedData
   coverImage {
     url
     title

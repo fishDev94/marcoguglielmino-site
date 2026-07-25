@@ -43,6 +43,12 @@
     "socials": {
       "ask_ai": "Summarize with AI",
       "share": "Share"
-    }
+    },
+    "paginator": {
+      "aria_label": "Article navigation",
+      "previous": "Previous",
+      "next": "Next"
+    },
+    "published_on": "Published on {date}"
   }
 }

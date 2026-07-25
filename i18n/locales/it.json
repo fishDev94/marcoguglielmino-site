@@ -43,6 +43,12 @@
     "socials": {
       "ask_ai": "Riassumi con l'AI",
       "share": "Condividi"
-    }
+    },
+    "paginator": {
+      "aria_label": "Navigazione articoli",
+      "previous": "Precedente",
+      "next": "Successivo"
+    },
+    "published_on": "Pubblicato il {date}"
   }
 }
