@@ -1,7 +1,10 @@
 <template>
   <NuxtLinkLocale
-    class="strava-card"
-    :class="{ 'is-gym': isWeightTraining }"
+    :class="[
+      'strava-card',
+      { 'strava-card--full': isFullCard },
+      { 'is-gym': isWeightTraining }
+    ]"
     :to="{
       name: 'activity-page',
       params: {
@@ -44,11 +47,13 @@
 <script setup lang="ts">
 import type { StravaActivityBase } from "@@/types/strava"
 
-const { activity } = defineProps<{
+const { activity, type = "default" } = defineProps<{
   activity: StravaActivityBase
+  type?: "default" | "full"
 }>()
 
 const isWeightTraining = computed(() => activity.type === "WeightTraining")
+const isFullCard = computed(() => type === "full")
 </script>
 
 <style lang="scss" scoped>
@@ -63,6 +68,10 @@ const isWeightTraining = computed(() => activity.type === "WeightTraining")
   width: 100%;
   cursor: pointer;
   transition: transform 0.2s ease;
+
+  &--full {
+    width: 100% !important;
+  }
 
   @include start-from(tablet) {
     width: 320px;

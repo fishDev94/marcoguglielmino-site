@@ -27,5 +27,28 @@
     "unmute": "Unmute",
     "view_on_instagram": "View on Instagram",
     "close_reel": "Close Reel"
+  },
+  "article": {
+    "equipment": {
+      "title": "Equipment"
+    },
+    "gallery": {
+      "title": "Visual Story",
+      "image_viewer": {
+        "close": "Close image viewer",
+        "previous": "Previous image",
+        "next": "Next image"
+      }
+    },
+    "socials": {
+      "ask_ai": "Summarize with AI",
+      "share": "Share"
+    },
+    "paginator": {
+      "aria_label": "Article navigation",
+      "previous": "Previous",
+      "next": "Next"
+    },
+    "published_on": "Published on {date}"
   }
 }

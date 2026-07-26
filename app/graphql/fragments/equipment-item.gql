@@ -1,0 +1,7 @@
+fragment EquipmentItemData on EquipmentItem {
+    image {
+        url
+    }
+    name
+    shortDescription
+}

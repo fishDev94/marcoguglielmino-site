@@ -1,4 +1,17 @@
 // https://nuxt.com/docs/api/configuration/nuxt-config
+
+const getBaseUrl = () => {
+  if (process.env.VERCEL_ENV === "production") {
+    return "https://www.marcoguglielmino.com"
+  }
+  if (process.env.VERCEL_URL) {
+    return `https://${process.env.VERCEL_URL}`
+  }
+  return "http://localhost:3000"
+}
+
+const baseUrl = getBaseUrl()
+
 export default defineNuxtConfig({
   modules: [
     "@nuxt/eslint",
@@ -8,7 +21,9 @@ export default defineNuxtConfig({
     "@vercel/analytics",
     "nuxt-graphql-client",
     "@nuxt/image",
-    "nuxt-svgo-loader"
+    "nuxt-svgo-loader",
+    "@stefanobartoletti/nuxt-social-share",
+    "@nuxtjs/sitemap"
   ],
 
   devtools: {
@@ -28,18 +43,14 @@ export default defineNuxtConfig({
         }
       ],
       link: [
-        { rel: "icon", type: "image/svg+xml", href: "/logo.svg" },
-        {
-          rel: "preload",
-          as: "image",
-          type: "image/webp",
-          href: "https://images.ctfassets.net/5ye49326jqzh/4RWc2Y4nmOdCEazj9fzUmz/c944ce5805fe112c5e66a142b10b45e8/screen.png?fm=webp&q=75&w=1200",
-          fetchpriority: "high"
-        }
+        { rel: "icon", type: "image/svg+xml", href: "/logo.svg" }
       ]
     }
   },
   css: ["~/assets/css/main.css"],
+  site: {
+    url: baseUrl
+  },
   ui: {
     colorMode: false
   },
@@ -66,7 +77,16 @@ export default defineNuxtConfig({
   compatibilityDate: "2026-06-30",
 
   nitro: {
+    compatibilityDate: {
+      vercel: "2025-07-14"
+    },
     routeRules: {
+      "/__sitemap__/**": {
+        isr: 3600
+      },
+      "/sitemap.xml": {
+        isr: 3600
+      },
       "/**": {
         headers: {
           "Content-Security-Policy": [
@@ -166,14 +186,16 @@ export default defineNuxtConfig({
         language: "it-IT",
         file: "it.json"
       },
-      { code: "en",
+      {
+        code: "en",
         name: "English",
         language: "en-GB",
         file: "en.json"
       }
     ],
     defaultLocale: "it",
-    trailingSlash: true
+    trailingSlash: true,
+    baseUrl
   },
   image: {
     providers: {
@@ -193,5 +215,9 @@ export default defineNuxtConfig({
       xxl: 1536,
       "2xl": 1536
     }
+  },
+  socialShare: {
+    baseUrl,
+    styled: true
   }
 })

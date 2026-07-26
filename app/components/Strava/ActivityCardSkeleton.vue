@@ -1,6 +1,9 @@
 <template>
   <UCard
-    class="mg-activity-card-skeleton"
+    :class="[
+      'mg-activity-card-skeleton',
+      { 'mg-activity-card-skeleton--full': type === 'full' }
+    ]"
     variant="solid"
   >
     <template #header>
@@ -22,6 +25,14 @@
   </UCard>
 </template>
 
+<script lang="ts" setup>
+interface Props {
+  type?: "default" | "full"
+}
+
+const { type = "default" } = defineProps<Props>()
+</script>
+
 <style lang="scss" scoped>
 .mg-activity-card-skeleton {
     background-color: #ffffff;
@@ -32,8 +43,12 @@
     box-shadow: 0 2px 8px rgba(0, 0, 0, 0.04);
     width: 100%;
 
+    &--full {
+      width: 100% !important;
+    }
+
     @include start-from(tablet) {
-    width: 320px;
-  }
+      width: 320px;
+    }
 }
 </style>

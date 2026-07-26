@@ -7,6 +7,14 @@
     <NuxtImg
       class="mg-reel-card__thumbnail"
       :src="reel.thumbnail_url"
+      loading="lazy"
+      format="webp"
+      quality="75"
+      width="320"
+      height="500"
+      sizes="xs:320px sm:280px"
+      densities="x1 x2"
+      :placeholder="`data:image/svg+xml;base64,${toBase64(shimmer(320, 500))}`"
     />
     <div class="mg-reel-card__description">
       <UIcon
@@ -61,12 +69,8 @@ defineProps<Props>()
     right: 0;
     bottom: 0;
     left: 0;
-
-    /* bg-contain bg-center */
     object-fit: contain;
     object-position: center;
-
-    /* transition-transform duration-500 */
     transition-property: transform;
     transition-duration: 500ms;
     transition-timing-function: cubic-bezier(0.4, 0, 0.2, 1);
@@ -104,14 +108,11 @@ defineProps<Props>()
 }
 
 .overlay-gradient {
-  /* absolute inset-0 */
   position: absolute;
   top: 0;
   height: 100%;
   width: 100%;
   z-index: 1;
-
-  /* bg-gradient-to-t from-black/80 via-transparent to-transparent */
   background-image: linear-gradient(
     to top,
     color-mix(in srgb, var(--mg-color-secondary) 80%, transparent) 0%,

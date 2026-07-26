@@ -1,0 +1,7 @@
+query blogPost($slug: String!, $locale: String) {
+    blogPostCollection(limit: 1, where: { slug: $slug }, locale: $locale) {
+        items {
+            ...BlogPostData
+        }
+    }
+}

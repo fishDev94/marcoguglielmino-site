@@ -27,5 +27,28 @@
     "unmute": "Attiva audio",
     "view_on_instagram": "Vedi su Instagram",
     "close_reel": "Chiudi Reel"
+  },
+  "article": {
+    "equipment": {
+      "title": "Attrezzatura"
+    },
+    "gallery": {
+      "title": "Racconto Visivo",
+      "image_viewer": {
+        "close": "Chiudi visualizzatore immagine",
+        "previous": "Immagine precedente",
+        "next": "Immagine successiva"
+      }
+    },
+    "socials": {
+      "ask_ai": "Riassumi con l'AI",
+      "share": "Condividi"
+    },
+    "paginator": {
+      "aria_label": "Navigazione articoli",
+      "previous": "Precedente",
+      "next": "Successivo"
+    },
+    "published_on": "Pubblicato il {date}"
   }
 }
