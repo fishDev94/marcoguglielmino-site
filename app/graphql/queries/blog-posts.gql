@@ -1,14 +1,16 @@
 query blogPosts(
   $locale: String
   $searchValue: String = ""
-  $filters: [String] = []
+  $filters: [String]
   $limit: Int = 100
+  $skip: Int = 0
 ) {
   blogPostCollection(
     locale: $locale
-    where: { title_contains: $searchValue, tags_contains_all: $filters }
+    where: { title_contains: $searchValue, tags_contains_some: $filters }
     order: [publishedData_DESC]
     limit: $limit
+    skip: $skip
   ) {
     items {
       ...BlogCard

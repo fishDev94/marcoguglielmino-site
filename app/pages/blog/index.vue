@@ -29,4 +29,12 @@ const breadcrumbItems: BreadcrumbItem[] = [
     to: "/blog"
   }
 ]
+
+const { articles, isLoading } = useArticlesData()
+
+watch(isLoading, (val) => {
+  if (!val) {
+    console.log(articles.value)
+  }
+}, { immediate: true })
 </script>
