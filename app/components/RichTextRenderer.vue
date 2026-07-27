@@ -87,6 +87,7 @@ const renderNode = (node: RichTextNode, index: number): VNodeChild => {
           alt: matchedAsset.title || "",
           width: matchedAsset.width,
           height: matchedAsset.height,
+          preload: { fetchPriority: "high" },
           class: "mg-richtext__img my-6 rounded-lg w-full object-cover"
         }
       )
