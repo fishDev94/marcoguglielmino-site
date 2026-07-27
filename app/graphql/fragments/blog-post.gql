@@ -3,7 +3,6 @@ fragment BlogPostData on BlogPost {
   slug
   seoTitle
   seoDescription
-  tags
   publishedData
   coverImage {
     url
@@ -56,5 +55,10 @@ fragment BlogPostData on BlogPost {
   }
   performance {
     ...PerformanceCardData
+  }
+  tags: tagsCollection {
+    items {
+    ...TagData
+    }
   }
 }

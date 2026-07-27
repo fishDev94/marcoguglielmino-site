@@ -8,7 +8,7 @@ import type { BodyDescriptionType } from "~~/types/contentful"
 
 export const useAsyncArticleData = async (slug: string) => {
   const lang = useCurrentLang()
-  const { articles } = useArticlesData()
+  const { articles } = useArticlesData({ ignoreQueryParams: true })
 
   const { data, pending, error } = await useAsyncGql({
     operation: "blogPost",
@@ -119,10 +119,16 @@ export const useAsyncArticleData = async (slug: string) => {
     const coverImageHeight = computed(
       () => article.value.coverImage?.height || 630
     )
-    const meta = computed(() =>
-      article.value.tags?.length
-        ? [{ name: "keywords", content: article.value.tags.join(", ") }]
+    const meta = computed(() => {
+      const tagValues = article.value?.tags?.items
+        ?.map(tag => tag?.tagValue)
+        ?.filter(Boolean)
+        .join(", ")
+
+      return tagValues
+        ? [{ name: "keywords", content: tagValues }]
         : []
+    }
     )
 
     return {

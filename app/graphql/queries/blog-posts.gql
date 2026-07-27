@@ -7,7 +7,7 @@ query blogPosts(
 ) {
   blogPostCollection(
     locale: $locale
-    where: { title_contains: $searchValue, tags_contains_some: $filters }
+    where: { title_contains: $searchValue, tags: { tagValue_in: $filters } }
     order: [publishedData_DESC]
     limit: $limit
     skip: $skip

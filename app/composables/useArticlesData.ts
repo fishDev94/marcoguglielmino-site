@@ -1,15 +1,30 @@
-export const useArticlesData = () => {
+import type { TagDataFragment } from "#gql"
+
+interface UseArticlesDataOptions {
+  ignoreQueryParams?: boolean
+  search?: string
+  filters?: string[]
+}
+
+export const useArticlesData = (options: UseArticlesDataOptions = {}) => {
+  const {
+    ignoreQueryParams = false,
+    search: customSearch,
+    filters: customFilters
+  } = options
+
   const lang = useCurrentLang()
   const route = useRoute()
   const router = useRouter()
 
-  const searchValue = ref("")
   const limit = ref(100)
   const skip = ref(0)
 
   const queryFilters = computed(() => {
-    const rawQuery = route.query.filters
+    if (customFilters?.length) return customFilters
+    if (ignoreQueryParams) return null
 
+    const rawQuery = route.query.filters
     if (!rawQuery) return null
 
     const filtersToArray = String(rawQuery)
@@ -20,20 +35,27 @@ export const useArticlesData = () => {
     return filtersToArray.length ? filtersToArray : null
   })
 
-  const { data, pending, error } = useAsyncGql({
-    operation: "blogPosts",
-    variables: {
-      locale: lang,
-      searchValue,
-      filters: queryFilters,
-      limit,
-      skip
+  const searchQuery = computed({
+    get() {
+      if (customSearch !== undefined) return customSearch
+      if (ignoreQueryParams) return ""
+      return route.query.search ? String(route.query.search) : ""
+    },
+    set(val) {
+      if (!ignoreQueryParams && customSearch === undefined) {
+        updateQuery("search", val)
+      }
     }
   })
 
-  const articles = computed(() => data.value?.blogPostCollection?.items)
+  const isFilterSelected = (filter: TagDataFragment["tagValue"]) => {
+    const filterLowCase = filter?.toLowerCase() || ""
+    return queryFilters.value?.includes(filterLowCase) ?? false
+  }
 
   const updateQuery = (key: "search" | "filters", value: string | undefined) => {
+    if (ignoreQueryParams) return
+
     const query = { ...route.query }
 
     if (value) {
@@ -50,8 +72,21 @@ export const useArticlesData = () => {
     router.push({ query })
   }
 
+  const { data, pending, error } = useAsyncGql({
+    operation: "blogPosts",
+    variables: {
+      locale: lang,
+      searchValue: searchQuery,
+      filters: queryFilters,
+      limit,
+      skip
+    }
+  })
+
+  const articles = computed(() => data.value?.blogPostCollection?.items)
+
   const setFilter = (filter: string) => {
-    if (!filter) return
+    if (ignoreQueryParams || customFilters !== undefined || !filter) return
 
     const filterLowCase = filter.toLowerCase()
 
@@ -75,6 +110,8 @@ export const useArticlesData = () => {
     articles,
     isLoading: pending,
     error,
-    setFilter
+    searchQuery,
+    setFilter,
+    isFilterSelected
   }
 }

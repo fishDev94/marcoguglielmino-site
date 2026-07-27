@@ -1,12 +1,16 @@
 fragment BlogCard on BlogPost {
-    __typename
+  __typename
+  title
+  slug
+  seoDescription
+  publishedData
+  coverImage {
+    url
     title
-    slug
-    seoDescription
-    coverImage {
-        url
-        title
+  }
+  tags: tagsCollection {
+    items {
+    ...TagData
     }
-    tags
-    publishedData
+  }
 }
