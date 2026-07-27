@@ -5,6 +5,9 @@ export interface AssetBlock {
   sys: { id: string }
   url: string
   title: string
+  description?: string
+  width?: number
+  height?: number
 }
 
 export interface EntryBlock {

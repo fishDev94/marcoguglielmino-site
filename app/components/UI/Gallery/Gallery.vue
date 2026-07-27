@@ -21,6 +21,7 @@
         >
           <NuxtImg
             :src="image.url || ''"
+            :alt="image.title || ''"
             loading="lazy"
             format="webp"
             quality="75"

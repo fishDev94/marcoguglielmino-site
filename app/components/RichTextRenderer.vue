@@ -85,6 +85,8 @@ const renderNode = (node: RichTextNode, index: number): VNodeChild => {
           key: index,
           src: formattedUrl,
           alt: matchedAsset.title || "",
+          width: matchedAsset.width,
+          height: matchedAsset.height,
           class: "mg-richtext__img my-6 rounded-lg w-full object-cover"
         }
       )
