@@ -3,7 +3,7 @@
     v-model="model"
     icon="i-lucide-search"
     size="md"
-    class="rounded-none"
+    class="mg-search-bar"
     variant="outline"
     placeholder="Search..."
     @keyup.enter="emit('onSearchSubmit')"
@@ -42,3 +42,11 @@ watch(model, (val) => {
   }
 })
 </script>
+
+<style lang="scss" scoped>
+  .mg-search-bar {
+    :deep(input) {
+      border-radius: 8px;
+    }
+  }
+</style>

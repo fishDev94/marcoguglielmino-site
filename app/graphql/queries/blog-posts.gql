@@ -12,6 +12,7 @@ query blogPosts(
     limit: $limit
     skip: $skip
   ) {
+    total
     items {
       ...BlogCard
     }

@@ -1,24 +1,39 @@
-import type { TagDataFragment } from "#gql"
+import type { BlogCardFragment, TagDataFragment } from "#gql"
 
 interface UseArticlesDataOptions {
   ignoreQueryParams?: boolean
   search?: string
   filters?: string[]
+  pageSize?: number
 }
 
 export const useArticlesData = (options: UseArticlesDataOptions = {}) => {
   const {
     ignoreQueryParams = false,
     search: customSearch,
-    filters: customFilters
+    filters: customFilters,
+    pageSize
   } = options
 
   const lang = useCurrentLang()
   const route = useRoute()
   const router = useRouter()
 
-  const limit = ref(100)
-  const skip = ref(0)
+  const currentPage = computed({
+    get() {
+      if (!pageSize || ignoreQueryParams) return 1
+      const page = Number(route.query.page)
+      return page > 0 ? page : 1
+    },
+    set(val) {
+      if (pageSize && !ignoreQueryParams) {
+        updateQuery("page", val > 1 ? String(val) : undefined)
+      }
+    }
+  })
+
+  const limit = computed(() => pageSize || 100)
+  const skip = computed(() => pageSize ? (currentPage.value - 1) * pageSize : 0)
 
   const queryFilters = computed(() => {
     if (customFilters?.length) return customFilters
@@ -53,7 +68,7 @@ export const useArticlesData = (options: UseArticlesDataOptions = {}) => {
     return queryFilters.value?.includes(filterLowCase) ?? false
   }
 
-  const updateQuery = (key: "search" | "filters", value: string | undefined) => {
+  const updateQuery = (key: "search" | "filters" | "page", value: string | undefined) => {
     if (ignoreQueryParams) return
 
     const query = { ...route.query }
@@ -65,7 +80,7 @@ export const useArticlesData = (options: UseArticlesDataOptions = {}) => {
       delete query[key]
     }
 
-    if (query.page) {
+    if (key !== "page" && query.page) {
       delete query.page
     }
 
@@ -83,7 +98,9 @@ export const useArticlesData = (options: UseArticlesDataOptions = {}) => {
     }
   })
 
-  const articles = computed(() => data.value?.blogPostCollection?.items)
+  const articles = computed(() => data.value?.blogPostCollection?.items as BlogCardFragment[] | undefined)
+  const total = computed(() => data.value?.blogPostCollection?.total || 0)
+  const totalPages = computed(() => pageSize ? Math.ceil(total.value / pageSize) : 1)
 
   const setFilter = (filter: string) => {
     if (ignoreQueryParams || customFilters !== undefined || !filter) return
@@ -111,6 +128,9 @@ export const useArticlesData = (options: UseArticlesDataOptions = {}) => {
     isLoading: pending,
     error,
     searchQuery,
+    currentPage,
+    totalPages,
+    total,
     setFilter,
     isFilterSelected
   }

@@ -194,6 +194,7 @@ export default defineNuxtConfig({
       }
     ],
     defaultLocale: "it",
+    detectBrowserLanguage: false,
     trailingSlash: true,
     baseUrl
   },

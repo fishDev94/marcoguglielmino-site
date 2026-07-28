@@ -54,7 +54,7 @@
         />
       </article>
     </template>
-    <template #right-side>
+    <template #side>
       <UIEquipmentItemList
         v-if="equipmentCollection"
         :items="equipmentCollection"
