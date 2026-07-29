@@ -84,6 +84,7 @@ const renderNode = (node: RichTextNode, index: number): VNodeChild => {
         {
           key: index,
           src: formattedUrl,
+          provide: "contentful",
           alt: matchedAsset.title || "",
           width: matchedAsset.width,
           height: matchedAsset.height,
