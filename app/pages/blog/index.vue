@@ -31,7 +31,7 @@
                   class="mg-articles__filter cursor-pointer"
                   :color="isTagActive(tag?.tagValue).color"
                   :variant="isTagActive(tag?.tagValue).variant"
-                  @click="setFilter(tag?.tagValue || '')"
+                  @click="toggleFilter(tag?.tagValue || '')"
                 >
                   {{ tag?.tagName }}
                 </UBadge>
@@ -60,6 +60,7 @@
 <script setup lang="ts">
 import type { TagDataFragment } from "#gql"
 import type { BreadcrumbItem } from "@nuxt/ui"
+import { PAGE_SIZE } from "@/constants"
 
 const breadcrumbItems: BreadcrumbItem[] = [
   {
@@ -73,13 +74,21 @@ const breadcrumbItems: BreadcrumbItem[] = [
 ]
 
 const {
-  articles,
   searchQuery,
-  setFilter,
+  activeFilters,
   isFilterSelected,
+  toggleFilter,
   currentPage,
-  total
-} = useArticlesData({ pageSize: 12 })
+  limit,
+  skip
+} = useUrlSearchEngine({ pageSize: PAGE_SIZE })
+
+const { articles, total } = useArticlesData({
+  searchQuery,
+  filters: computed(() => activeFilters.value.length ? activeFilters.value : null),
+  limit,
+  skip
+})
 
 const { tags } = useTagsData()
 const isTagActive = (
