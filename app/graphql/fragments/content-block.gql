@@ -7,10 +7,8 @@ fragment ContentBlockData on ContentBlock {
   carousel: carouselCollection(limit: 10) {
     items {
       __typename
-      ... on Entry {
-        ... on RecordCard {
-          ...RecordCardData
-        }
+      ... on PerformanceCard {
+        ...PerformanceCardData
       }
     }
   }
