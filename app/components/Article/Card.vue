@@ -64,11 +64,11 @@ const props = defineProps<{
   article: BlogCardFragment
 }>()
 
-const { locale } = useI18n()
+const lang = useCurrentLang()
 
 const formattedDate = computed(() => {
   if (!props.article.publishedData) return ""
-  return formatDate(props.article.publishedData, locale.value).toUpperCase()
+  return formatDate(props.article.publishedData, lang).toUpperCase()
 })
 
 const mainTag = computed(() => {

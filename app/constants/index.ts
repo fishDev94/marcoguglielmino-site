@@ -10,3 +10,14 @@ export const REEL_CARD_COUNT = 6
 
 // PAGINATION DATA
 export const PAGE_SIZE = 12
+
+// DATA FETCHING UTILS
+export enum DISCIPLINE {
+  "800M" = "800m",
+  "1000M" = "1000m",
+  "1500M" = "1500m",
+  "5000M" = "5000m",
+  "5kM" = "5k Road",
+  "10KM" = "10k Road",
+  "Half Marathon" = "Half Marathon"
+}

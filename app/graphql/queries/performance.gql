@@ -1,0 +1,7 @@
+query performanceCard($locale: String, $discipline: String) {
+    performanceCardCollection(limit: 100, locale: $locale, where: { discipline: $discipline }) {
+        items {
+            ...PerformanceCardData
+        }
+    }
+}
