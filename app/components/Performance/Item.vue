@@ -1,377 +1,192 @@
-<script setup lang="ts">
-import { formatDate } from "@/utils/contentful"
-import type { PerformanceCardDataFragment } from "#gql"
-
-const props = withDefaults(
-  defineProps<{
-    item: PerformanceCardDataFragment
-    variant?: "desktop" | "mobile"
-  }>(),
-  {
-    variant: "mobile"
-  }
-)
-
-const isPositiveTrend = computed(() => {
-  if (!props.item.comparisonText) return true
-  const text = props.item.comparisonText.trim().toLowerCase()
-  return text.startsWith("-") || text.includes("pb")
-})
-
-function parseMonthDay(dateString: string) {
-  const date = new Date(dateString)
-  if (isNaN(date.getTime())) return { month: "---", day: "--" }
-  const month = date.toLocaleString("en-US", { month: "short" }).toUpperCase()
-  const day = date.getDate().toString().padStart(2, "0")
-  return { month, day }
-}
-</script>
-
 <template>
-  <!-- 🖥️ DESKTOP VARIANT (Genera solo un <tr>) -->
   <tr
     v-if="variant === 'desktop'"
     class="mg-performance-item mg-performance-item--desktop"
   >
     <td class="mg-performance-item__cell mg-performance-item__cell--date">
-      {{ formatDate(item.date) }}
+      <PerformanceDateBadge :date="item.date" />
     </td>
     <td class="mg-performance-item__cell mg-performance-item__cell--event">
-      <span class="mg-performance-item__title">{{ item.title }}</span>
-      <span
-        v-if="item.location"
-        class="mg-performance-item__location"
-      >
-        • {{ item.location }}
-      </span>
+      <PerformanceEventInfo
+        :location="item.location || ''"
+        :title="item.title || ''"
+      />
     </td>
-    <td
-      class="mg-performance-item__cell mg-performance-item__cell--time"
-      :class="{ 'mg-performance-item__cell--pb': item.label === 'Personal Best' }"
-    >
-      {{ item.value }}
+    <td class="mg-performance-item__cell mg-performance-item__cell--time">
+      <PerformanceTime
+        :value="item.value || ''"
+        :label="item.label || ''"
+        :is-pb="item.label === 'Personal Best'"
+      />
     </td>
     <td class="mg-performance-item__cell mg-performance-item__cell--trend">
-      <span
-        v-if="item.comparisonText"
-        class="mg-performance-item__trend-badge"
-        :class="isPositiveTrend ? 'mg-performance-item__trend-badge--positive' : 'mg-performance-item__trend-badge--negative'"
-      >
-        <span class="material-symbols-outlined mg-performance-item__trend-icon">
-          {{ isPositiveTrend ? 'arrow_drop_up' : 'arrow_drop_down' }}
-        </span>
-        {{ item.comparisonText }}
-      </span>
-      <span
-        v-else
-        class="mg-performance-item__empty-trend"
-      >-</span>
+      <PerformanceTrend :trend-data="trendData" />
     </td>
     <td class="mg-performance-item__cell mg-performance-item__cell--action">
-      <NuxtLink
-        v-if="item.blogReference?.slug"
-        :to="`/blog/${item.blogReference.slug}`"
-        class="mg-performance-item__link"
-      >
-        Read Post
-      </NuxtLink>
-      <span
-        v-else
-        class="mg-performance-item__no-link"
-      >
-        No Report
-      </span>
+      <PerformanceReference :blog-reference="item.blogReference || ''" />
     </td>
   </tr>
 
-  <!-- 📱 MOBILE VARIANT (Genera solo un <div>) -->
   <div
     v-else-if="variant === 'mobile'"
     class="mg-performance-item mg-performance-item--mobile"
   >
     <div class="mg-performance-item__mobile-top">
       <div class="mg-performance-item__mobile-info">
-        <div class="mg-performance-item__date-badge">
-          <span class="mg-performance-item__date-month">{{ parseMonthDay(item.date).month }}</span>
-          <span class="mg-performance-item__date-day">{{ parseMonthDay(item.date).day }}</span>
-        </div>
-        <div class="mg-performance-item__event-details">
-          <span class="mg-performance-item__mobile-title">{{ item.title }}</span>
-          <span
-            v-if="item.location"
-            class="mg-performance-item__mobile-location"
-          >{{ item.location }}</span>
-        </div>
+        <PerformanceDateBadge :date="item.date" />
+        <PerformanceEventInfo
+          :location="item.location || ''"
+          :title="item.title || ''"
+        />
       </div>
 
-      <div class="mg-performance-item__mobile-time-wrapper">
-        <span
-          class="mg-performance-item__mobile-time"
-          :class="{ 'mg-performance-item__mobile-time--pb': item.label === 'Personal Best' }"
-        >
-          {{ item.value }}
-        </span>
-        <div
-          v-if="item.comparisonText"
-          class="mg-performance-item__mobile-trend"
-          :class="isPositiveTrend ? 'mg-performance-item__mobile-trend--positive' : 'mg-performance-item__mobile-trend--negative'"
-        >
-          <span class="material-symbols-outlined mg-performance-item__mobile-trend-icon">
-            {{ isPositiveTrend ? 'trending_down' : 'trending_up' }}
-          </span>
-          <span>{{ item.comparisonText }}</span>
-        </div>
+      <div class="mg-performance-item__mobile-meta">
+        <PerformanceTime
+          :value="item.value || ''"
+          :label="item.label || ''"
+          :is-pb="item.label === 'Personal Best'"
+        />
+        <PerformanceTrend :trend-data="trendData" />
       </div>
     </div>
 
+    <USeparator v-if="item.blogReference" />
+
     <div
-      v-if="item.typeOfRace || item.blogReference?.slug"
+      v-if="item.blogReference"
       class="mg-performance-item__mobile-footer"
     >
-      <span
-        v-if="item.typeOfRace"
-        class="mg-performance-item__race-type"
-      >
-        {{ item.typeOfRace }}
-      </span>
-      <span v-else />
-
-      <NuxtLink
-        v-if="item.blogReference?.slug"
-        :to="`/blog/${item.blogReference.slug}`"
-        class="mg-performance-item__mobile-link"
-      >
-        READ POST <span class="material-symbols-outlined mg-performance-item__link-icon">arrow_forward</span>
-      </NuxtLink>
+      <PerformanceReference :blog-reference="item.blogReference" />
     </div>
   </div>
 </template>
 
-<style scoped>
-/* --- DESKTOP VIEW --- */
-.mg-performance-item--desktop {
-  border-bottom: 1px solid rgba(var(--color-split-gray-rgb, 128, 128, 128), 0.05);
-  transition: background-color 0.2s ease;
+<script setup lang="ts">
+import { breakpointsTailwind, useBreakpoints } from "@vueuse/core"
+import type { PerformanceCardDataFragment } from "#gql"
+
+const props = withDefaults(
+  defineProps<{
+    item: PerformanceCardDataFragment
+    referenceValue?: string
+  }>(),
+  {
+    referenceValue: undefined
+  }
+)
+
+const breakpoints = useBreakpoints(breakpointsTailwind)
+
+const variant = computed(() =>
+  breakpoints.greaterOrEqual("md").value ? "desktop" : "mobile"
+)
+
+function parseTimeToSeconds(timeString: string): number {
+  const parts = timeString.trim().split(":")
+  if (parts.length === 2) {
+    const minutes = parseInt(parts[0] || "0")
+    const seconds = parseFloat(parts[1] || "0")
+    return minutes * 60 + seconds
+  } else if (parts.length === 3) {
+    const hours = parseInt(parts[0] || "0")
+    const minutes = parseInt(parts[1] || "0")
+    const seconds = parseFloat(parts[2] || "0")
+    return hours * 3600 + minutes * 60 + seconds
+  }
+  return 0
 }
 
-.mg-performance-item--desktop:hover {
-  background-color: rgba(var(--color-atletica-blue-rgb, 0, 122, 255), 0.05);
+function formatTimeDifference(diffSeconds: number): string {
+  const sign = diffSeconds < 0 ? "-" : "+"
+  const absDiff = Math.abs(diffSeconds)
+
+  if (absDiff >= 60) {
+    const minutes = Math.floor(absDiff / 60)
+    const seconds = absDiff % 60
+    const formatted = `${minutes}:${seconds.toFixed(2).padStart(5, "0")}`
+    return `${sign}${formatted}`
+  }
+
+  const formatted = absDiff.toFixed(2).replace(/\.?0+$/, "")
+  return `${sign}${formatted}s`
 }
 
-.mg-performance-item__cell {
-  padding: 1rem;
-}
+const trendData = computed(() => {
+  if (props.referenceValue?.trim() && props.item.value?.trim()) {
+    const currentSeconds = parseTimeToSeconds(props.item.value)
+    const refSeconds = parseTimeToSeconds(props.referenceValue)
 
-.mg-performance-item__cell--date {
-  font-weight: 700;
-}
+    if (currentSeconds > 0 && refSeconds > 0) {
+      const diff = currentSeconds - refSeconds
 
-.mg-performance-item__title {
-  font-weight: 500;
-  color: var(--color-track-navy, #0f172a);
-}
+      if (diff !== 0) {
+        return {
+          text: formatTimeDifference(diff),
+          isPositive: diff < 0
+        }
+      }
+    }
+  }
 
-.mg-performance-item__location {
-  color: rgba(var(--color-on-surface-variant-rgb, 100, 100, 100), 0.7);
-  font-size: 0.75rem;
-  margin-left: 0.25rem;
-}
+  return null
+})
+</script>
 
-.mg-performance-item__cell--time {
-  text-align: right;
-  font-family: var(--font-data-mono, monospace);
-  font-weight: 700;
-  color: var(--color-on-surface, #1e293b);
-}
+<style lang="scss" scoped>
+.mg-performance-item {
+  color: var(--mg-color-on-surface);
 
-.mg-performance-item__cell--pb {
-  color: var(--color-atletica-blue, #007aff);
-}
+  &--desktop {
+    border-bottom: 1px solid color-mix(in srgb, var(--mg-color-neutral) 10%, transparent);
+    transition: background-color 0.2s ease;
 
-.mg-performance-item__cell--trend {
-  text-align: center;
-}
+    &:hover {
+      background-color: color-mix(in srgb, var(--mg-color-primary) 8%, transparent);
+    }
+  }
 
-.mg-performance-item__trend-badge {
-  display: inline-flex;
-  align-items: center;
-  justify-content: center;
-  font-weight: 700;
-  font-size: 0.75rem;
-}
+  &--mobile {
+    background-color: var(--mg-color-surface-lowest, #ffffff);
+    border: 1px solid color-mix(in srgb, var(--mg-color-neutral) 15%, transparent);
+    border-radius: 0.75rem;
+    padding: 0.75rem;
+    display: flex;
+    flex-direction: column;
+    gap: 0.75rem;
+    box-shadow: 0 1px 2px 0 rgba(0, 0, 0, 0.04);
+  }
 
-.mg-performance-item__trend-badge--positive {
-  color: var(--color-velocity-cyan, #00e5ff);
-}
+  &__cell {
+    padding: 1rem;
+    vertical-align: middle;
+  }
 
-.mg-performance-item__trend-badge--negative {
-  color: var(--color-error, #ef4444);
-}
+  &__mobile-top {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 0.75rem;
+  }
 
-.mg-performance-item__trend-icon {
-  font-size: 16px;
-}
+  &__mobile-info {
+    display: flex;
+    align-items: center;
+    gap: 0.75rem;
+    min-width: 0;
+  }
 
-.mg-performance-item__empty-trend {
-  color: var(--color-split-gray, #94a3b8);
-  font-size: 0.75rem;
-}
+  &__mobile-meta {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-end;
+    gap: 0.35rem;
+    flex-shrink: 0;
+  }
 
-.mg-performance-item__cell--action {
-  text-align: right;
-}
-
-.mg-performance-item__link {
-  color: var(--color-atletica-blue, #007aff);
-  font-weight: 700;
-  font-size: 12px;
-  text-transform: uppercase;
-  text-decoration: none;
-}
-
-.mg-performance-item__link:hover {
-  text-decoration: underline;
-}
-
-.mg-performance-item__no-link {
-  color: rgba(var(--color-on-surface-variant-rgb, 100, 100, 100), 0.4);
-  font-weight: 700;
-  font-size: 12px;
-  text-transform: uppercase;
-  cursor: not-allowed;
-}
-
-/* --- MOBILE VIEW --- */
-.mg-performance-item--mobile {
-  background-color: #ffffff;
-  border: 1px solid rgba(var(--color-split-gray-rgb, 128, 128, 128), 0.2);
-  border-radius: 0.5rem;
-  padding: 0.75rem;
-  display: flex;
-  flex-direction: column;
-  gap: 0.5rem;
-  box-shadow: 0 1px 2px 0 rgba(0, 0, 0, 0.05);
-}
-
-.mg-performance-item__mobile-top {
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-}
-
-.mg-performance-item__mobile-info {
-  display: flex;
-  align-items: center;
-  gap: 0.75rem;
-}
-
-.mg-performance-item__date-badge {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-  width: 2.5rem;
-  height: 2.5rem;
-  background-color: var(--color-surface-container, #f1f5f9);
-  border-radius: 0.5rem;
-  color: var(--color-track-navy, #0f172a);
-  flex-shrink: 0;
-}
-
-.mg-performance-item__date-month {
-  font-weight: 700;
-  font-size: 10px;
-}
-
-.mg-performance-item__date-day {
-  font-family: var(--font-headline, sans-serif);
-  font-size: 0.875rem;
-  line-height: 1;
-}
-
-.mg-performance-item__event-details {
-  display: flex;
-  flex-direction: column;
-}
-
-.mg-performance-item__mobile-title {
-  font-weight: 700;
-  font-size: 0.875rem;
-  color: var(--color-track-navy, #0f172a);
-}
-
-.mg-performance-item__mobile-location {
-  font-size: 12px;
-  color: var(--color-split-gray, #94a3b8);
-}
-
-.mg-performance-item__mobile-time-wrapper {
-  text-align: right;
-  flex-shrink: 0;
-}
-
-.mg-performance-item__mobile-time {
-  display: block;
-  font-family: var(--font-data-mono, monospace);
-  font-weight: 700;
-  color: var(--color-track-navy, #0f172a);
-}
-
-.mg-performance-item__mobile-time--pb {
-  color: var(--color-atletica-blue, #007aff);
-}
-
-.mg-performance-item__mobile-trend {
-  display: flex;
-  align-items: center;
-  justify-content: flex-end;
-  gap: 0.125rem;
-  font-size: 10px;
-  font-weight: 700;
-}
-
-.mg-performance-item__mobile-trend--positive {
-  color: var(--color-velocity-cyan, #00e5ff);
-}
-
-.mg-performance-item__mobile-trend--negative {
-  color: var(--color-error, #ef4444);
-}
-
-.mg-performance-item__mobile-trend-icon {
-  font-size: 14px;
-}
-
-.mg-performance-item__mobile-footer {
-  padding-top: 0.5rem;
-  border-top: 1px solid rgba(var(--color-split-gray-rgb, 128, 128, 128), 0.1);
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  font-size: 10px;
-}
-
-.mg-performance-item__race-type {
-  color: var(--color-split-gray, #94a3b8);
-  font-weight: 700;
-  text-transform: uppercase;
-}
-
-.mg-performance-item__mobile-link {
-  color: var(--color-atletica-blue, #007aff);
-  font-weight: 700;
-  display: flex;
-  align-items: center;
-  gap: 0.25rem;
-  text-transform: uppercase;
-  text-decoration: none;
-}
-
-.mg-performance-item__mobile-link:hover {
-  text-decoration: underline;
-}
-
-.mg-performance-item__link-icon {
-  font-size: 14px;
+  &__mobile-footer {
+    display: flex;
+    justify-content: flex-end;
+    align-items: center;
+  }
 }
 </style>
