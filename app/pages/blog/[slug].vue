@@ -13,20 +13,28 @@
               class="mg-blog-post__badge rounded-full uppercase"
               color="info"
             >
-              {{ blogPostData.typeOfRecord }}
+              {{ article.typeOfRecord }}
             </UBadge>
             <div class="mg-blog-post__location">
-              <span>{{ formatDate(blogPostData.eventDate, useCurrentLang()) }} • {{ blogPostData.location }}</span>
+              <span>{{ formatDate(article.eventDate, useCurrentLang()) }} •
+                {{ article.location }}</span>
             </div>
             <span
-              v-if="blogPostData.publishedData"
+              v-if="article.publishedData"
               class="mg-blog-post__published"
             >
-              {{ $t('article.published_on', { date: formatDate(blogPostData.publishedData, useCurrentLang()) }) }}
+              {{
+                $t("article.published_on", {
+                  date: formatDate(
+                    article.publishedData,
+                    useCurrentLang()
+                  )
+                })
+              }}
             </span>
           </div>
           <h1 class="mg-blog-post__title">
-            {{ blogPostData.title }}
+            {{ article.title }}
           </h1>
         </header>
         <RichTextRenderer
@@ -46,14 +54,12 @@
         />
       </article>
     </template>
-    <template #right-side>
+    <template #side>
       <UIEquipmentItemList
         v-if="equipmentCollection"
         :items="equipmentCollection"
       />
-      <UIArticlePerformance
-        :data="performance"
-      />
+      <UIArticlePerformance :data="performance" />
       <ArticleSocialShare />
     </template>
   </NuxtLayout>
@@ -86,106 +92,109 @@ definePageMeta({
 const { slug } = route.params
 
 const {
-  blogPostData,
+  article,
   galleryData,
   bodyDescription,
   equipmentCollection,
   performance,
-  navigation
-} = await useAsyncBlogPostData(String(slug))
+  navigation,
+  seoUtilities
+} = await useAsyncArticleData(String(slug))
 
-const isRecord = computed(() => blogPostData.value.typeOfRecord !== "none")
-const seoTitle = computed(() => blogPostData.value.seoTitle || blogPostData.value.title || "")
-const seoDescription = computed(() => blogPostData.value.seoDescription || "")
-const coverImageUrl = computed(() => blogPostData.value.coverImage?.url || "")
-const coverImageAlt = computed(() => blogPostData.value.coverImage?.description || blogPostData.value.coverImage?.title || seoTitle.value)
-const coverImageWidth = computed(() => blogPostData.value.coverImage?.width || 1200)
-const coverImageHeight = computed(() => blogPostData.value.coverImage?.height || 630)
+const {
+  title,
+  description,
+  coverImageUrl,
+  coverImageAlt,
+  coverImageHeight,
+  coverImageWidth,
+  meta
+} = seoUtilities()
+
+const isRecord = computed(() => article.value.typeOfRecord !== "none")
 
 useSeoMeta({
-  title: seoTitle,
-  description: seoDescription,
-  ogTitle: seoTitle,
-  ogDescription: seoDescription,
+  title,
+  description,
+  ogTitle: title,
+  ogDescription: description,
   ogImage: coverImageUrl,
   ogImageAlt: coverImageAlt,
   ogImageWidth: coverImageWidth,
   ogImageHeight: coverImageHeight,
   ogType: "article",
-  articlePublishedTime: blogPostData.value.publishedData || undefined,
+  articlePublishedTime: article.value.publishedData || undefined,
   twitterCard: "summary_large_image",
-  twitterTitle: seoTitle,
-  twitterDescription: seoDescription,
+  twitterTitle: title,
+  twitterDescription: description,
   twitterImage: coverImageUrl,
   twitterImageAlt: coverImageAlt
 })
 
 useHead({
-  title: seoTitle,
-  meta: (blogPostData.value.tags?.length
-    ? [{ name: "keywords", content: blogPostData.value.tags.join(", ") }]
-    : [])
+  title,
+  meta
 })
 </script>
 
 <style lang="scss" scoped>
-  .mg-blog-post {
-    &__header {
-      display: flex;
-      flex-direction: column;
-      gap: 12px;
-      margin-bottom: 12px;
+.mg-blog-post {
+  &__header {
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+    margin-bottom: 12px;
 
-      @include start-from(medium-desktop) {
-        gap: 16px;
-        margin-bottom: 16px;
-      }
-    }
-
-    &__info-container {
-      display: flex;
-      flex-direction: column;
-      gap: 12px;
-
-      @include start-from(medium-desktop) {
-        flex-direction: row;
-        align-items: center;
-        gap: 8px;
-      }
-    }
-
-    &__location {
-      @include body(3);
-
-      color: var(--mg-color-on-surface-variant);
-      opacity: 0.8;
-    }
-
-    &__published {
-      @include body(4);
-
-      color: var(--mg-color-neutral);
-      opacity: 0.7;
-    }
-
-    &__badge {
-      @include body(4);
-
-      width: max-content;
-      padding: 6px 12px;
-      color: var(--mg-color-on-surface-variant);
-    }
-
-    &__title {
-      @include heading(2);
-    }
-
-    &__body-text {
-      margin-bottom: 24px;
-
-      :deep(p) {
-        margin-bottom: 24px;
-      }
+    @include start-from(medium-desktop) {
+      gap: 16px;
+      margin-bottom: 16px;
     }
   }
+
+  &__info-container {
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+
+    @include start-from(medium-desktop) {
+      flex-direction: row;
+      align-items: center;
+      gap: 8px;
+    }
+  }
+
+  &__location {
+    @include body(3);
+
+    color: var(--mg-color-on-surface-variant);
+    opacity: 0.8;
+  }
+
+  &__published {
+    @include body(4);
+
+    color: var(--mg-color-neutral);
+    opacity: 0.7;
+  }
+
+  &__badge {
+    @include body(4);
+
+    width: max-content;
+    padding: 6px 12px;
+    color: var(--mg-color-on-surface-variant);
+  }
+
+  &__title {
+    @include heading(2);
+  }
+
+  &__body-text {
+    margin-bottom: 24px;
+
+    :deep(p) {
+      margin-bottom: 24px;
+    }
+  }
+}
 </style>

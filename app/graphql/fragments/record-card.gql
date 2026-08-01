@@ -1,7 +1,0 @@
-fragment RecordCardData on RecordCard {
-    typeOfRace
-    raceTitle
-    time
-    location
-    date
-}

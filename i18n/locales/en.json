@@ -50,5 +50,9 @@
       "next": "Next"
     },
     "published_on": "Published on {date}"
+  },
+  "articles": {
+    "title": "Running Insights",
+    "description": "Thresholds, splits, and race execution. The story of a passion built on fast paces, data analysis, and pushing past the limit."
   }
 }

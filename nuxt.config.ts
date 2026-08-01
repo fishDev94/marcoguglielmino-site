@@ -81,6 +81,33 @@ export default defineNuxtConfig({
       vercel: "2025-07-14"
     },
     routeRules: {
+      "/": {
+        isr: 3600
+      },
+      "/blog": {
+        isr: 600
+      },
+      "/blog/**": {
+        isr: 600
+      },
+      "/coach-page": {
+        isr: 3600
+      },
+      "/gallery": {
+        isr: 3600
+      },
+      "/contacts": {
+        isr: 86400
+      },
+      "/records": {
+        isr: 3600
+      },
+      "/activities": {
+        isr: 600
+      },
+      "/activities/**": {
+        isr: 600
+      },
       "/__sitemap__/**": {
         isr: 3600
       },
@@ -194,6 +221,7 @@ export default defineNuxtConfig({
       }
     ],
     defaultLocale: "it",
+    detectBrowserLanguage: false,
     trailingSlash: true,
     baseUrl
   },

@@ -1,0 +1,4 @@
+fragment TagData on Tag {
+    tagName
+    tagValue
+}

@@ -7,6 +7,8 @@
     >
       <NuxtImg
         :src="image.url || ''"
+        :alt="image.title || ''"
+        provider="contentful"
         loading="lazy"
         format="webp"
         quality="75"

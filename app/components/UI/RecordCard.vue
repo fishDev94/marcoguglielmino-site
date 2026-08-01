@@ -5,10 +5,10 @@
     </p>
     <div class="mg-record-card__race-info">
       <h3 class="mg-record-card__race-title">
-        {{ cardData.raceTitle }}
+        {{ cardData.discipline }}
       </h3>
       <p class="mg-record-card__race-time">
-        {{ cardData.time }}
+        {{ cardData.value }}
       </p>
     </div>
     <USeparator />
@@ -22,10 +22,10 @@
 </template>
 
 <script lang="ts" setup>
-import type { RecordCardDataFragment } from "#gql"
+import type { PerformanceCardDataFragment } from "#gql"
 
 interface Props {
-  cardData: RecordCardDataFragment
+  cardData: PerformanceCardDataFragment
 }
 
 defineProps<Props>()

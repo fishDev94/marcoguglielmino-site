@@ -1,0 +1,7 @@
+query tags {
+    tagCollection(limit: 20) {
+        items {
+            ...TagData
+        }
+    }
+}

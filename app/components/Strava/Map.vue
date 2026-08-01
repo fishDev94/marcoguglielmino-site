@@ -24,6 +24,63 @@ const mapEl = useTemplateRef("mapEl")
 const { $L } = useNuxtApp()
 let leafletMap: LeafletMap | null = null
 
+const getHaversineDistance = (p1: LatLngTuple, p2: LatLngTuple): number => {
+  const R = 6371e3
+  const rad = Math.PI / 180
+
+  const dLat = (p2[0] - p1[0]) * rad
+  const dLng = (p2[1] - p1[1]) * rad
+
+  const lat1 = p1[0] * rad
+  const lat2 = p2[0] * rad
+
+  const a
+    = Math.sin(dLat / 2) * Math.sin(dLat / 2)
+      + Math.cos(lat1) * Math.cos(lat2) * Math.sin(dLng / 2) * Math.sin(dLng / 2)
+
+  const c = 2 * Math.atan2(Math.sqrt(a), Math.sqrt(1 - a))
+
+  return R * c
+}
+
+const cropPolyline = (
+  coords: LatLngTuple[],
+  startMetersCut = 500,
+  endMetersCut = 0
+): LatLngTuple[] => {
+  if (coords.length < 2) return coords
+
+  let accumulated = 0
+  let startIndex = 0
+
+  for (let i = 1; i < coords.length; i++) {
+    accumulated += getHaversineDistance(coords[i - 1] as LatLngTuple, coords[i] as LatLngTuple)
+    if (accumulated >= startMetersCut) {
+      startIndex = i
+      break
+    }
+  }
+
+  let cropped = coords.slice(startIndex)
+
+  if (endMetersCut > 0 && cropped.length > 2) {
+    accumulated = 0
+    let endIndex = cropped.length - 1
+
+    for (let i = cropped.length - 2; i >= 0; i--) {
+      accumulated += getHaversineDistance(cropped[i] as LatLngTuple, cropped[i + 1] as LatLngTuple)
+      if (accumulated >= endMetersCut) {
+        endIndex = i
+        break
+      }
+    }
+
+    cropped = cropped.slice(0, endIndex + 1)
+  }
+
+  return cropped
+}
+
 const initializeMap = () => {
   if (!mapEl.value || !props.polylineData) return
 
@@ -33,9 +90,11 @@ const initializeMap = () => {
   }
 
   try {
-    const coords: LatLngTuple[] = polyline
+    const rawCoords: LatLngTuple[] = polyline
       .decode(props.polylineData)
       .map(([lat, lng]) => [lat, lng])
+
+    const coords = cropPolyline(rawCoords, 500, 500)
 
     if (!coords.length) return
 

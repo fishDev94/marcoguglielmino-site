@@ -1,9 +1,13 @@
+import type { BlogPostDataFragment } from "#gql"
 import type { Block, Text, Inline } from "@contentful/rich-text-types"
 
 export interface AssetBlock {
   sys: { id: string }
   url: string
   title: string
+  description?: string
+  width?: number
+  height?: number
 }
 
 export interface EntryBlock {
@@ -21,3 +25,14 @@ export type HyperlinkNode = Inline & {
   }
   content?: RichTextNode[]
 }
+
+export type BodyDescriptionType = {
+  links?: {
+    assets?: {
+      block?: AssetBlock[]
+    }
+    entries?: {
+      block?: EntryBlock[]
+    }
+  } | null
+} & BlogPostDataFragment["bodyDescription"]

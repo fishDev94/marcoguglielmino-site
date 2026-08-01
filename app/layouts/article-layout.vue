@@ -3,16 +3,30 @@
     name="content-wrapper"
     disable-padding
   >
-    <div class="mg-article-layout">
+    <div :class="['mg-article-layout', marginClass, paddingClass, mobileOrderClass]">
       <section class="mg-article-layout__main-section">
         <slot name="main" />
       </section>
       <aside class="mg-article-layout__aside">
-        <slot name="right-side" />
+        <slot name="side" />
       </aside>
     </div>
   </NuxtLayout>
 </template>
+
+<script lang="ts" setup>
+interface Props {
+  margin?: "auto" | "no-margin"
+  padding?: "auto" | "no-padding"
+  mobileSidePosition?: "top" | "bottom"
+}
+
+const { margin = "auto", padding = "auto", mobileSidePosition = "bottom" } = defineProps<Props>()
+
+const marginClass = computed(() => margin === "no-margin" ? "mg-article-layout--no-margin" : "")
+const paddingClass = computed(() => padding === "no-padding" ? "mg-article-layout--no-padding" : "")
+const mobileOrderClass = computed(() => mobileSidePosition === "top" ? "mg-article-layout--side-top" : "")
+</script>
 
 <style lang="scss" scoped>
 $mobile-padding: 24px;
@@ -26,6 +40,26 @@ $mobile-padding: 24px;
   margin-left: auto;
   margin-right: auto;
   padding: $mobile-padding;
+
+  &--no-margin {
+    margin: 0 !important;
+  }
+
+  &--no-padding {
+    padding: 0 !important;
+  }
+
+  &--side-top {
+    .mg-article-layout__aside {
+      order: -1;
+    }
+
+    @include start-from(medium-desktop) {
+      .mg-article-layout__aside {
+        order: unset;
+      }
+    }
+  }
 
   :deep(.mg-richtext__img) {
     margin-left: -$mobile-padding;
