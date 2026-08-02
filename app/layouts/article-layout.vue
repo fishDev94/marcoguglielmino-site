@@ -30,15 +30,13 @@ const mobileOrderClass = computed(() => mobileSidePosition === "top" ? "mg-artic
 
 <style lang="scss" scoped>
 $mobile-padding: 24px;
+$tablet-padding: 64px;
 
 .mg-article-layout {
   display: grid;
   grid-template-columns: 1fr;
   gap: 1.5rem;
   width: 100%;
-  max-width: 1280px;
-  margin-left: auto;
-  margin-right: auto;
   padding: $mobile-padding;
 
   &--no-margin {
@@ -68,6 +66,12 @@ $mobile-padding: 24px;
     max-width: none;
     border-radius: 0;
 
+    @include start-from(tablet) {
+      margin-left: -$tablet-padding;
+      margin-right: -$tablet-padding;
+      width: calc(100% + (#{$tablet-padding} * 2));
+    }
+
     @include start-from(medium-desktop) {
       margin-left: 0;
       margin-right: 0;
@@ -76,9 +80,14 @@ $mobile-padding: 24px;
     }
   }
 
+  @include start-from(tablet) {
+    padding-inline: $tablet-padding;
+  }
+
   @include start-from(medium-desktop) {
     grid-template-columns: repeat(12, minmax(0, 1fr));
     gap: 1.5rem;
+    padding-inline: 64px;
   }
 
   &__main-section {

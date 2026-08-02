@@ -9,7 +9,7 @@
         :class="['mg-navbar-button__icon', 'size-6', { 'mg-navbar-button__icon--active': isActive }]"
       />
       <p :class="['mg-navbar-button__text', { 'mg-navbar-button__text--active': isActive }]">
-        {{ page }}
+        {{ routeName }}
       </p>
     </div>
   </NuxtLinkLocale>
@@ -27,10 +27,19 @@ const isActive = computed(() => {
 
   return routeNameWithoutLocale === page
 })
+
+const routeName = computed(() => {
+  if (page === "performance") {
+    return "records"
+  }
+
+  return page
+})
+
 const name = computed(() => {
   if (page === "home") {
     return "i-material-symbols-home-outline"
-  } else if (page === "records") {
+  } else if (page === "performance") {
     return "i-uis-graph-bar"
   } else if (page === "blog") {
     return "i-quill-paper"

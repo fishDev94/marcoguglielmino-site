@@ -25,7 +25,7 @@ const { disablePadding = false } = defineProps<Props>()
   }
 
   @include start-from(tablet) {
-    padding-inline: 32px;
+    padding-inline: 64px;
   }
 }
 </style>
