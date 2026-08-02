@@ -14,28 +14,17 @@
 <script setup lang="ts">
 import { formatDate } from "@/utils/contentful"
 
-withDefaults(
-  defineProps<{
-    date: string
-  }>(),
-  {}
-)
+defineProps<{
+  date: string
+}>()
 
 const lang = useCurrentLang()
-
-function parseMonthDay(dateString: string) {
-  const d = new Date(dateString)
-  if (isNaN(d.getTime())) return { month: "---", day: "--", year: "" }
-  const month = d.toLocaleString("en-US", { month: "short" }).toUpperCase()
-  const day = d.getDate().toString().padStart(2, "0")
-  const year = d.getFullYear().toString().slice(-2)
-  return { month, day, year }
-}
 </script>
 
 <style lang="scss" scoped>
 .mg-perf-date {
   @include body(4);
+
   color: var(--mg-color-neutral);
   font-weight: 700;
   text-transform: uppercase;
@@ -65,17 +54,20 @@ function parseMonthDay(dateString: string) {
 
   &__month {
     @include body(4);
+
     text-transform: uppercase;
   }
 
   &__day {
     @include body(1);
+
     font-weight: 700;
     line-height: 1;
   }
 
   &__year {
     @include body(4);
+
     line-height: 0.8;
     font-weight: 500;
   }

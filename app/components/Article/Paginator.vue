@@ -161,7 +161,7 @@ defineProps<{
     white-space: nowrap;
     overflow: hidden;
     text-overflow: ellipsis;
-    max-width: 55vw;
+    max-width: 35vw;
 
     @include start-from(medium-desktop) {
       max-width: 100%;

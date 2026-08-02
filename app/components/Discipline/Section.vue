@@ -1,39 +1,39 @@
 <template>
   <section class="mg-disc-section">
     <DisciplineHeader
-      :discipline="discipline"
-      :personal-best="personalBest"
-      :season-best="seasonBest"
-      :icon="icon"
+      :discipline
+      :personal-best
+      :season-best
+      :icon
     />
 
     <div class="mg-disc-section__content">
       <DisciplineChart
-        :discipline="discipline"
+        :discipline
         :items="performanceItems"
       />
 
-      <PerformanceTable :discipline="discipline" />
+      <PerformanceTable :discipline />
     </div>
   </section>
 </template>
 
 <script setup lang="ts">
-const props = withDefaults(
-  defineProps<{
-    discipline: string
-    icon?: string
-  }>(),
-  {
-    icon: "i-material-symbols:trending-down"
-  }
-)
+interface Props {
+  discipline: string
+  icon?: string
+}
+
+const {
+  discipline,
+  icon = "i-material-symbols:trending-down"
+} = defineProps<Props>()
 
 const lang = useCurrentLang()
 
 const { data } = await useAsyncGql("performanceCard", {
   locale: lang,
-  discipline: props.discipline
+  discipline: discipline
 })
 
 const performanceItems = computed(() => {

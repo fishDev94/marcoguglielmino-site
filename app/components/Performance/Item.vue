@@ -1,6 +1,6 @@
 <template>
   <tr
-    v-if="variant === 'desktop'"
+    v-if="isDesktop"
     class="mg-performance-item mg-performance-item--desktop"
   >
     <td class="mg-performance-item__cell mg-performance-item__cell--date">
@@ -28,7 +28,7 @@
   </tr>
 
   <div
-    v-else-if="variant === 'mobile'"
+    v-else
     class="mg-performance-item mg-performance-item--mobile"
   >
     <div class="mg-performance-item__mobile-top">
@@ -44,9 +44,9 @@
         <PerformanceTime
           :value="item.value || ''"
           :label="item.label || ''"
-          :is-pb="item.label === 'Personal Best'"
+          :is-pb
         />
-        <PerformanceTrend :trend-data="trendData" />
+        <PerformanceTrend :trend-data />
       </div>
     </div>
 
@@ -76,40 +76,12 @@ const props = withDefaults(
 )
 
 const breakpoints = useBreakpoints(breakpointsTailwind)
+const isPb = computed(() => props.item.label === "Personal Best")
 
 const variant = computed(() =>
   breakpoints.greaterOrEqual("md").value ? "desktop" : "mobile"
 )
-
-function parseTimeToSeconds(timeString: string): number {
-  const parts = timeString.trim().split(":")
-  if (parts.length === 2) {
-    const minutes = parseInt(parts[0] || "0")
-    const seconds = parseFloat(parts[1] || "0")
-    return minutes * 60 + seconds
-  } else if (parts.length === 3) {
-    const hours = parseInt(parts[0] || "0")
-    const minutes = parseInt(parts[1] || "0")
-    const seconds = parseFloat(parts[2] || "0")
-    return hours * 3600 + minutes * 60 + seconds
-  }
-  return 0
-}
-
-function formatTimeDifference(diffSeconds: number): string {
-  const sign = diffSeconds < 0 ? "-" : "+"
-  const absDiff = Math.abs(diffSeconds)
-
-  if (absDiff >= 60) {
-    const minutes = Math.floor(absDiff / 60)
-    const seconds = absDiff % 60
-    const formatted = `${minutes}:${seconds.toFixed(2).padStart(5, "0")}`
-    return `${sign}${formatted}`
-  }
-
-  const formatted = absDiff.toFixed(2).replace(/\.?0+$/, "")
-  return `${sign}${formatted}s`
-}
+const isDesktop = computed(() => variant.value === "desktop")
 
 const trendData = computed(() => {
   if (props.referenceValue?.trim() && props.item.value?.trim()) {

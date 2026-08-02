@@ -6,19 +6,19 @@
           <thead class="mg-perf-table__head">
             <tr>
               <th class="mg-perf-table__header-cell mg-perf-table__header-cell--date">
-                Date
+                {{ $t('performance.table.date') }}
               </th>
               <th class="mg-perf-table__header-cell mg-perf-table__header-cell--event">
-                Event / Location
+                {{ $t('performance.table.event') }}
               </th>
               <th class="mg-perf-table__header-cell mg-perf-table__header-cell--time">
-                Time
+                {{ $t('performance.table.performance_time') }}
               </th>
               <th class="mg-perf-table__header-cell mg-perf-table__header-cell--trend">
-                Trend
+                {{ $t('performance.table.trend') }}
               </th>
               <th class="mg-perf-table__header-cell mg-perf-table__header-cell--action">
-                Actions
+                {{ $t('performance.table.actions') }}
               </th>
             </tr>
           </thead>

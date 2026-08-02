@@ -48,6 +48,16 @@ defineProps<{
 
 <style lang="scss" scoped>
 .mg-disc-header {
+  display: flex;
+  width: 100%;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 0;
+
+  @include start-from(tablet) {
+    background-color: var(--mg-color-secondary);
+  }
+
   &__mobile {
     display: flex;
     align-items: flex-end;
@@ -102,65 +112,6 @@ defineProps<{
       justify-content: space-between;
         padding: 1rem 1.5rem;
     }
-  }
-
-  &__left {
-    display: flex;
-    align-items: center;
-    gap: 0.75rem;
-  }
-
-  &__icon {
-    width: 1.5rem;
-    height: 1.5rem;
-    color: var(--mg-color-primary);
-  }
-
-  &__title {
-    @include heading(2);
-    color: #ffffff;
-    margin: 0;
-  }
-
-  &__right {
-    display: flex;
-    align-items: center;
-  }
-
-  &__pb {
-    display: flex;
-    flex-direction: column;
-    align-items: flex-end;
-    text-align: right;
-  }
-
-  &__pb-label {
-    @include body(4);
-    color: rgba(255, 255, 255, 0.5);
-    text-transform: uppercase;
-    letter-spacing: 0.08em;
-    margin: 0;
-  }
-
-  &__pb-value {
-    @include heading(3);
-    color: var(--mg-color-accent);
-    font-family: "Courier New", monospace;
-    margin: 0.125rem 0 0 0;
-  }
-}
-</style>
-
-<style lang="scss" scoped>
-.mg-disc-header {
-  display: flex;
-  width: 100%;
-  align-items: center;
-  justify-content: space-between;
-  margin-bottom: 0;
-
-  @include start-from(tablet) {
-    background-color: var(--mg-color-secondary);
   }
 
   &__left {

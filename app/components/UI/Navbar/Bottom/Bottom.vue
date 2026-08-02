@@ -1,7 +1,7 @@
 <template>
   <div class="mg-navbar-bottom">
     <UINavbarBottomIcon page="home" />
-    <UINavbarBottomIcon page="records" />
+    <UINavbarBottomIcon page="performance" />
     <UINavbarBottomIcon page="blog" />
     <UINavbarBottomIcon page="strava" />
   </div>

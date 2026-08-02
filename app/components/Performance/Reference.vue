@@ -5,13 +5,13 @@
       :to="`/blog/${blogReference}`"
       class="mg-perf-reference__link"
     >
-      <span class="mg-perf-reference__text">Read Post</span>
+      <span class="mg-perf-reference__text">{{ $t('performance.read_post_cta') }}</span>
       <UIcon name="i-material-symbols-arrow-forward-rounded" />
     </NuxtLink>
     <span
       v-else
       class="mg-perf-reference__empty"
-    >No Report</span>
+    >{{ $t('performance.no_report') }}</span>
   </div>
 </template>
 

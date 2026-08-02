@@ -20,7 +20,7 @@ const items = computed<NavigationMenuItem[]>(() => [
   },
   {
     label: "Records",
-    to: "/records",
+    to: "/performance",
     class: "font-bold not-focus:text-white aria-[current=page]:text-(--ui-primary)"
   },
   {

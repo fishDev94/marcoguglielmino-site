@@ -54,5 +54,16 @@
   "articles": {
     "title": "Running Insights",
     "description": "Soglie, parziali e gestione della gara. Il racconto di una passione vissuta tra ritmi serrati, analisi dei dati e continua ricerca del limite."
+  },
+  "performance": {
+    "read_post_cta": "Leggi articolo",
+    "no_report": "Nessun report",
+    "table": {
+      "date": "Data",
+      "event": "Gara / Luogo",
+      "performance_time": "Tempo",
+      "trend": "Trend",
+      "actions": "Azioni"
+    }
   }
 }

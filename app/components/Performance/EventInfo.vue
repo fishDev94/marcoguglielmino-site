@@ -5,16 +5,10 @@
 </template>
 
 <script setup lang="ts">
-withDefaults(
-  defineProps<{
-    location?: string
-    title?: string
-  }>(),
-  {
-    location: undefined,
-    title: undefined
-  }
-)
+defineProps<{
+  location?: string
+  title?: string
+}>()
 </script>
 
 <style lang="scss" scoped>
