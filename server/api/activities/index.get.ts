@@ -16,8 +16,8 @@ export default defineEventHandler(async (event) => {
 
     return activities
   } catch (err: unknown) {
-    const status = (err as { status?: number; statusCode?: number })?.status
-      || (err as { status?: number; statusCode?: number })?.statusCode
+    const status = (err as { status?: number, statusCode?: number })?.status
+      || (err as { status?: number, statusCode?: number })?.statusCode
 
     // If rate limited (429), serve cached data
     if (status === 429) {

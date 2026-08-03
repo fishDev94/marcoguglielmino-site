@@ -14,8 +14,8 @@ export default defineEventHandler(async (event) => {
 
     return activity
   } catch (err: unknown) {
-    const status = (err as { status?: number; statusCode?: number })?.status
-      || (err as { status?: number; statusCode?: number })?.statusCode
+    const status = (err as { status?: number, statusCode?: number })?.status
+      || (err as { status?: number, statusCode?: number })?.statusCode
 
     if (status === 429) {
       const cached = await redis.get<string>(cacheKey)

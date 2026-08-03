@@ -117,9 +117,10 @@ function makeSvgScalers(points: ChartPoint[]) {
   const maxSec = Math.max(...points.map(p => p.seconds))
   const range = maxSec - minSec || 1
   const padX = 2
-  const padY = 5
+  const padTop = 5
+  const padBottom = 12 // extra space at bottom to avoid overlapping year labels
   const svgX = (i: number) => padX + (i / Math.max(points.length - 1, 1)) * (100 - padX * 2)
-  const svgY = (sec: number) => padY + ((sec - minSec) / range) * (40 - padY * 2)
+  const svgY = (sec: number) => padTop + ((sec - minSec) / range) * (40 - padTop - padBottom)
 
   return { svgX, svgY }
 }
@@ -147,7 +148,8 @@ function buildFillPath(points: ChartPoint[]): string {
   if (points.length < 2) return ""
   const { svgX, svgY } = makeSvgScalers(points)
   const lastIdx = points.length - 1
-  let d = `M${svgX(0)},40 L${svgX(0)},${svgY(points[0]?.seconds || 0)}`
+  const fillBottom = 30 // stop fill above year labels area
+  let d = `M${svgX(0)},${fillBottom} L${svgX(0)},${svgY(points[0]?.seconds || 0)}`
   for (let i = 0; i < points.length - 1; i++) {
     const x0 = svgX(i)
     const y0 = svgY(points[i]?.seconds || 0)
@@ -155,7 +157,7 @@ function buildFillPath(points: ChartPoint[]): string {
     const y1 = svgY(points[i + 1]?.seconds || 0)
     d += ` C${x0 + (x1 - x0) / 3},${y0} ${x1 - (x1 - x0) / 3},${y1} ${x1},${y1}`
   }
-  d += ` L${svgX(lastIdx)},40 Z`
+  d += ` L${svgX(lastIdx)},${fillBottom} Z`
   return d
 }
 
