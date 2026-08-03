@@ -9,7 +9,6 @@ import type { InstagramReel } from "~~/types/instagram"
  */
 export const useReelViewer = (reels: Ref<InstagramReel[] | null | undefined>) => {
   const route = useRoute()
-  const router = useRouter()
 
   // --- State ---
   const isPaused = ref(false)
@@ -17,9 +16,10 @@ export const useReelViewer = (reels: Ref<InstagramReel[] | null | undefined>) =>
   const videoProgress = ref(0)
   const currentTime = ref(0)
   const duration = ref(0)
+  const _selectedReelId = ref<string | undefined>(route.query.r_id as string | undefined)
 
   // --- Computed ---
-  const selectedReelId = computed(() => route.query.r_id as string | undefined)
+  const selectedReelId = computed(() => _selectedReelId.value)
 
   const selectedReel = computed(() =>
     reels.value?.find(r => r.id === selectedReelId.value)
@@ -28,11 +28,20 @@ export const useReelViewer = (reels: Ref<InstagramReel[] | null | undefined>) =>
   const formattedCurrentTime = computed(() => formatTime(currentTime.value))
   const formattedDuration = computed(() => formatTime(duration.value))
 
+  // Sync URL → state (e.g. on page load with ?r_id=xxx, or browser back/forward)
+  watch(
+    () => route.query.r_id as string | undefined,
+    (newId) => {
+      _selectedReelId.value = newId
+    }
+  )
+
   // --- Actions ---
   const closeViewer = () => {
-    const query = { ...route.query }
-    delete query.r_id
-    router.push({ query })
+    _selectedReelId.value = undefined
+    const url = new URL(window.location.href)
+    url.searchParams.delete("r_id")
+    window.history.replaceState({}, "", url.toString())
   }
 
   const togglePlayPause = (videoEl: HTMLVideoElement | null) => {
@@ -109,12 +118,20 @@ export const useReelViewer = (reels: Ref<InstagramReel[] | null | undefined>) =>
     }
   }
 
+  // --- Listen for reel open events from ReelCard ---
+  const onReelOpen = (e: Event) => {
+    const reelId = (e as CustomEvent).detail as string
+    _selectedReelId.value = reelId
+  }
+
   onMounted(() => {
     window.addEventListener("keydown", onEscKeydown)
+    window.addEventListener("reel-open", onReelOpen)
   })
 
   onUnmounted(() => {
     window.removeEventListener("keydown", onEscKeydown)
+    window.removeEventListener("reel-open", onReelOpen)
   })
 
   // --- Body scroll lock + invalid ID cleanup ---

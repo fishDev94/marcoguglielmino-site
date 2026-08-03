@@ -1,7 +1,9 @@
 <template>
-  <NuxtLink
-    :to="{ query: { ...$route.query, r_id: reel.id } }"
+  <button
     class="mg-reel-card block"
+    tabindex="0"
+    @click="openReel"
+    @keydown.enter="openReel"
   >
     <div class="overlay-gradient" />
     <NuxtImg
@@ -25,7 +27,7 @@
         {{ reel.caption }}
       </p>
     </div>
-  </NuxtLink>
+  </button>
 </template>
 
 <script lang="ts" setup>
@@ -35,7 +37,15 @@ interface Props {
   reel: InstagramReel
 }
 
-defineProps<Props>()
+const props = defineProps<Props>()
+
+const openReel = () => {
+  const url = new URL(window.location.href)
+  url.searchParams.set("r_id", props.reel.id)
+  window.history.replaceState({}, "", url.toString())
+  // Dispatch a popstate-like event so the composable picks it up
+  window.dispatchEvent(new CustomEvent("reel-open", { detail: props.reel.id }))
+}
 </script>
 
 <style lang="scss" scoped>

@@ -8,6 +8,7 @@ export default defineEventHandler(async (event) => {
 
   const IG_USER_ID = config.instagram.userId
   const TOKEN = config.instagram.token
+  const CDN_BASE_URL = config.cdnBaseUrl
 
   if (!IG_USER_ID || !TOKEN) {
     throw new Error("Missing Instagram credentials")
@@ -21,10 +22,18 @@ export default defineEventHandler(async (event) => {
     }
   })
 
-  // 2. Filtra solo i Reel
-  const reels = res.data.filter(
-    m => m.media_product_type === "REELS"
-  ).slice(0, limit)
+  // 2. Filtra solo i Reel e aggiungi video_src dalla CDN
+  // Convenzione: il file su R2 deve essere {shortcode}.mp4 (minuscolo)
+  const reels = res.data
+    .filter(m => m.media_product_type === "REELS")
+    .slice(0, limit)
+    .map((reel) => {
+      const shortcode = reel.permalink?.match(/\/reel\/([^/]+)/)?.[1]
+      return {
+        ...reel,
+        video_src: shortcode ? `${CDN_BASE_URL}/reels/${shortcode}.mp4` : undefined
+      }
+    })
 
   return reels
 })

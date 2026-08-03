@@ -2,6 +2,10 @@
 // Fetches a fresh media_url from the Graph API for a given reel ID,
 // then streams the video to the client. This ensures the CDN URL is
 // signed for the SAME IP that will download it (this serverless instance).
+//
+// NOTE: As of Graph API v25.0, media_url is NOT returned for REELS that
+// contain copyrighted audio. The client should only call this endpoint
+// for reels that have media_url available (checked via reels.get response).
 export default defineEventHandler(async (event) => {
   const query = getQuery(event)
   const mediaId = query.id as string | undefined
@@ -39,7 +43,10 @@ export default defineEventHandler(async (event) => {
   })
 
   if (!mediaData?.media_url) {
-    throw createError({ statusCode: 404, statusMessage: "No media_url returned for this ID" })
+    throw createError({
+      statusCode: 404,
+      statusMessage: "No media_url available for this reel (likely contains copyrighted audio)"
+    })
   }
 
   // 2. Immediately fetch the video from the CDN (same IP that just got the URL)

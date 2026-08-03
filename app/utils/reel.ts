@@ -31,11 +31,13 @@ export const formatTimeAgo = (dateString: string, t: (key: string, count?: numbe
 }
 
 /**
- * Returns a proxied URL for Instagram reel videos.
- * The proxy endpoint fetches a fresh media_url from the Graph API
- * (signed for the server's own IP) and streams the video to the client.
- * This avoids IP/geo-lock 500 errors from Instagram CDN.
+ * Returns the video source URL for a reel.
+ * Priority: CDN URL (video_src) > proxy endpoint (fallback).
  */
-export const proxyVideoUrl = (reelId: string): string => {
+export const proxyVideoUrl = (reelId: string, videoSrc?: string): string => {
+  if (videoSrc) {
+    return videoSrc
+  }
+  // Fallback: proxy endpoint (for reels not yet uploaded to CDN)
   return `/api/instagram/video?id=${encodeURIComponent(reelId)}`
 }

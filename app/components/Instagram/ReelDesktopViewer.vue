@@ -21,8 +21,9 @@
             </button>
 
             <InstagramReelPlayer
+              v-if="selectedReel.video_src"
               ref="playerRef"
-              :src="proxyVideoUrl(selectedReel.id)"
+              :src="proxyVideoUrl(selectedReel.id, selectedReel.video_src)"
               :muted="isMuted"
               :progress="videoProgress"
               :is-paused
@@ -36,6 +37,27 @@
               @loadedmetadata="onLoadedMetadata"
               @seek="handleSeek"
             />
+
+            <!-- Fallback: thumbnail + CTA when media_url is not available (copyrighted audio) -->
+            <div
+              v-else
+              class="mg-reel-desktop__fallback"
+              @click="openInstagram"
+            >
+              <img
+                v-if="selectedReel.thumbnail_url"
+                :src="selectedReel.thumbnail_url"
+                :alt="selectedReel.caption || 'Reel thumbnail'"
+                class="mg-reel-desktop__fallback-img"
+              >
+              <div class="mg-reel-desktop__fallback-overlay">
+                <UIcon
+                  name="i-material-symbols-play-circle-outline"
+                  class="mg-reel-desktop__fallback-icon"
+                />
+                <span class="mg-reel-desktop__fallback-label">{{ $t('reel_viewer.view_on_instagram') }}</span>
+              </div>
+            </div>
 
             <InstagramReelInfo
               :caption="selectedReel.caption || ''"
@@ -104,7 +126,13 @@ watch(
     if (!import.meta.client) return
 
     if (!reel) {
-      getVideoEl()?.pause()
+      const video = getVideoEl()
+
+      if (video) {
+        video.pause()
+        video.removeAttribute("src")
+        video.load()
+      }
       return
     }
 
@@ -164,6 +192,57 @@ watch(
     @include start-from(tablet) {
       flex-direction: row;
     }
+  }
+
+  &__fallback {
+    position: relative;
+    width: 100%;
+    aspect-ratio: 9 / 16;
+    max-height: 80vh;
+    cursor: pointer;
+    overflow: hidden;
+
+    @include start-from(tablet) {
+      width: 45%;
+      flex-shrink: 0;
+    }
+  }
+
+  &__fallback-img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+  }
+
+  &__fallback-overlay {
+    position: absolute;
+    inset: 0;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: 16px;
+    background: color-mix(in srgb, var(--mg-color-secondary) 40%, transparent);
+    transition: background 0.2s ease;
+
+    &:hover {
+      background: color-mix(in srgb, var(--mg-color-secondary) 55%, transparent);
+    }
+  }
+
+  &__fallback-icon {
+    width: 72px;
+    height: 72px;
+    color: var(--mg-btn-text-primary);
+    opacity: 0.9;
+  }
+
+  &__fallback-label {
+    @include body(2);
+
+    color: var(--mg-btn-text-primary);
+    font-style: italic;
+    opacity: 0.9;
   }
 }
 

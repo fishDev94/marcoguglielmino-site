@@ -16,7 +16,7 @@ const getActivities = (query?: { page?: number, per_page?: number }) => {
   watch(
     error,
     (err) => {
-      if (err) {
+      if (err && err.status !== 429) {
         showError(
           createError({
             statusCode: err.status || 500,

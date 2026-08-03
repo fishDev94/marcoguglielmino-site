@@ -23,6 +23,9 @@ export const useArticlesData = (options: UseArticlesDataOptions = {}) => {
       filters,
       limit,
       skip
+    },
+    options: {
+      watch: [searchValue, filters, limit, skip]
     }
   })
 

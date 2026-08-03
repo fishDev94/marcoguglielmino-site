@@ -17,6 +17,7 @@
                 @click="handleToggleMute"
               >
                 <UIcon
+                  :key="muteButtonConfig.iconName"
                   :name="muteButtonConfig.iconName"
                   class="size-6"
                 />
@@ -48,8 +49,9 @@
               class="mg-reel-mobile__slide"
             >
               <InstagramReelPlayer
+                v-if="reel.video_src"
                 :ref="(el: any) => setPlayerRef(el, reel.id)"
-                :src="proxyVideoUrl(reel.id)"
+                :src="proxyVideoUrl(reel.id, reel.video_src)"
                 :muted="isMuted"
                 :progress="activeReelId === reel.id ? videoProgress : 0"
                 :is-paused="isPaused && activeReelId === reel.id"
@@ -57,6 +59,27 @@
                 @click="handleSlideTogglePlayPause"
                 @timeupdate="(video: HTMLVideoElement) => handleMobileTimeUpdate(video, reel.id)"
               />
+
+              <!-- Fallback: thumbnail + CTA when media_url is not available (copyrighted audio) -->
+              <div
+                v-else
+                class="mg-reel-mobile__fallback"
+                @click.stop="openInstagram(reel)"
+              >
+                <img
+                  v-if="reel.thumbnail_url"
+                  :src="reel.thumbnail_url"
+                  :alt="reel.caption || 'Reel thumbnail'"
+                  class="mg-reel-mobile__fallback-img"
+                >
+                <div class="mg-reel-mobile__fallback-overlay">
+                  <UIcon
+                    name="i-material-symbols-play-circle-outline"
+                    class="mg-reel-mobile__fallback-icon"
+                  />
+                  <span class="mg-reel-mobile__fallback-label">{{ $t('reel_viewer.view_on_instagram') }}</span>
+                </div>
+              </div>
 
               <InstagramReelInfo
                 :caption="reel.caption || ''"
@@ -340,6 +363,47 @@ const openInstagram = (reel: InstagramReel) => {
     justify-content: center;
     background-color: var(--mg-color-secondary);
     cursor: pointer;
+  }
+
+  &__fallback {
+    position: absolute;
+    inset: 0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+  }
+
+  &__fallback-img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+  }
+
+  &__fallback-overlay {
+    position: absolute;
+    inset: 0;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: 12px;
+    background: color-mix(in srgb, var(--mg-color-secondary) 40%, transparent);
+  }
+
+  &__fallback-icon {
+    width: 64px;
+    height: 64px;
+    color: var(--mg-btn-text-primary);
+    opacity: 0.9;
+  }
+
+  &__fallback-label {
+    @include body(3);
+
+    color: var(--mg-btn-text-primary);
+    font-style: italic;
+    opacity: 0.9;
   }
 }
 

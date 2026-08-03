@@ -40,9 +40,19 @@
           </template>
           <template #main>
             <ArticleCardGrid
-              v-if="articles"
+              v-if="articles && !isLoading"
               :articles
             />
+
+            <div
+              v-else
+              class="mg-articles__skeleton-grid"
+            >
+              <ArticleCardSkeleton
+                v-for="n in 6"
+                :key="`article-skeleton-${n}`"
+              />
+            </div>
 
             <UPagination
               v-model="currentPage"
@@ -83,7 +93,7 @@ const {
   skip
 } = useUrlSearchEngine({ pageSize: PAGE_SIZE })
 
-const { articles, total } = useArticlesData({
+const { articles, total, isLoading } = useArticlesData({
   searchQuery,
   filters: computed(() => activeFilters.value.length ? activeFilters.value : null),
   limit,
@@ -153,6 +163,20 @@ const isTagActive = (
     display: flex;
     justify-content: center;
     margin-top: 32px;
+  }
+
+  &__skeleton-grid {
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: 16px;
+
+    @include start-from(tablet) {
+      grid-template-columns: repeat(2, 1fr);
+    }
+
+    @include start-from(large-desktop) {
+      grid-template-columns: repeat(3, 1fr);
+    }
   }
 
   :deep(.mg-article-layout) {

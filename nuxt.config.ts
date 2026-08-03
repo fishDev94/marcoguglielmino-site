@@ -64,6 +64,7 @@ export default defineNuxtConfig({
     stravaRefreshToken: "",
     stravaClientID: "",
     stravaAccessToken: "",
+    cdnBaseUrl: "https://cdn.marcoguglielmino.com",
     instagram: {
       userId: "", // page id
       token: "" // System User Token
@@ -122,7 +123,7 @@ export default defineNuxtConfig({
             "style-src 'self' 'unsafe-inline' https://fonts.googleapis.com",
             "img-src 'self' data: https://images.ctfassets.net https://*.tile.openstreetmap.org https://*.cdninstagram.com;",
             "font-src 'self' https://fonts.gstatic.com",
-            "media-src 'self' data: https://*.cdninstagram.com https://*.fbcdn.net;",
+            "media-src 'self' data: https://*.cdninstagram.com https://*.fbcdn.net https://cdn.marcoguglielmino.com;",
             [
               "connect-src",
               "'self'",
