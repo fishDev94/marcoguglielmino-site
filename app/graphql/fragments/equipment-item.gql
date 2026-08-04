@@ -1,4 +1,5 @@
 fragment EquipmentItemData on EquipmentItem {
+    type
     image {
         url
     }

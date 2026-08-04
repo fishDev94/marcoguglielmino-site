@@ -3,45 +3,47 @@
     :class="['mg-content-block', `mg-content-block--${contentData.background}`]"
   >
     <NuxtLayout name="content-wrapper">
-      <article
-        :class="[
-          'mg-content-block__main',
-          `mg-content-block__main--${contentData.contentAlignment}`
-        ]"
-      >
-        <div class="mg-content-block__text-content">
-          <h2
-            :class="[
-              'mg-content-block__title',
-              'uppercase',
-              `mg-content-block__title--${contentData.contentAlignment}`
-            ]"
-          >
-            <span class="mg-content-block__line hidden md:block" />
-            {{ contentData.title }}
-          </h2>
-          <RichTextRenderer
-            v-if="contentData.bodyDescription?.json"
-            :custom-rich-text-json="contentData.bodyDescription?.json"
+      <div class="mg-content-block__container">
+        <article
+          :class="[
+            'mg-content-block__main',
+            `mg-content-block__main--${contentData.contentAlignment}`
+          ]"
+        >
+          <div class="mg-content-block__text-content">
+            <h2
+              :class="[
+                'mg-content-block__title',
+                'uppercase',
+                `mg-content-block__title--${contentData.contentAlignment}`
+              ]"
+            >
+              <span class="mg-content-block__line hidden md:block" />
+              {{ contentData.title }}
+            </h2>
+            <RichTextRenderer
+              v-if="contentData.bodyDescription?.json"
+              :custom-rich-text-json="contentData.bodyDescription?.json"
+            />
+          </div>
+          <ContentCardList
+            v-if="contentCardList.length"
+            :data="contentCardList"
           />
-        </div>
-        <ContentCardList
-          v-if="contentCardList.length"
-          :data="contentCardList"
-        />
-      </article>
-      <UICarousel
-        v-if="contentData.carousel?.items.length"
-        class="mg-content-block__carousel-section"
-      >
-        <component
-          :is="COMPONENTS_MAP[cardData?.__typename]"
-          v-for="(cardData, i) in validContentCarouselCardList"
-          :key="`${cardData?.__typename}-card+${i}`"
-          :card-data
-        />
-      </UICarousel>
-      <slot />
+        </article>
+        <UICarousel
+          v-if="contentData.carousel?.items.length"
+          class="mg-content-block__carousel-section"
+        >
+          <component
+            :is="COMPONENTS_MAP[cardData?.__typename]"
+            v-for="(cardData, i) in validContentCarouselCardList"
+            :key="`${cardData?.__typename}-card+${i}`"
+            :card-data
+          />
+        </UICarousel>
+        <slot />
+      </div>
     </NuxtLayout>
   </section>
 </template>
@@ -74,7 +76,12 @@ const validContentCarouselCardList = computed(() =>
 
 <style lang="scss" scoped>
 .mg-content-block {
+  padding-block: 24px;
   background-color: var(--mg-btn-bg-inverted);
+
+  @include start-from(tablet) {
+    padding-block: 38px;
+  }
 
   &--default-white {
     background-color: var(--mg-btn-bg-inverted);
@@ -88,22 +95,25 @@ const validContentCarouselCardList = computed(() =>
     background-color: var(--mg-color-surface-alt);
   }
 
+  &__container {
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
+    align-content: flex-start;
+  }
+
   &__main {
     display: flex;
     flex-direction: column;
     gap: 24px;
-    padding-block: 24px;
-    margin: 0 auto;
 
     @include start-from(tablet) {
-      padding-block: 38px;
       flex-direction: row;
     }
 
     &--center {
       @include start-from(tablet) {
         justify-content: center;
-        padding-bottom: 16px;
       }
     }
   }
@@ -148,11 +158,9 @@ const validContentCarouselCardList = computed(() =>
   &__text-content {
     display: flex;
     flex-direction: column;
+    align-items: flex-start;
+    width: 100%;
     gap: 24px;
-  }
-
-  &__carousel-section {
-    padding-bottom: 38px;
   }
 
   :deep(.mg-carousel__scollable-content) {

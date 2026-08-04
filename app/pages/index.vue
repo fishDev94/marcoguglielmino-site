@@ -24,8 +24,8 @@
     >
       <template v-if="bottomBlock.slug === 'latest-stories-section'">
         <ArticleWidget
-          v-if="latestArticle"
-          :article="latestArticle"
+          v-if="latestArticleSlug"
+          :article-slug="latestArticleSlug"
         />
       </template>
     </ContentBlock>
@@ -46,5 +46,5 @@ const {
 
 const { articles, isLoading } = useArticlesData({ limit: ref(1), server: false })
 
-const latestArticle = computed(() => articles.value?.at(0))
+const latestArticleSlug = computed(() => articles.value?.at(0)?.slug || "")
 </script>

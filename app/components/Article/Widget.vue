@@ -1,11 +1,14 @@
 <template>
-  <ArticleCard :article />
+  <ArticleCard
+    :article
+    dimension="wide"
+  />
 </template>
 
 <script lang="ts" setup>
-import type { BlogCardFragment } from "#gql"
-
-defineProps<{
-  article: BlogCardFragment
+const { articleSlug } = defineProps<{
+  articleSlug: string
 }>()
+
+const { article } = await useAsyncArticleData(articleSlug || "")
 </script>

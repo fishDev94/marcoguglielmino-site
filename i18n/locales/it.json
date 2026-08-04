@@ -49,6 +49,9 @@
       "previous": "Precedente",
       "next": "Successivo"
     },
+    "wide_card": {
+      "readMoreCTA": "Leggi l'articolo completo"
+    },
     "published_on": "Pubblicato il {date}"
   },
   "articles": {
