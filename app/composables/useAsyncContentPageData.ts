@@ -11,7 +11,7 @@ export default async function useAsyncContentPageData() {
     operation: "page",
     variables: {
       slug: String(baseRouteName.value) || "",
-      lang: lang
+      locale: lang
     }
   })
 

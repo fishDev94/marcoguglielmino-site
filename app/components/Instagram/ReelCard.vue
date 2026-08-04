@@ -1,5 +1,6 @@
 <template>
   <button
+    type="button"
     class="mg-reel-card block"
     tabindex="0"
     @click="openReel"
@@ -89,6 +90,9 @@ const openReel = () => {
   &__description {
     position: absolute;
     bottom: 0;
+    display: flex;
+    align-items: center;
+    gap: 6px;
     color: var(--mg-btn-text-primary);
     padding-bottom: 24px;
     padding-left: 24px;
@@ -103,6 +107,7 @@ const openReel = () => {
       overflow: hidden;
       text-overflow: ellipsis;
       width: 90%;
+      line-height: unset;
     }
   }
 

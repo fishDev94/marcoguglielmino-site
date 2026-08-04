@@ -5,6 +5,7 @@ interface UseArticlesDataOptions {
   filters?: Ref<string[] | null> | ComputedRef<string[] | null>
   limit?: Ref<number> | ComputedRef<number>
   skip?: Ref<number> | ComputedRef<number>
+  server?: boolean
 }
 
 export const useArticlesData = (options: UseArticlesDataOptions = {}) => {
@@ -14,20 +15,28 @@ export const useArticlesData = (options: UseArticlesDataOptions = {}) => {
   const filters = options.filters ?? ref(null)
   const limit = options.limit ?? ref(100)
   const skip = options.skip ?? ref(0)
+  const server = options.server !== false
 
-  const { data, pending, error } = useAsyncGql({
-    operation: "blogPosts",
-    variables: {
-      locale: lang,
-      searchValue,
-      filters,
-      limit,
-      skip
-    },
-    options: {
-      watch: [searchValue, filters, limit, skip]
+  const variables = computed(() => ({
+    locale: unref(lang),
+    searchValue: unref(searchValue),
+    filters: unref(filters),
+    limit: unref(limit),
+    skip: unref(skip)
+  }))
+
+  const route = useRoute()
+  const routeName = String(route.name || "default")
+
+  const { data, pending, error } = useAsyncData(
+    `articles:${routeName}`,
+    () => GqlBlogPosts(variables.value),
+    {
+      lazy: true,
+      server,
+      watch: [variables]
     }
-  })
+  )
 
   const articles = computed(
     () => data.value?.blogPostCollection?.items as BlogCardFragment[] | undefined

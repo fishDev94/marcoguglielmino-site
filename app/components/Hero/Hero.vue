@@ -30,14 +30,19 @@
             {{ copy }}
           </p>
           <div class="mg-hero__cta-buttons">
-            <UIButton
+            <NuxtLinkLocale
               v-for="(button, index) in buttons"
               :key="`cta-button+${index}`"
-              :type="button.typeButton"
-              :is-strong="button.isButtonStrong || false"
+              :to="button.path || ''"
             >
-              {{ button.text }}
-            </UIButton>
+              <UIButton
+
+                :type="button.typeButton"
+                :is-strong="button.isButtonStrong || false"
+              >
+                {{ button.text }}
+              </UIButton>
+            </NuxtLinkLocale>
           </div>
         </div>
       </NuxtLayout>

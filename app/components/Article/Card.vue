@@ -1,8 +1,11 @@
 <template>
-  <article class="mg-blog-card">
+  <article :class="['mg-blog-card', { 'mg-blog-card--wide': isWideCard }]">
     <NuxtLinkLocale
       :to="`/blog/${article.slug}`"
-      class="mg-blog-card__link"
+      :class="[
+        'mg-blog-card__link',
+        { 'mg-blog-card__link--wide': isWideCard }
+      ]"
     >
       <div class="mg-blog-card__image-wrapper">
         <NuxtImg
@@ -23,13 +26,25 @@
         </span>
       </div>
       <div class="mg-blog-card__content">
-        <time
-          v-if="formattedDate"
-          :datetime="article.publishedData"
-          class="mg-blog-card__date"
-        >
-          {{ formattedDate }}
-        </time>
+        <div class="mg-blog-card__header">
+          <div
+            v-if="isWideCard"
+            class="mg-blog-card__equipment-card"
+          >
+            <NuxtImg
+              class="mg-blog-card__equipment-card-image"
+              :src="equipmentItem?.image?.url || ''"
+            />
+            <p>{{ equipmentItem?.name }}</p>
+          </div>
+          <time
+            v-if="formattedDate"
+            :datetime="article.publishedData"
+            class="mg-blog-card__date"
+          >
+            {{ formattedDate }}
+          </time>
+        </div>
 
         <h3 class="mg-blog-card__title">
           {{ article.title }}
@@ -43,6 +58,17 @@
         </p>
         <div class="mg-blog-card__footer">
           <div
+            v-if="isWideCard"
+            class="mg-blog-card__cta-read-more"
+          >
+            {{ $t("article.wide_card.readMoreCTA") }}
+            <UIcon
+              name="i-material-symbols-arrow-forward-rounded"
+              class="mg-blog-card__button-icon"
+            />
+          </div>
+          <div
+            v-else
             class="mg-blog-card__button"
             :aria-label="article.title"
           >
@@ -58,23 +84,37 @@
 </template>
 
 <script setup lang="ts">
-import type { BlogCardFragment } from "#gql"
+import type { BlogCardFragment, BlogPostDataFragment } from "#gql"
 
-const props = defineProps<{
-  article: BlogCardFragment
+const { article, dimension = "normal" } = defineProps<{
+  article: BlogCardFragment | BlogPostDataFragment
+  dimension?: "normal" | "wide"
 }>()
+
+const isWideCard = computed(() => dimension === "wide")
 
 const lang = useCurrentLang()
 
 const formattedDate = computed(() => {
-  if (!props.article.publishedData) return ""
-  return formatDate(props.article.publishedData, lang).toUpperCase()
+  if (!article.publishedData) return ""
+  return formatDate(article.publishedData, lang).toUpperCase()
+})
+
+const equipmentItem = computed(() => {
+  if (isWideCard.value) {
+    const equipmentList
+      = (article as BlogPostDataFragment).equipment?.items || []
+
+    return equipmentList.find(e => e?.type === "shoe")
+  }
+
+  return null
 })
 
 const mainTag = computed(() => {
   return (
-    props.article.tags?.items?.[0]?.tagName
-    || props.article.tags?.items?.[0]?.tagValue
+    article.tags?.items?.[0]?.tagName
+    || article.tags?.items?.[0]?.tagValue
     || ""
   )
 })
@@ -90,6 +130,10 @@ const mainTag = computed(() => {
   transition:
     transform 0.2s ease,
     box-shadow 0.2s ease;
+
+  &--wide {
+    border-radius: 2px;
+  }
 
   &:hover {
     transform: translateY(-2px);
@@ -114,12 +158,100 @@ const mainTag = computed(() => {
     transform: scale(0.98);
   }
 
+  &__header {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+  }
+
+  &__equipment-card {
+    @include body(4);
+
+    border-radius: 8px;
+    display: flex;
+    align-items: center;
+    gap: 4px;
+    padding-inline: 8px;
+    color: var(--mg-btn-text-primary);
+    background-color: var(--mg-color-secondary);
+    height: 32px;
+
+    @include start-from(tablet) {
+      border-radius: 4px;
+    }
+  }
+
+  &__equipment-card-image {
+    display: grid;
+    place-content: center;
+    object-fit: cover;
+    width: 24px;
+    border-radius: 999px;
+  }
+
   &__link {
     display: flex;
     flex-direction: column;
     height: 100%;
     text-decoration: none;
     color: inherit;
+
+    &--wide {
+      @include start-from(tablet) {
+        flex-direction: row;
+      }
+
+      .mg-blog-card {
+        &__image-wrapper {
+          @include start-from(tablet) {
+            width: 50%;
+            height: auto;
+          }
+        }
+
+        &__content {
+          gap: 8px;
+
+          @include start-from(tablet) {
+            padding: 36px;
+            justify-content: center;
+            gap: 8px;
+          }
+        }
+
+        &__date {
+          margin: 0;
+        }
+
+        &__title {
+          margin-bottom: 0;
+
+          @include start-from(tablet) {
+            @include heading(2);
+          }
+        }
+
+        &__description {
+          @include start-from(tablet) {
+            @include body(3);
+            line-height: 1.2rem;
+            display: -webkit-box;
+            line-clamp: unset;
+            -webkit-line-clamp: unset;
+            -webkit-box-orient: unset;
+          }
+        }
+
+        &__footer {
+          margin-top: 0;
+          justify-content: flex-start;
+
+          @include start-from(tablet) {
+            justify-content: flex-end;
+          }
+        }
+      }
+    }
   }
 
   &__image-wrapper {
@@ -204,6 +336,31 @@ const mainTag = computed(() => {
     align-items: center;
     justify-content: flex-end;
     margin-top: auto;
+  }
+
+  &__cta-read-more {
+    @include body(2);
+    font-weight: 700;
+    font-style: italic;
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    background-color: var(--mg-color-primary);
+    padding: 8px 32px;
+    color: var(--mg-btn-text-primary);
+
+    & > span {
+      display: none;
+    }
+
+    @include start-from(tablet) {
+      color: var(--mg-color-primary);
+      background-color: unset;
+
+      & > span {
+        display: inline;
+      }
+    }
   }
 
   &__button {

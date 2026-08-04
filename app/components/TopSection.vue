@@ -1,24 +1,26 @@
 <template>
   <div :class="['mg-top-section', `mg-top-section--${background}`]">
     <NuxtLayout name="content-wrapper">
-      <header class="mg-top-section__header">
-        <div class="mg-top-section__title-section">
-          <h2 class="mg-top-section__title uppercase md:capitalize">
-            {{ title }}
-          </h2>
-        </div>
-        <NuxtLinkLocale
-          v-if="linkTo"
-          class="mg-top-section__link"
-          :to="{ name: linkTo }"
-        >
-          <p>{{ link }}</p>
-          <UIcon name="i-material-symbols-arrow-forward" />
-        </NuxtLinkLocale>
-      </header>
-      <p class="mg-top-section__description">
-        {{ description }}
-      </p>
+      <div class="mg-top-section__text-container">
+        <header class="mg-top-section__header">
+          <div class="mg-top-section__title-section">
+            <h2 class="mg-top-section__title uppercase md:capitalize">
+              {{ title }}
+            </h2>
+          </div>
+          <NuxtLinkLocale
+            v-if="linkTo"
+            class="mg-top-section__link"
+            :to="{ name: linkTo }"
+          >
+            <p>{{ link }}</p>
+            <UIcon name="i-material-symbols-arrow-forward" />
+          </NuxtLinkLocale>
+        </header>
+        <p class="mg-top-section__description">
+          {{ description }}
+        </p>
+      </div>
       <div class="mg-top-section__body">
         <UICarousel :carousel-item-size="carouselItemSize">
           <slot />
@@ -57,6 +59,10 @@ const link = computed(() => $t(`${i18nModuleName.value}.link`, ""))
   padding-block: 24px;
   background-color: var(--mg-btn-bg-inverted);
 
+  @include start-from(tablet) {
+    padding-block: 38px;
+  }
+
   &--default-white {
     background-color: var(--mg-btn-bg-inverted);
   }
@@ -86,6 +92,12 @@ const link = computed(() => $t(`${i18nModuleName.value}.link`, ""))
 
   &--surface-light-grey {
     background-color: var(--mg-color-surface-alt);
+  }
+
+  &__text-container {
+    display: flex;
+    flex-direction: column;
+    margin-bottom: 16px;
   }
 
   &__header {
@@ -139,10 +151,6 @@ const link = computed(() => $t(`${i18nModuleName.value}.link`, ""))
     & > p {
       width: max-content;
     }
-  }
-
-  &__body {
-    margin-top: 16px;
   }
 
   &__card {

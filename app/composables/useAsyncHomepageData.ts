@@ -19,6 +19,10 @@ export const useAsyncHomepageData = async () => {
     return homepageData.value?.bodyContent?.items as ContentBlockDataFragment[]
   })
 
+  const bottomContentBlocks = computed(() => {
+    return homepageData.value?.bottomContent?.items as ContentBlockDataFragment[]
+  })
+
   const aboutCardList = computed(() => {
     return homepageData.value.bodyContent?.items[0]?.cards?.items as Array<{ type: "light" | "dark" } & AboutCardDataFragment>
   })
@@ -28,6 +32,7 @@ export const useAsyncHomepageData = async () => {
   return {
     homepageData,
     contentBlocks,
+    bottomContentBlocks,
     aboutCardList,
     ctaButtons
   }

@@ -8,7 +8,7 @@ import type { BodyDescriptionType } from "~~/types/contentful"
 
 export const useAsyncArticleData = async (slug: string) => {
   const lang = useCurrentLang()
-  const { articles } = useArticlesData()
+  const { articles } = useArticlesData({ server: false })
 
   const { data, pending, error } = await useAsyncGql({
     operation: "blogPost",

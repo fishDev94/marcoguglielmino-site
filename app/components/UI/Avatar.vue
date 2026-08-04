@@ -14,7 +14,12 @@
 </template>
 
 <script lang="ts" setup>
-const { src, title } = await useAsyncAvatarData()
+interface Props {
+  src: string
+  title: string
+}
+
+defineProps<Props>()
 </script>
 
 <style lang="scss" scoped>

@@ -1,13 +1,23 @@
 <template>
   <div class="mg-default-layout">
-    <UINavbarTop />
+    <UINavbarTop
+      :footer-data
+      :avatar-data
+    />
     <main class="mg-default-layout__content">
       <slot />
     </main>
-    <MGFooter />
+    <MGFooter :footer-data />
     <UINavbarBottom />
   </div>
 </template>
+
+<script setup lang="ts">
+const [footerData, avatarData] = await Promise.all([
+  useAsyncFooterData(),
+  useAsyncAvatarData()
+])
+</script>
 
 <style lang="scss" scoped>
   .mg-default-layout {
