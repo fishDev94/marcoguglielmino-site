@@ -44,7 +44,10 @@ const {
   ctaButtons
 } = await useAsyncHomepageData()
 
-const { articles, isLoading } = useArticlesData({ limit: ref(1), server: false })
+const {
+  articles
+  // isLoading
+} = useArticlesData({ limit: ref(1), server: false })
 
 const latestArticleSlug = computed(() => articles.value?.at(0)?.slug || "")
 </script>
