@@ -41,6 +41,7 @@
           :card-data
         />
       </UICarousel>
+      <slot />
     </NuxtLayout>
   </section>
 </template>

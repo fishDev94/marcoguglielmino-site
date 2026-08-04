@@ -16,4 +16,9 @@ fragment HomepageData on Homepage {
           ...ContentBlockData
         }
       }
+      bottomContent: bottomContentCollection {
+        items {
+          ...ContentBlockData
+        }
+      }
 }
