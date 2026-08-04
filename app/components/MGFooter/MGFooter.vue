@@ -1,17 +1,17 @@
 <template>
   <footer
-    v-if="footerData"
+    v-if="footerData.footerData.value"
     class="mg-footer"
   >
     <div class="mg-footer__header">
       <h3 class="mg-footer__title uppercase">
-        {{ footerData.mainTitle }}
+        {{ footerData.footerData.value.mainTitle }}
       </h3>
       <p class="mg-footer__copy md:hidden">
-        {{ footerData.copy }}
+        {{ footerData.footerData.value.copy }}
       </p>
       <p class="mg-footer__copyright--desktop hidden md:block">
-        {{ footerData.copyright }}
+        {{ footerData.footerData.value.copyright }}
       </p>
     </div>
     <nav aria-label="Footer navigation">
@@ -23,7 +23,7 @@
     />
     <section class="mg-footer__bottom">
       <p class="mg-footer__copyright">
-        {{ footerData.copyright }}
+        {{ footerData.footerData.value.copyright }}
       </p>
     </section>
   </footer>
@@ -32,15 +32,20 @@
 <script lang="ts" setup>
 import type { FooterColumn } from "@nuxt/ui"
 
-const { footerData } = await useAsyncFooterData()
+interface Props {
+  footerData: Awaited<ReturnType<typeof useAsyncFooterData>>
+}
+
+const props = defineProps<Props>()
 
 const columns = computed<FooterColumn[]>(() => {
-  if (!footerData.value) return []
+  const data = props.footerData.footerData.value
+  if (!data) return []
 
   const nav: FooterColumn = { label: "Navigation", children: [] }
   const social: FooterColumn = { label: "Social", children: [] }
 
-  footerData.value.navigationLinks?.items.forEach((item) => {
+  data.navigationLinks?.items.forEach((item) => {
     nav.children?.push({
       label: item?.title as string,
       to: item?.url as string,
@@ -48,7 +53,7 @@ const columns = computed<FooterColumn[]>(() => {
     })
   })
 
-  footerData.value.socialLinks?.items.forEach((item) => {
+  data.socialLinks?.items.forEach((item) => {
     social.children?.push({
       label: item?.title as string,
       to: item?.url as string,

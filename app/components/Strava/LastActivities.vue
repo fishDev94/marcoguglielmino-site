@@ -4,7 +4,7 @@
     link-to="strava"
     background="default-white"
   >
-    <template v-if="isLoadingStravaData">
+    <template v-if="isLoadingStravaData && !activities">
       <StravaActivityCardSkeleton
         v-for="n in LAST_ACTIVITIES_PER_PAGE"
         :key="`${n}+strava-skeleton`"

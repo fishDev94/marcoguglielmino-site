@@ -4,7 +4,7 @@
     background="secondary-dark"
     carousel-item-size="320px"
   >
-    <template v-if="isReelsDataLoading">
+    <template v-if="!reels">
       <InstagramReelCardSkeleton
         v-for="n in REEL_CARD_COUNT"
         :key="`${n}+reel-skeleton`"
@@ -29,5 +29,5 @@
 <script lang="ts" setup>
 import { REEL_CARD_COUNT } from "~/constants"
 
-const { reels, isReelsDataLoading } = useInstagramReelData(ref(REEL_CARD_COUNT))
+const { reels } = useInstagramReelData(ref(REEL_CARD_COUNT))
 </script>

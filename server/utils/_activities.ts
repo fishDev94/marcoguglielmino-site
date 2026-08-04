@@ -8,10 +8,16 @@ import { Redis } from "@upstash/redis"
 const redis = Redis.fromEnv()
 
 export async function getStravaAccessToken() {
-  const { stravaClientID, stravaClientSecret, stravaRefreshToken }
-    = useRuntimeConfig()
+  const { stravaClientID, stravaClientSecret, stravaRefreshToken } = useRuntimeConfig()
 
-  let refreshToken = await redis.get("strava_refresh_token")
+  // Check if we have a cached access token
+  const cachedToken = await redis.get<string>("strava_access_token")
+  if (cachedToken) {
+    return cachedToken
+  }
+
+  // No cached token — refresh it
+  let refreshToken = await redis.get<string>("strava_refresh_token")
 
   if (!refreshToken) {
     refreshToken = stravaRefreshToken
@@ -34,6 +40,10 @@ export async function getStravaAccessToken() {
   const accessToken = tokenRes.access_token
   const newRefreshToken = tokenRes.refresh_token
 
+  // Cache access token for 50 minutes (Strava tokens last 6 hours)
+  await redis.set("strava_access_token", accessToken, { ex: 3000 })
+
+  // Update refresh token if rotated
   if (newRefreshToken && newRefreshToken !== refreshToken) {
     await redis.set("strava_refresh_token", newRefreshToken)
   }

@@ -10,10 +10,14 @@
 </template>
 
 <script setup lang="ts">
-const { internalLinks } = await useAsyncFooterData()
+interface Props {
+  internalLinks: Awaited<ReturnType<typeof useAsyncFooterData>>["internalLinks"]
+}
+
+const props = defineProps<Props>()
 
 const items = computed(() =>
-  internalLinks.value?.map((link) => {
+  props.internalLinks.value?.map((link) => {
     return {
       label: link?.title as string,
       to: link?.url as string,

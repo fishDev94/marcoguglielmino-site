@@ -13,13 +13,25 @@
             <span class="mg-top-nav-bar__title-full">Marco Guglielmino</span>
           </h1>
         </NuxtLinkLocale>
-        <UINavbarTopMenu />
-        <UIAvatar />
+        <UINavbarTopMenu :internal-links="footerData.internalLinks" />
+        <UIAvatar
+          :src="avatarData.src.value"
+          :title="avatarData.title.value"
+        />
         <UINavbarTopNavigationIcons />
       </div>
     </NuxtLayout>
   </nav>
 </template>
+
+<script setup lang="ts">
+interface Props {
+  footerData: Awaited<ReturnType<typeof useAsyncFooterData>>
+  avatarData: Awaited<ReturnType<typeof useAsyncAvatarData>>
+}
+
+defineProps<Props>()
+</script>
 
 <style scoped lang="scss">
 .mg-top-nav-bar {
@@ -61,7 +73,7 @@
       display: none;
     }
 
-    @include start-from(tablet) {
+    @include start-from(medium-desktop) {
       @include heading(3);
 
       text-transform: none;
