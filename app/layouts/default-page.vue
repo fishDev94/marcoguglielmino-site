@@ -1,15 +1,19 @@
 <template>
-  <NuxtLayout name="content-wrapper">
+  <main>
     <ContentPageHero
       v-if="pageData"
       :page-data
     />
-    <RichTextRenderer
-      v-if="richTextField"
-      :custom-rich-text-json="richTextField"
-    />
-    <slot />
-  </NuxtLayout>
+    <NuxtLayout
+      name="content-wrapper"
+    >
+      <RichTextRenderer
+        v-if="richTextField"
+        :custom-rich-text-json="richTextField"
+      />
+      <slot />
+    </NuxtLayout>
+  </main>
 </template>
 
 <script setup lang="ts">
