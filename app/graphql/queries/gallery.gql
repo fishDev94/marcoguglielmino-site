@@ -1,0 +1,15 @@
+query getGalleryAssets($locale: String) {
+  assetCollection(
+    locale: $locale
+    where: { contentfulMetadata: { tags: { id_contains_some: ["gallery"] } } }
+    limit: 100
+  ) {
+    items {
+      _id
+      title
+      url
+      width
+      height
+    }
+  }
+}

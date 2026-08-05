@@ -1,6 +1,9 @@
 <template>
   <NuxtLayout name="content-wrapper">
-    <ContentPageHero :page-data />
+    <ContentPageHero
+      v-if="pageData"
+      :page-data
+    />
     <RichTextRenderer
       v-if="richTextField"
       :custom-rich-text-json="richTextField"

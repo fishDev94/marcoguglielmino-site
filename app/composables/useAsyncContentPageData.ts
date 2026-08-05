@@ -7,7 +7,7 @@ export default async function useAsyncContentPageData() {
   const baseRouteName = computed(() => routeBaseName(route))
   const lang = useCurrentLang()
 
-  const { data } = await useAsyncGql({
+  const { data, error } = await useAsyncGql({
     operation: "page",
     variables: {
       slug: String(baseRouteName.value) || "",
@@ -40,6 +40,7 @@ export default async function useAsyncContentPageData() {
   return {
     pageData,
     seoData,
-    richTextField
+    richTextField,
+    error
   }
 }
