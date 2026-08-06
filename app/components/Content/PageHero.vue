@@ -66,7 +66,7 @@ const heroImage = computed(() => {
   &__cover {
     position: relative;
     overflow: hidden;
-    height: 35dvh;
+    height: 30dvh;
     width: 100%;
     background-color: var(--mg-color-secondary);
   }
@@ -90,6 +90,9 @@ const heroImage = computed(() => {
 
   &__text-content {
     padding: 36px;
+    max-width: 1440px;
+    width: 100%;
+    margin: 0 auto;
 
     @include start-from(tablet) {
       padding-inline: 64px;

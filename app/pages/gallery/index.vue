@@ -1,9 +1,7 @@
 <template>
   <NuxtLayout name="default-page">
     <section class="mg-gallery-page">
-      <UIGallery
-        :images
-      />
+      <UIGalleryGrid :images />
     </section>
   </NuxtLayout>
 </template>
@@ -23,12 +21,16 @@ const images = computed(() => {
     alt: asset?.title || "",
     width: asset?.width || 0,
     height: asset?.height || 0
-  })) as LightboxImage[] || []
+  })) as Array<{ width: number, height: number } & LightboxImage> || []
 })
 </script>
 
 <style lang="scss" scoped>
 .mg-gallery-page {
   padding: 36px 0;
+
+  @include start-from(tablet) {
+    padding: 64px 0;
+  }
 }
 </style>
