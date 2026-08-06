@@ -1,11 +1,18 @@
 <template>
   <div class="mg-navbar-bottom">
-    <UINavbarBottomIcon page="home" />
-    <UINavbarBottomIcon page="performance" />
-    <UINavbarBottomIcon page="blog" />
-    <UINavbarBottomIcon page="strava" />
+    <UINavbarBottomIcon
+      v-for="page in bottomNavList"
+      :key="page"
+      :page
+    />
   </div>
 </template>
+
+<script lang="ts" setup>
+const bottomNavList = [
+  "home", "performance", "blog", "gallery"
+]
+</script>
 
 <style lang="scss" scoped>
     .mg-navbar-bottom {

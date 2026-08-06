@@ -43,8 +43,8 @@ const name = computed(() => {
     return "i-uis-graph-bar"
   } else if (page === "blog") {
     return "i-quill-paper"
-  } else if (page === "strava") {
-    return "i-mdi-run"
+  } else if (page === "gallery") {
+    return "i-boxicons-camera"
   }
 
   return "i-mdi-run"

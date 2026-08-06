@@ -1,7 +1,7 @@
 <template>
   <div class="mg-gallery-mosaic">
     <div
-      v-for="(image, index) in images"
+      v-for="(image, index) in visibleImages"
       :key="image.id || index"
       class="mg-gallery-mosaic__item"
       :class="getBentoClass(index)"
@@ -14,36 +14,41 @@
         loading="lazy"
         format="webp"
         quality="80"
-        sizes="sm:100vw md:50vw lg:800px"
+        sizes="sm:100vw md:400px lg:500px"
         densities="x1 x2"
         :placeholder="`data:image/svg+xml;base64,${toBase64(shimmer(image.width || 600, image.height || 400))}`"
         class="mg-gallery-mosaic__img"
       />
-      <!-- Overlay hover interattivo (Desktop) -->
-      <div class="mg-gallery-mosaic__overlay">
-        <span class="mg-gallery-mosaic__icon">zoom_in</span>
-      </div>
     </div>
+
+    <div
+      v-if="hasMore"
+      ref="sentinelRef"
+      class="mg-gallery-mosaic__sentinel"
+      aria-hidden="true"
+    />
 
     <UIImageViewerDesktop
       v-if="isDesktop"
-      :images="images"
+      :images
     />
     <UIImageViewerMobile
       v-else
-      :images="images"
+      :images
     />
   </div>
 </template>
 
 <script lang="ts" setup>
-import { breakpointsTailwind, useBreakpoints } from "@vueuse/core"
+import { breakpointsTailwind, useBreakpoints, useIntersectionObserver } from "@vueuse/core"
 
 import type { LightboxImage } from "@@/types/image-viewer"
 
 interface Props {
   images: Array<{ width: number, height: number } & LightboxImage>
 }
+
+const BATCH_SIZE = 10
 
 const breakpoints = useBreakpoints(breakpointsTailwind)
 const isDesktop = breakpoints.greaterOrEqual("md")
@@ -54,6 +59,28 @@ const { openViewer } = useImageViewer(toRef(() => images))
 const emit = defineEmits<{
   (e: "select", id: string): void
 }>()
+
+const visibleCount = ref(BATCH_SIZE)
+const sentinelRef = ref<HTMLElement | null>(null)
+
+const visibleImages = computed(() => images.slice(0, visibleCount.value))
+const hasMore = computed(() => visibleCount.value < images.length)
+
+const loadMore = () => {
+  if (hasMore.value) {
+    visibleCount.value = Math.min(visibleCount.value + BATCH_SIZE, images.length)
+  }
+}
+
+useIntersectionObserver(
+  sentinelRef,
+  ([entry]) => {
+    if (entry?.isIntersecting) {
+      loadMore()
+    }
+  },
+  { rootMargin: "200px" }
+)
 
 const handleSelect = (id?: string) => {
   if (id) {
@@ -72,14 +99,23 @@ const getBentoClass = (index: number): string => {
 .mg-gallery-mosaic {
   display: flex;
   flex-direction: column;
-  gap: 1rem;
+  gap: 12px;
   width: 100%;
 
   @media (min-width: 768px) {
     display: grid;
     grid-template-columns: repeat(12, 1fr);
     grid-auto-rows: 220px;
-    gap: 1.5rem;
+    gap: 16px;
+  }
+
+  &__sentinel {
+    height: 1px;
+    width: 100%;
+
+    @media (min-width: 768px) {
+      grid-column: span 12;
+    }
   }
 
   &__item {
