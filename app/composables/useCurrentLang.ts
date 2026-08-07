@@ -1,5 +1,5 @@
 export default function useCurrentLang() {
   const { locale } = useI18n()
 
-  return locale.value
+  return locale.value || "it"
 }

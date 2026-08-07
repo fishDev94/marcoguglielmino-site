@@ -1,7 +1,7 @@
 <template>
   <section class="mg-disc-section">
     <DisciplineHeader
-      :discipline
+      :discipline="disciplineName"
       :personal-best
       :season-best
       :icon
@@ -9,44 +9,36 @@
 
     <div class="mg-disc-section__content">
       <DisciplineChart
-        :discipline
-        :items="performanceItems"
+        :discipline="disciplineName"
+        :items="performance || []"
       />
 
-      <PerformanceTable :discipline />
+      <PerformanceTable :discipline="disciplineName" />
     </div>
   </section>
 </template>
 
 <script setup lang="ts">
+import type { PerformanceCardDataFragment } from "#gql"
+
 interface Props {
-  discipline: string
+  performance: PerformanceCardDataFragment[]
+  disciplineName: string
   icon?: string
 }
 
 const {
-  discipline,
+  performance,
   icon = "i-material-symbols:trending-down"
 } = defineProps<Props>()
 
-const lang = useCurrentLang()
-
-const { data } = await useAsyncGql("performanceCard", {
-  locale: lang,
-  discipline: discipline
-})
-
-const performanceItems = computed(() => {
-  return data.value?.performanceCardCollection?.items ?? []
-})
-
 const personalBest = computed(() => {
-  const pbItem = performanceItems.value.find(item => item?.label === "Personal Best")
+  const pbItem = performance.find(item => item?.label === "Personal Best")
   return pbItem?.value || "-"
 })
 
 const seasonBest = computed(() => {
-  const sbItem = performanceItems.value.find(item => item?.label === "Season's Best")
+  const sbItem = performance.find(item => item?.label === "Season's Best")
   return sbItem?.value || "-"
 })
 </script>

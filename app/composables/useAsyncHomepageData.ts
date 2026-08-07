@@ -1,7 +1,26 @@
 import type { AboutCardDataFragment, ContentBlockDataFragment, CtaButtonDataFragment, HomepageDataFragment } from "#gql"
 
+const logHomepageDataError = (error: unknown) => {
+  if (!import.meta.server) return
+
+  const requestError = error as {
+    message?: string
+    name?: string
+    status?: number
+    statusCode?: number
+  }
+
+  console.error("[homepage-data] Contentful query failed", {
+    name: requestError.name,
+    message: requestError.message,
+    status: requestError.status || requestError.statusCode,
+    vercelEnvironment: process.env.VERCEL_ENV,
+    vercelDeployment: process.env.VERCEL_URL
+  })
+}
+
 export const useAsyncHomepageData = async () => {
-  const { data } = await useAsyncGql({
+  const { data, error } = await useAsyncGql({
     operation: "homepage",
     variables: { slug: "homepage", locale: useCurrentLang() },
     options: {
@@ -10,6 +29,16 @@ export const useAsyncHomepageData = async () => {
       }
     }
   })
+
+  if (error.value) {
+    logHomepageDataError(error.value)
+
+    throw createError({
+      statusCode: 500,
+      statusMessage: "Failed to fetch homepage data",
+      fatal: true
+    })
+  }
 
   const homepageData = computed(() => {
     return data?.value.homepageCollection?.items[0] as HomepageDataFragment

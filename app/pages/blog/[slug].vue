@@ -117,6 +117,7 @@ useSeoMeta({
   title,
   description,
   ogTitle: title,
+  ogSiteName: "Marco Guglielmino",
   ogDescription: description,
   ogImage: coverImageUrl,
   ogImageAlt: coverImageAlt,

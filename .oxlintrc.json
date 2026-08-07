@@ -8,7 +8,7 @@
   "rules": {
     "no-unused-vars": "warn",
     "no-implicit-coercion": "off",
-    "no-underscore-dangle": ["error", { "allow": ["__typename", "_selectedReelId"] }],
+    "no-underscore-dangle": ["error", { "allow": ["__typename", "_selectedReelId", "_id"] }],
     "no-ternary": "off",
     "sort-keys": "off",
     "id-length": "off",

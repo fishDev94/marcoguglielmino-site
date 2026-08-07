@@ -96,6 +96,7 @@
 </template>
 
 <script setup lang="ts">
+import { INIT_REF_NUMBER } from "~/constants"
 import type { InstagramReel } from "~~/types/instagram"
 
 const props = defineProps<{
@@ -164,14 +165,14 @@ const handleToggleMute = () => {
 // --- Play a specific video, pause all others ---
 const playVideo = (id: string) => {
   activeReelId.value = id
-  videoProgress.value = 0
+  videoProgress.value = INIT_REF_NUMBER
 
   playerRefs.forEach((player, videoId) => {
     const video = player.videoEl
     if (!video) return
 
     if (videoId === id) {
-      video.currentTime = 0
+      video.currentTime = INIT_REF_NUMBER
       attemptPlay(video)
     } else {
       video.pause()
@@ -181,16 +182,16 @@ const playVideo = (id: string) => {
 
 // --- Order reels so selected reel is first ---
 const prepareReelsOrder = (targetId: string) => {
-  if (!props.reels || props.reels.length === 0) return
+  if (!props.reels || props.reels.length === INIT_REF_NUMBER) return
 
   const targetIndex = props.reels.findIndex(r => r.id === targetId)
 
-  if (targetIndex <= 0) {
+  if (targetIndex <= INIT_REF_NUMBER) {
     orderedReels.value = [...props.reels]
   } else {
     orderedReels.value = [
       ...props.reels.slice(targetIndex),
-      ...props.reels.slice(0, targetIndex)
+      ...props.reels.slice(INIT_REF_NUMBER, targetIndex)
     ]
   }
 }
@@ -208,7 +209,7 @@ watch(
       await nextTick()
 
       if (containerRef.value) {
-        containerRef.value.scrollTop = 0
+        containerRef.value.scrollTop = INIT_REF_NUMBER
       }
 
       const video = getVideoEl(newId)
@@ -232,7 +233,7 @@ watch(
 
 // --- Scroll snap handler ---
 const onScroll = () => {
-  if (!containerRef.value || orderedReels.value.length === 0) return
+  if (!containerRef.value || orderedReels.value.length === INIT_REF_NUMBER) return
 
   const container = containerRef.value
   const slideHeight = container.clientHeight

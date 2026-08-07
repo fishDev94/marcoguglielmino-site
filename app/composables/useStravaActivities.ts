@@ -1,7 +1,7 @@
 import type { NuxtError } from "#app"
 import type { StravaActivity } from "~~/types/strava"
 
-const getActivities = (query?: { page?: number, per_page?: number }) => {
+const getActivities = <T extends StravaActivity>(query?: { page?: number, per_page?: number }) => {
   const { data, pending, error } = useFetch("/api/activities/", {
     lazy: true,
     query: {
@@ -13,23 +13,11 @@ const getActivities = (query?: { page?: number, per_page?: number }) => {
     }
   })
 
-  watch(
-    error,
-    (err) => {
-      if (err && err.status !== 429) {
-        showError(
-          createError({
-            statusCode: err.status || 500,
-            statusMessage: err.statusText || "Fetch error",
-            message: err.message
-          })
-        )
-      }
-    },
-    { immediate: true }
-  )
-
-  return { data, pending, error }
+  return { data, pending, error } as {
+    data: Ref<T[]>
+    pending: Ref<boolean>
+    error: Ref<NuxtError<unknown>>
+  }
 }
 
 const getActivity = <T extends StravaActivity>(activityId: string) => {
@@ -52,8 +40,7 @@ const getActivity = <T extends StravaActivity>(activityId: string) => {
           })
         )
       }
-    },
-    { immediate: true }
+    }
   )
 
   return { data, pending, error } as {

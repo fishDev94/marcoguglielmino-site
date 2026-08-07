@@ -37,25 +37,24 @@
         </svg>
       </div>
       <div class="container-max mx-auto px-margin-mobile flex flex-col items-center text-center z-10">
-        <!-- 404 Headline -->
+        <!-- Error Headline -->
         <div class="relative mb-stack-md">
           <h1
             class="font-montserrat font-display-lg text-[12rem] md:text-[20rem] leading-none select-none italic text-(--ui-primary) opacity-10 absolute left-1/2 -translate-x-1/2 top-1/2 -translate-y-1/2 pointer-events-none"
           >
-            404
+            {{ statusCode }}
           </h1>
           <h1 class="font-montserrat font-display-lg text-[8rem] md:text-[14rem] leading-none italic relative text-(--ui-secondary)">
-            404
+            {{ statusCode }}
           </h1>
         </div>
         <!-- Supporting Message -->
         <div class="max-w-2xl mb-stack-lg mb-8">
           <h2 class="font-headline-lg text-headline-lg mb-4 text-(--ui-secondary) text-4xl font-bold">
-            Oops! Sembra che tu sia uscito fuori pista.
+            {{ errorTitle }}
           </h2>
           <p class="font-body-lg text-body-lg text-on-surface-variant">
-            Anche ai migliori capita di sbagliare traiettoria. Non preoccuparti, riprendiamo il ritmo e
-            torniamo sul percorso principale.
+            {{ errorDescription }}
           </p>
         </div>
         <!-- Call to Action -->
@@ -102,3 +101,23 @@
     </main>
   </NuxtLayout>
 </template>
+
+<script setup lang="ts">
+const error = useError()
+
+const statusCode = computed(() => error.value?.statusCode || 500)
+
+const errorTitle = computed(() => {
+  if (statusCode.value === 404) {
+    return "Oops! Sembra che tu sia uscito fuori pista."
+  }
+  return "Qualcosa è andato storto."
+})
+
+const errorDescription = computed(() => {
+  if (statusCode.value === 404) {
+    return "Anche ai migliori capita di sbagliare traiettoria. Non preoccuparti, riprendiamo il ritmo e torniamo sul percorso principale."
+  }
+  return "Si è verificato un errore imprevisto. Riprova tra qualche istante o torna alla home page."
+})
+</script>

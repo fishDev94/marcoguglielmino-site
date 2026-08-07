@@ -30,9 +30,5 @@ defineProps<Props>()
     border: 2px solid var(--ui-primary);
     width: 32px;
     height: 32px;
-
-    @include start-from(tablet) {
-        display: none;
-    }
 }
 </style>

@@ -8,7 +8,7 @@
     </h2>
 
     <UIGalleryMosaic
-      :images="images"
+      :images
       @select="openViewer"
     />
 
@@ -38,11 +38,11 @@
       </UICarousel>
     </div>
 
-    <ArticleImageViewerDesktop
+    <UIImageViewerDesktop
       v-if="isDesktop"
       :images="images"
     />
-    <ArticleImageViewerMobile
+    <UIImageViewerMobile
       v-else
       :images="images"
     />

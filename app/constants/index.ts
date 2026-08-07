@@ -1,5 +1,6 @@
 export const INIT_REF_NUMBER = 0
 export const FIRST_ELEMENT = 0
+export const UNIT = 1
 
 // TIME IN MILLISECOND
 export const DEBOUNCE_TIME = 100
@@ -42,3 +43,6 @@ export const DISCIPLINES = {
     icon: "i-material-symbols:flag"
   }
 }
+
+// UI
+export const BATCH_SIZE = 10
