@@ -3,14 +3,16 @@ import type { ContentPageDataFragment } from "#gql"
 export default async function useAsyncContentPageData() {
   const route = useRoute()
   const routeBaseName = useRouteBaseName()
+  const slugParam = route.params.slug
 
   const baseRouteName = computed(() => routeBaseName(route))
   const lang = useCurrentLang()
+  const pageName = slugParam ? String(slugParam) : String(baseRouteName.value)
 
   const { data, error } = await useAsyncGql({
     operation: "page",
     variables: {
-      slug: String(baseRouteName.value) || "",
+      slug: pageName || "",
       locale: lang
     }
   })
