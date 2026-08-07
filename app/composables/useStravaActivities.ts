@@ -13,22 +13,6 @@ const getActivities = (query?: { page?: number, per_page?: number }) => {
     }
   })
 
-  watch(
-    error,
-    (err) => {
-      if (err && err.status !== 429) {
-        showError(
-          createError({
-            statusCode: err.status || 500,
-            statusMessage: err.statusText || "Fetch error",
-            message: err.message
-          })
-        )
-      }
-    },
-    { immediate: true }
-  )
-
   return { data, pending, error }
 }
 
@@ -52,8 +36,7 @@ const getActivity = <T extends StravaActivity>(activityId: string) => {
           })
         )
       }
-    },
-    { immediate: true }
+    }
   )
 
   return { data, pending, error } as {

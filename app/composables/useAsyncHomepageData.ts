@@ -1,7 +1,7 @@
 import type { AboutCardDataFragment, ContentBlockDataFragment, CtaButtonDataFragment, HomepageDataFragment } from "#gql"
 
 export const useAsyncHomepageData = async () => {
-  const { data } = await useAsyncGql({
+  const { data, error } = await useAsyncGql({
     operation: "homepage",
     variables: { slug: "homepage", locale: useCurrentLang() },
     options: {
@@ -10,6 +10,14 @@ export const useAsyncHomepageData = async () => {
       }
     }
   })
+
+  if (error.value) {
+    throw createError({
+      statusCode: 500,
+      statusMessage: "Failed to fetch homepage data",
+      fatal: true
+    })
+  }
 
   const homepageData = computed(() => {
     return data?.value.homepageCollection?.items[0] as HomepageDataFragment
