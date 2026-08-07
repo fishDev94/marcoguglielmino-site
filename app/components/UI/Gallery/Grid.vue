@@ -14,7 +14,7 @@
         loading="lazy"
         format="webp"
         quality="80"
-        sizes="sm:100vw md:400px lg:500px"
+        :sizes="getImageSizes(index)"
         densities="x1 x2"
         :placeholder="`data:image/svg+xml;base64,${toBase64(shimmer(image.width || 600, image.height || 400))}`"
         class="mg-gallery-mosaic__img"
@@ -43,12 +43,11 @@
 import { breakpointsTailwind, useBreakpoints, useIntersectionObserver } from "@vueuse/core"
 
 import type { LightboxImage } from "@@/types/image-viewer"
+import { BATCH_SIZE, INIT_REF_NUMBER, UNIT } from "~/constants"
 
 interface Props {
   images: Array<{ width: number, height: number } & LightboxImage>
 }
-
-const BATCH_SIZE = 10
 
 const breakpoints = useBreakpoints(breakpointsTailwind)
 const isDesktop = breakpoints.greaterOrEqual("md")
@@ -63,7 +62,7 @@ const emit = defineEmits<{
 const visibleCount = ref(BATCH_SIZE)
 const sentinelRef = ref<HTMLElement | null>(null)
 
-const visibleImages = computed(() => images.slice(0, visibleCount.value))
+const visibleImages = computed(() => images.slice(INIT_REF_NUMBER, visibleCount.value))
 const hasMore = computed(() => visibleCount.value < images.length)
 
 const loadMore = () => {
@@ -91,7 +90,27 @@ const handleSelect = (id?: string) => {
 
 const getBentoClass = (index: number): string => {
   const patternIndex = index % 5
-  return `mg-gallery-mosaic__item--bento-${patternIndex + 1}`
+  return `mg-gallery-mosaic__item--bento-${patternIndex + UNIT}`
+}
+
+const getImageSizes = (index: number): string => {
+  const patternIndex = index % 5
+
+  // Mobile: sempre 100vw (full width stack)
+  // Desktop: basato sulla griglia bento (12 colonne, max-width 1440px)
+  switch (patternIndex) {
+    case 0: // bento-1: span 4 col, span 3 rows
+      return "sm:100vw md:400px lg:480px"
+    case 1: // bento-2: span 8 col, span 2 rows
+      return "sm:100vw md:640px lg:960px"
+    case 2: // bento-3: span 4 col
+    case 3: // bento-4: span 4 col
+      return "sm:100vw md:400px lg:480px"
+    case 4: // bento-5: span 12 col (full width)
+      return "sm:100vw md:768px lg:1280px"
+    default:
+      return "sm:100vw md:640px lg:800px"
+  }
 }
 </script>
 
@@ -102,7 +121,7 @@ const getBentoClass = (index: number): string => {
   gap: 12px;
   width: 100%;
 
-  @media (min-width: 768px) {
+  @include start-from(tablet) {
     display: grid;
     grid-template-columns: repeat(12, 1fr);
     grid-auto-rows: 220px;
@@ -113,7 +132,7 @@ const getBentoClass = (index: number): string => {
     height: 1px;
     width: 100%;
 
-    @media (min-width: 768px) {
+    @include start-from(tablet) {
       grid-column: span 12;
     }
   }
@@ -131,7 +150,7 @@ const getBentoClass = (index: number): string => {
       transform 0.4s cubic-bezier(0.165, 0.84, 0.44, 1),
       box-shadow 0.4s cubic-bezier(0.165, 0.84, 0.44, 1);
 
-    @media (min-width: 768px) {
+    @include start-from(tablet) {
       height: 100%;
     }
 
@@ -198,13 +217,6 @@ const getBentoClass = (index: number): string => {
     padding: 1.25rem;
     opacity: 0;
     transition: opacity 0.3s ease;
-  }
-
-  &__icon {
-    font-family: "Material Symbols Outlined", sans-serif;
-    color: var(--mg-color-accent);
-    font-size: 2rem;
-    user-select: none;
   }
 }
 </style>

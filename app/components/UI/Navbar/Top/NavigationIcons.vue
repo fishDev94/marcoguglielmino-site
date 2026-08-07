@@ -1,5 +1,6 @@
 <template>
   <div class="mg-nav-icons">
+    <UILocaleSelector />
     <NuxtLinkLocale
       class="mg-nav-icons__link"
       :to="{ name: 'strava' }"
@@ -15,7 +16,11 @@
     >
       <UIcon
         name="i-boxicons-camera"
-        :class="['mg-nav-icons__icon', 'size-6', { 'text-(--ui-primary)': isActive, 'text-white': !isActive }]"
+        :class="[
+          'mg-nav-icons__icon',
+          'size-6',
+          { 'text-(--ui-primary)': isActive, 'text-white': !isActive }
+        ]"
       />
     </NuxtLinkLocale>
   </div>
@@ -31,8 +36,9 @@ const isActive = computed(() => route.path === "/gallery")
   display: none;
 
   @include start-from(tablet) {
-      display: flex;
-      gap: 16px;
+    display: flex;
+    align-items: center;
+    gap: 16px;
   }
 
   &__link {

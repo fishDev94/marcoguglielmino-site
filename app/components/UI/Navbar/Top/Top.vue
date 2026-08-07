@@ -14,10 +14,13 @@
           </h1>
         </NuxtLinkLocale>
         <UINavbarTopMenu :internal-links="footerData.internalLinks" />
-        <UIAvatar
-          :src="avatarData.src.value"
-          :title="avatarData.title.value"
-        />
+        <div class="mg-top-nav-bar__right-mobile-side">
+          <UILocaleSelector />
+          <UIAvatar
+            :src="avatarData.src.value"
+            :title="avatarData.title.value"
+          />
+        </div>
         <UINavbarTopNavigationIcons />
       </div>
     </NuxtLayout>
@@ -54,6 +57,7 @@ defineProps<Props>()
 
   &__left {
     display: flex;
+    align-items: center;
     gap: 16px;
     cursor: pointer;
 
@@ -68,6 +72,12 @@ defineProps<Props>()
     text-transform: uppercase;
     font-style: italic;
     color: var(--mg-btn-text-primary);
+
+    @include start-from(tablet) {
+      .mg-top-nav-bar__title-short {
+        font-size: 18px;
+      }
+    }
 
     .mg-top-nav-bar__title-full {
       display: none;
@@ -85,6 +95,16 @@ defineProps<Props>()
       .mg-top-nav-bar__title-full {
         display: inline;
       }
+    }
+  }
+
+  &__right-mobile-side {
+    display: flex;
+    align-items: center;
+    gap: 16px;
+
+    @include start-from(tablet) {
+      display: none;
     }
   }
 }
