@@ -1,16 +1,13 @@
 <template>
-  <NuxtLinkLocale
+  <NuxtLink
     :class="[
       'strava-card',
       { 'strava-card--full': isFullCard },
       { 'is-gym': isWeightTraining }
     ]"
-    :to="{
-      name: 'activity-page',
-      params: {
-        activityId: activity.id
-      }
-    }"
+    :to="stravaActivityUrl"
+    target="_blank"
+    rel="noopener noreferrer"
   >
     <StravaHeader
       :activity-name="activity.name"
@@ -41,7 +38,7 @@
       :suffer-score="activity.suffer_score || 0"
       :distance="activity.distance"
     />
-  </NuxtLinkLocale>
+  </NuxtLink>
 </template>
 
 <script setup lang="ts">
@@ -54,6 +51,7 @@ const { activity, type = "default" } = defineProps<{
 
 const isWeightTraining = computed(() => activity.type === "WeightTraining")
 const isFullCard = computed(() => type === "full")
+const stravaActivityUrl = computed(() => `https://www.strava.com/activities/${activity.id}`)
 </script>
 
 <style lang="scss" scoped>

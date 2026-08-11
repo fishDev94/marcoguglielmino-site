@@ -5,6 +5,7 @@
       :page-data
     />
     <NuxtLayout
+      v-if="!withAsideLayout"
       name="content-wrapper"
     >
       <RichTextRenderer
@@ -13,10 +14,35 @@
       />
       <slot />
     </NuxtLayout>
+    <div
+      v-else
+      class="mg-default-page__content"
+    >
+      <NuxtLayout
+        name="article-layout"
+        :split
+      >
+        <template #main>
+          <RichTextRenderer
+            v-if="richTextField"
+            :custom-rich-text-json="richTextField"
+          />
+          <slot name="main" />
+        </template>
+        <template #side>
+          <slot name="side" />
+        </template>
+      </NuxtLayout>
+    </div>
   </main>
 </template>
 
 <script setup lang="ts">
+const { withAsideLayout = false } = defineProps<{
+  withAsideLayout?: boolean
+  split?: "8-4" | "50-50"
+}>()
+
 const {
   pageData,
   seoData,
@@ -44,3 +70,15 @@ useHead({
   title: seoData.value?.title
 })
 </script>
+
+<style scoped lang="scss">
+.mg-default-page {
+  &__content {
+    padding-block: calc(36px - 24px);
+
+    @include start-from(tablet) {
+      padding-block: calc(64px - 24px);
+    }
+  }
+}
+</style>

@@ -3,7 +3,7 @@
     name="content-wrapper"
     disable-padding
   >
-    <div :class="['mg-article-layout', marginClass, paddingClass, mobileOrderClass]">
+    <div :class="['mg-article-layout', marginClass, paddingClass, mobileOrderClass, splitClass]">
       <section class="mg-article-layout__main-section">
         <slot name="main" />
       </section>
@@ -19,10 +19,12 @@ interface Props {
   margin?: "auto" | "no-margin"
   padding?: "auto" | "no-padding"
   mobileSidePosition?: "top" | "bottom"
+  split?: "8-4" | "50-50"
 }
 
-const { margin = "auto", padding = "auto", mobileSidePosition = "bottom" } = defineProps<Props>()
+const { margin = "auto", padding = "auto", mobileSidePosition = "bottom", split = "8-4" } = defineProps<Props>()
 
+const splitClass = computed(() => `mg-article-layout--split-${split}`)
 const marginClass = computed(() => margin === "no-margin" ? "mg-article-layout--no-margin" : "")
 const paddingClass = computed(() => padding === "no-padding" ? "mg-article-layout--no-padding" : "")
 const mobileOrderClass = computed(() => mobileSidePosition === "top" ? "mg-article-layout--side-top" : "")
@@ -104,12 +106,33 @@ $tablet-padding: 64px;
     display: flex;
     flex-direction: column;
     gap: 2rem;
+  }
 
-    @media (min-width: 1024px) {
-      grid-column: span 4 / span 4;
-      position: sticky;
-      top: 6rem;
-      height: fit-content;
+  &--split-8-4 {
+    @include start-from(medium-desktop) {
+      .mg-article-layout__main-section {
+        grid-column: span 8 / span 8;
+      }
+      .mg-article-layout__aside {
+        grid-column: span 4 / span 4;
+        position: sticky;
+        top: 6rem;
+        height: fit-content;
+      }
+    }
+  }
+
+  &--split-50-50 {
+    @include start-from(medium-desktop) {
+      .mg-article-layout__main-section {
+        grid-column: span 6 / span 6;
+      }
+      .mg-article-layout__aside {
+        grid-column: span 6 / span 6;
+        position: sticky;
+        top: 6rem;
+        height: fit-content;
+      }
     }
   }
 }

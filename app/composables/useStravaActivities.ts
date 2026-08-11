@@ -1,8 +1,13 @@
 import type { NuxtError } from "#app"
-import type { StravaActivity } from "~~/types/strava"
+import type { StravaActivitiesPage, StravaActivity } from "~~/types/strava"
 
-const getActivities = <T extends StravaActivity>(query?: { page?: number, per_page?: number }) => {
-  const { data, pending, error } = useFetch("/api/activities/", {
+type StravaActivitiesQuery = {
+  page?: number | Ref<number>
+  per_page?: number | Ref<number>
+}
+
+const getActivities = <T extends StravaActivity>(query?: StravaActivitiesQuery) => {
+  const { data, pending, error } = useFetch<StravaActivitiesPage<T>>("/api/activities/", {
     lazy: true,
     query: {
       page: query?.page,
@@ -14,7 +19,7 @@ const getActivities = <T extends StravaActivity>(query?: { page?: number, per_pa
   })
 
   return { data, pending, error } as {
-    data: Ref<T[]>
+    data: Ref<StravaActivitiesPage<T> | null>
     pending: Ref<boolean>
     error: Ref<NuxtError<unknown>>
   }

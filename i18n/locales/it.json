@@ -68,5 +68,22 @@
       "trend": "Trend",
       "actions": "Azioni"
     }
+  },
+  "contacts": {
+    "social": {
+      "instagram": {
+        "title": "Instagram",
+        "description": "Dietro le quinte e momenti di gara in tempo reale.",
+        "actionLabel": "{'@'}fish.run.dev"
+    },
+      "strava": {
+        "title": "Strava",
+        "description": "Analisi tecnica e volumi di allenamento settimanali.",
+        "actionLabel": "Guarda i segmenti"
+    }
+    },
+    "contact": {
+    "directEmail": "Email Diretta"
+    }
   }
 }
