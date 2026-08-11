@@ -25,7 +25,7 @@ export const useUrlSearchEngine = (options: UseUrlSearchEngineOptions = {}) => {
       delete query.page
     }
 
-    router.push({ query })
+    router.replace({ query })
   }
 
   // --- Search ---

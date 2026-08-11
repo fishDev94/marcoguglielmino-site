@@ -28,8 +28,14 @@ export const useArticlesData = (options: UseArticlesDataOptions = {}) => {
   const route = useRoute()
   const routeName = String(route.name || "default")
 
+  const fetchKey = computed(() => {
+    const normalizedFilters = (unref(filters) ?? []).slice().toSorted().join(",")
+
+    return `articles:${routeName}:${unref(lang)}:${String(unref(searchValue)).trim()}:${normalizedFilters}:${unref(limit)}:${unref(skip)}`
+  })
+
   const { data, pending, error } = useAsyncData(
-    `articles:${routeName}`,
+    fetchKey,
     () => GqlBlogPosts(variables.value),
     {
       lazy: true,

@@ -2,7 +2,7 @@
   <NuxtLayout name="default-page">
     <section class="mg-activities">
       <UICardGrid>
-        <template v-if="isActivitiesLoading">
+        <template v-if="isListLoading">
           <StravaActivityCardSkeleton
             v-for="n in PAGE_SIZE"
             :key="`skeleton-card+${n}`"
@@ -24,7 +24,7 @@
           label="Previous"
           color="neutral"
           variant="soft"
-          :disabled="!hasPreviousPage"
+          :disabled="!hasPreviousPage || isListLoading"
           @click="goToPreviousPage"
         />
         <span class="mg-activities__page-indicator">Page {{ currentPage }}</span>
@@ -32,7 +32,7 @@
           label="Next"
           color="neutral"
           variant="soft"
-          :disabled="!hasNextPage"
+          :disabled="!hasNextPage || isListLoading"
           @click="goToNextPage"
         />
       </div>
@@ -48,35 +48,45 @@ definePageMeta({
 })
 
 const { getActivities } = useStravaActivities()
+const { currentPage } = useUrlSearchEngine({ pageSize: PAGE_SIZE })
 
-const {
-  currentPage
-} = useUrlSearchEngine({ pageSize: PAGE_SIZE })
-
-const { data: activitiesPage, pending: isActivitiesLoading } = getActivities({
+const { data: activitiesPage, pending: isActivitiesLoading, execute: fetchActivities } = getActivities({
   page: currentPage,
   per_page: PAGE_SIZE
+})
+
+const isListLoading = computed(() => !activitiesPage.value || isActivitiesLoading.value)
+
+const loadPage = async (page: number) => {
+  if (page < 1 || page === currentPage.value || isActivitiesLoading.value) {
+    return
+  }
+
+  currentPage.value = page
+  await fetchActivities(page)
+}
+
+onMounted(() => {
+  fetchActivities(currentPage.value)
 })
 
 const activitiesList = computed(() => activitiesPage.value?.items || [])
 const hasNextPage = computed(() => activitiesPage.value?.hasNextPage || false)
 const hasPreviousPage = computed(() => currentPage.value > 1)
 
-const goToPreviousPage = () => {
+const goToPreviousPage = async () => {
   if (!hasPreviousPage.value) return
-  currentPage.value -= 1
+
+  window.scrollTo({ top: 0, behavior: "smooth" })
+  await loadPage(currentPage.value - 1)
 }
 
-const goToNextPage = () => {
+const goToNextPage = async () => {
   if (!hasNextPage.value) return
-  currentPage.value += 1
-}
 
-watch(isActivitiesLoading, (newValue) => {
-  if (newValue) {
-    window.scrollTo({ top: 0, behavior: "smooth" })
-  }
-})
+  window.scrollTo({ top: 0, behavior: "smooth" })
+  await loadPage(currentPage.value + 1)
+}
 </script>
 
 <style lang="scss" scoped>

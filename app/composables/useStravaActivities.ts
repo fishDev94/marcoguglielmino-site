@@ -1,5 +1,6 @@
 import type { NuxtError } from "#app"
 import type { StravaActivitiesPage, StravaActivity } from "~~/types/strava"
+import { PAGE_SIZE } from "~/constants"
 
 type StravaActivitiesQuery = {
   page?: number | Ref<number>
@@ -7,21 +8,38 @@ type StravaActivitiesQuery = {
 }
 
 const getActivities = <T extends StravaActivity>(query?: StravaActivitiesQuery) => {
-  const { data, pending, error } = useFetch<StravaActivitiesPage<T>>("/api/activities/", {
-    lazy: true,
-    query: {
-      page: query?.page,
-      per_page: query?.per_page
-    },
-    getCachedData(key, nuxtApp) {
-      return nuxtApp.payload.data[key] || nuxtApp.static.data[key]
-    }
-  })
+  const pageValue = computed(() => unref(query?.page ?? 1))
+  const perPageValue = computed(() => unref(query?.per_page ?? PAGE_SIZE))
 
-  return { data, pending, error } as {
+  const data = ref<StravaActivitiesPage<T> | null>(null)
+  const pending = ref(false)
+  const error = ref<NuxtError<unknown> | null>(null)
+
+  const execute = async (page?: number) => {
+    pending.value = true
+    error.value = null
+
+    try {
+      const response = await $fetch<StravaActivitiesPage<T>>("/api/activities/", {
+        query: {
+          page: page ?? pageValue.value,
+          per_page: perPageValue.value
+        }
+      })
+
+      data.value = response
+    } catch (err) {
+      error.value = err as NuxtError<unknown>
+    } finally {
+      pending.value = false
+    }
+  }
+
+  return { data, pending, error, execute } as {
     data: Ref<StravaActivitiesPage<T> | null>
     pending: Ref<boolean>
-    error: Ref<NuxtError<unknown>>
+    error: Ref<NuxtError<unknown> | null>
+    execute: (page?: number) => Promise<void>
   }
 }
 

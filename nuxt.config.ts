@@ -85,12 +85,6 @@ export default defineNuxtConfig({
       "/": {
         isr: 3600
       },
-      "/blog": {
-        isr: 600
-      },
-      "/blog/**": {
-        isr: 600
-      },
       "/coach-page": {
         isr: 3600
       },
