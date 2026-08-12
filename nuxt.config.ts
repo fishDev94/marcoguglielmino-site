@@ -82,9 +82,6 @@ export default defineNuxtConfig({
       vercel: "2025-07-14"
     },
     routeRules: {
-      "/": {
-        isr: 3600
-      },
       "/coach-page": {
         isr: 3600
       },

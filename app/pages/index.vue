@@ -1,11 +1,11 @@
 <template>
   <div class="mg-homepage">
     <Hero
-      :src="homepageData.heroBackground?.url || ''"
-      :label="homepageData.label || ''"
-      :title="homepageData.title || ''"
-      :kicker="homepageData.kicker || ''"
-      :copy="homepageData.copy || ''"
+      :src="homepageData?.heroBackground?.url || ''"
+      :label="homepageData?.label || ''"
+      :title="homepageData?.title || ''"
+      :kicker="homepageData?.kicker || ''"
+      :copy="homepageData?.copy || ''"
       :cta-buttons
     />
     <!-- Body Content-block from Contentful -->
