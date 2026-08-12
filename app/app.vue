@@ -38,12 +38,24 @@
 </template>
 
 <script setup lang="ts">
-const i18nHead = useLocaleHead({ seo: true })
 const route = useRoute()
+const { locale } = useI18n()
+
+const routeLocale = computed(() => {
+  return route.path === "/en" || route.path.startsWith("/en/")
+    ? "en"
+    : "it"
+})
+
+watch(routeLocale, (value) => {
+  if (locale.value !== value) {
+    locale.value = value
+  }
+}, { immediate: true })
+
+const i18nHead = useLocaleHead({ seo: true })
 
 const htmlLang = computed(() => {
-  return route.path === "/en" || route.path.startsWith("/en/")
-    ? "en-GB"
-    : "it-IT"
+  return routeLocale.value === "en" ? "en-GB" : "it-IT"
 })
 </script>
