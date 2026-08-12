@@ -81,6 +81,9 @@ importers:
       '@iconify-json/boxicons':
         specifier: 1.2.0
         version: 1.2.0
+      '@iconify-json/circle-flags':
+        specifier: ^1.2.10
+        version: 1.2.10
       '@iconify-json/material-symbols':
         specifier: 1.2.83
         version: 1.2.83
@@ -1531,6 +1534,9 @@ packages:
   '@iconify-json/boxicons@1.2.0':
     resolution: {integrity: sha512-yAfCVaiZ5t2bC1xNVEdkWUI94e3u15IrytO2XFh8/7Y45M1i51adQpi42OhH2pUdsYM0/KY4Gklrb+XB+oZS/w==}
 
+  '@iconify-json/circle-flags@1.2.10':
+    resolution: {integrity: sha512-sZRxs689a281RtZvuAiKtV7pQHv8Tk0HkinSM7QvLgdLEK8xgGRCcbDvL09Rq+/KtemmsMzGhS9/qt+r3ca+Ug==}
+
   '@iconify-json/material-symbols@1.2.83':
     resolution: {integrity: sha512-4I2rfNlaoyn4zIcdJDxUMuPV1pVp8Tgwy+eJvyAZuOpmPtOsniQ8Dug6wzRD5s9KLyQA3smFvuBphVdYG7NWQA==}
 
@@ -2277,6 +2283,7 @@ packages:
     engines: {node: ^20.19.0 || >=22.12.0}
     cpu: [x64]
     os: [linux]
+    libc: [glibc]
 
   '@oxc-parser/binding-linux-x64-musl@0.128.0':
     resolution: {integrity: sha512-4NehAe404MRdoZVS9DW8C5XbJwbXIc/KfVlYdpi5vE4081zc9Y0YzKVqyOYj/Puye7/Do+ohaONBFWlEHYl9hw==}
@@ -10094,6 +10101,10 @@ snapshots:
   '@humanwhocodes/retry@0.4.3': {}
 
   '@iconify-json/boxicons@1.2.0':
+    dependencies:
+      '@iconify/types': 2.0.0
+
+  '@iconify-json/circle-flags@1.2.10':
     dependencies:
       '@iconify/types': 2.0.0
 

@@ -23,7 +23,7 @@
         >
           <template #side>
             <div class="mg-articles__search-engine">
-              <UISearchBar v-model="searchQuery" />
+              <UISearchBar v-model="searchInput" />
               <div class="mg-articles__filters">
                 <UBadge
                   v-for="(tag, i) in tags"
@@ -68,6 +68,7 @@
 </template>
 
 <script setup lang="ts">
+import { watchDebounced } from "@vueuse/core"
 import type { TagDataFragment } from "#gql"
 import type { BreadcrumbItem } from "@nuxt/ui"
 import { PAGE_SIZE } from "@/constants"
@@ -92,6 +93,21 @@ const {
   limit,
   skip
 } = useUrlSearchEngine({ pageSize: PAGE_SIZE })
+const { locale } = useI18n()
+
+const searchInput = ref(searchQuery.value)
+
+watch(searchQuery, (value) => {
+  if (value !== searchInput.value) {
+    searchInput.value = value
+  }
+})
+
+watchDebounced(searchInput, (value) => {
+  if (value !== searchQuery.value) {
+    searchQuery.value = value
+  }
+}, { debounce: 400 })
 
 const { articles, total, isLoading } = useArticlesData({
   searchQuery,
@@ -109,6 +125,15 @@ const isTagActive = (
     color: isFilterSelected(tagValue) ? "primary" : "neutral"
   }
 }
+
+useSeoMeta({
+  title: $t("articles.seo.title"),
+  description: $t("articles.seo.description"),
+  ogTitle: $t("articles.seo.title"),
+  ogDescription: $t("articles.seo.description"),
+  ogType: "website",
+  ogLocale: locale.value === "it" ? "it_IT" : "en_US"
+})
 </script>
 
 <style lang="scss" scoped>

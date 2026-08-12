@@ -56,7 +56,11 @@
   },
   "articles": {
     "title": "Running Insights",
-    "description": "Soglie, parziali e gestione della gara. Il racconto di una passione vissuta tra ritmi serrati, analisi dei dati e continua ricerca del limite."
+    "description": "Soglie, parziali e gestione della gara. Il racconto di una passione vissuta tra ritmi serrati, analisi dei dati e continua ricerca del limite.",
+    "seo": {
+      "title": "Blog & Articoli | Marco Guglielmino",
+      "description": "Leggi gli articoli di Marco Guglielmino su corsa, analisi dei dati di allenamento e gare."
+    }
   },
   "performance": {
     "read_post_cta": "Leggi articolo",

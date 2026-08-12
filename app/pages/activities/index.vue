@@ -2,7 +2,7 @@
   <NuxtLayout name="default-page">
     <section class="mg-activities">
       <UICardGrid>
-        <template v-if="isListLoading">
+        <template v-if="isInitialLoading">
           <StravaActivityCardSkeleton
             v-for="n in PAGE_SIZE"
             :key="`skeleton-card+${n}`"
@@ -19,21 +19,23 @@
         </template>
       </UICardGrid>
 
-      <div class="mg-activities__pagination">
-        <UButton
-          label="Previous"
-          color="neutral"
-          variant="soft"
-          :disabled="!hasPreviousPage || isListLoading"
-          @click="goToPreviousPage"
-        />
-        <span class="mg-activities__page-indicator">Page {{ currentPage }}</span>
-        <UButton
-          label="Next"
-          color="neutral"
-          variant="soft"
-          :disabled="!hasNextPage || isListLoading"
-          @click="goToNextPage"
+      <div
+        v-if="hasNextPage"
+        ref="sentinelRef"
+        class="mg-activities__sentinel"
+        aria-hidden="true"
+      />
+
+      <div
+        v-if="isLoadingMore"
+        class="mg-activities__loader"
+        role="status"
+        aria-label="Loading more activities"
+      >
+        <span
+          v-for="n in 3"
+          :key="`loader-dot-${n}`"
+          class="mg-activities__loader-dot"
         />
       </div>
     </section>
@@ -41,6 +43,9 @@
 </template>
 
 <script lang="ts" setup>
+import { useIntersectionObserver } from "@vueuse/core"
+
+import type { StravaActivity } from "~~/types/strava"
 import { PAGE_SIZE } from "~/constants"
 
 definePageMeta({
@@ -48,45 +53,44 @@ definePageMeta({
 })
 
 const { getActivities } = useStravaActivities()
-const { currentPage } = useUrlSearchEngine({ pageSize: PAGE_SIZE })
+
+const page = ref(1)
+const activitiesList = ref<StravaActivity[]>([])
+const hasNextPage = ref(true)
+const sentinelRef = ref<HTMLElement | null>(null)
 
 const { data: activitiesPage, pending: isActivitiesLoading, execute: fetchActivities } = getActivities({
-  page: currentPage,
+  page,
   per_page: PAGE_SIZE
 })
 
-const isListLoading = computed(() => !activitiesPage.value || isActivitiesLoading.value)
+watch(activitiesPage, (newPage) => {
+  if (!newPage) return
 
-const loadPage = async (page: number) => {
-  if (page < 1 || page === currentPage.value || isActivitiesLoading.value) {
-    return
-  }
-
-  currentPage.value = page
-  await fetchActivities(page)
-}
-
-onMounted(() => {
-  fetchActivities(currentPage.value)
+  activitiesList.value.push(...newPage.items)
+  hasNextPage.value = newPage.hasNextPage
 })
 
-const activitiesList = computed(() => activitiesPage.value?.items || [])
-const hasNextPage = computed(() => activitiesPage.value?.hasNextPage || false)
-const hasPreviousPage = computed(() => currentPage.value > 1)
+// activitiesPage is only ever fetched client-side, so gate on it (not just pending) to match SSR markup and avoid a hydration mismatch
+const isInitialLoading = computed(() => activitiesList.value.length === 0 && (!activitiesPage.value || isActivitiesLoading.value))
+const isLoadingMore = computed(() => activitiesList.value.length > 0 && isActivitiesLoading.value)
 
-const goToPreviousPage = async () => {
-  if (!hasPreviousPage.value) return
+const loadMore = async () => {
+  if (!hasNextPage.value || isActivitiesLoading.value) return
 
-  window.scrollTo({ top: 0, behavior: "smooth" })
-  await loadPage(currentPage.value - 1)
+  page.value += 1
+  await fetchActivities(page.value)
 }
 
-const goToNextPage = async () => {
-  if (!hasNextPage.value) return
-
-  window.scrollTo({ top: 0, behavior: "smooth" })
-  await loadPage(currentPage.value + 1)
-}
+useIntersectionObserver(
+  sentinelRef,
+  ([entry]) => {
+    if (entry?.isIntersecting) {
+      loadMore()
+    }
+  },
+  { rootMargin: "200px" }
+)
 </script>
 
 <style lang="scss" scoped>
@@ -101,16 +105,44 @@ const goToNextPage = async () => {
     width: 100% !important;
   }
 
-  &__pagination {
-    margin-top: 24px;
+  &__sentinel {
+    height: 1px;
+  }
+
+  &__loader {
     display: flex;
     align-items: center;
     justify-content: center;
-    gap: 12px;
+    gap: 8px;
+    padding: 24px 0;
   }
 
-  &__page-indicator {
-    @include body(2);
+  &__loader-dot {
+    width: 8px;
+    height: 8px;
+    border-radius: 50%;
+    background-color: var(--mg-color-primary);
+    animation: mg-activities-bounce 1s ease-in-out infinite;
+
+    &:nth-child(2) {
+      animation-delay: 0.15s;
+    }
+
+    &:nth-child(3) {
+      animation-delay: 0.3s;
+    }
+  }
+}
+
+@keyframes mg-activities-bounce {
+  0%, 80%, 100% {
+    opacity: 0.3;
+    transform: scale(0.75);
+  }
+
+  40% {
+    opacity: 1;
+    transform: scale(1);
   }
 }
 </style>

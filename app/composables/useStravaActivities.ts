@@ -35,6 +35,10 @@ const getActivities = <T extends StravaActivity>(query?: StravaActivitiesQuery) 
     }
   }
 
+  if (import.meta.client) {
+    execute()
+  }
+
   return { data, pending, error, execute } as {
     data: Ref<StravaActivitiesPage<T> | null>
     pending: Ref<boolean>
