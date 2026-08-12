@@ -1,6 +1,6 @@
 <template>
   <Html
-    :lang="i18nHead.htmlAttrs?.lang"
+    :lang="htmlLang"
     :dir="i18nHead.htmlAttrs?.dir"
   >
     <Head>
@@ -39,4 +39,11 @@
 
 <script setup lang="ts">
 const i18nHead = useLocaleHead({ seo: true })
+const route = useRoute()
+
+const htmlLang = computed(() => {
+  return route.path === "/en" || route.path.startsWith("/en/")
+    ? "en-GB"
+    : "it-IT"
+})
 </script>
