@@ -30,7 +30,7 @@ export const useAsyncArticleData = async (
   watch(
     error,
     (err) => {
-      if (err) {
+      if (err && showErrorOnFailure) {
         showError(
           createError({
             statusCode: err.statusCode || 500,
