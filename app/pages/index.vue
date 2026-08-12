@@ -23,10 +23,12 @@
       :content-data="bottomBlock"
     >
       <template v-if="bottomBlock.slug === 'latest-stories-section'">
-        <ArticleWidget
-          v-if="latestArticleSlug"
-          :article-slug="latestArticleSlug"
-        />
+        <ClientOnly>
+          <ArticleWidget
+            v-if="latestArticleSlug"
+            :article-slug="latestArticleSlug"
+          />
+        </ClientOnly>
       </template>
     </ContentBlock>
   </div>
