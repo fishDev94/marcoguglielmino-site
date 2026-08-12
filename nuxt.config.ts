@@ -19,6 +19,7 @@ export default defineNuxtConfig({
     "@nuxtjs/i18n",
     "@nuxtjs/mdc",
     "@vercel/analytics",
+    "@vercel/speed-insights",
     "nuxt-graphql-client",
     "@nuxt/image",
     "nuxt-svgo-loader",
