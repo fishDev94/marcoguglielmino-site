@@ -4,18 +4,20 @@
     link-to="strava"
     background="default-white"
   >
-    <template v-if="isLoadingStravaData && !activities">
+    <template v-if="isLoadingStravaData || activities.length === 0">
       <StravaActivityCardSkeleton
         v-for="n in LAST_ACTIVITIES_PER_PAGE"
         :key="`${n}+strava-skeleton`"
       />
     </template>
     <template v-else>
-      <StravaActivityCard
-        v-for="(activity, i) in activities"
-        :key="`activity-card-${activity.id}+${i}`"
-        :activity
-      />
+      <ClientOnly>
+        <StravaActivityCard
+          v-for="(activity, i) in activities"
+          :key="`activity-card-${activity.id}+${i}`"
+          :activity
+        />
+      </ClientOnly>
     </template>
   </TopSection>
 </template>
@@ -25,5 +27,7 @@ import { LAST_ACTIVITIES_PER_PAGE } from "~/constants"
 
 const { getActivities } = useStravaActivities()
 
-const { data: activities, pending: isLoadingStravaData } = getActivities({ per_page: LAST_ACTIVITIES_PER_PAGE })
+const { data: activitiesPage, pending: isLoadingStravaData } = getActivities({ per_page: LAST_ACTIVITIES_PER_PAGE })
+
+const activities = computed(() => activitiesPage.value?.items || [])
 </script>

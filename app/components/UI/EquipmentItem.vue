@@ -1,5 +1,10 @@
 <template>
-  <div class="mg-equipment-item">
+  <NuxtLink
+    :to="affiliateUrl || '#'"
+    class="mg-equipment-item"
+    target="_blank"
+    rel="noopener noreferrer"
+  >
     <div class="mg-equipment-item__image-wrapper">
       <img
         v-if="imgSrc"
@@ -26,7 +31,7 @@
         {{ shortDescription }}
       </p>
     </div>
-  </div>
+  </NuxtLink>
 </template>
 
 <script lang="ts" setup>
@@ -34,6 +39,7 @@ interface Props {
   name?: string
   shortDescription?: string
   imgSrc?: string
+  affiliateUrl?: string
 }
 
 const {
@@ -48,6 +54,11 @@ const {
   display: flex;
   align-items: center;
   gap: 1rem;
+  cursor: pointer;
+
+  &:hover {
+    background-color: rgba(255, 255, 255, 0.05);
+  }
 
   &__image-wrapper {
     width: 4rem;

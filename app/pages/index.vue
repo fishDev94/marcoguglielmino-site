@@ -1,11 +1,11 @@
 <template>
   <div class="mg-homepage">
     <Hero
-      :src="homepageData.heroBackground?.url || ''"
-      :label="homepageData.label || ''"
-      :title="homepageData.title || ''"
-      :kicker="homepageData.kicker || ''"
-      :copy="homepageData.copy || ''"
+      :src="homepageData?.heroBackground?.url || ''"
+      :label="homepageData?.label || ''"
+      :title="homepageData?.title || ''"
+      :kicker="homepageData?.kicker || ''"
+      :copy="homepageData?.copy || ''"
       :cta-buttons
     />
     <!-- Body Content-block from Contentful -->
@@ -23,10 +23,12 @@
       :content-data="bottomBlock"
     >
       <template v-if="bottomBlock.slug === 'latest-stories-section'">
-        <ArticleWidget
-          v-if="latestArticleSlug"
-          :article-slug="latestArticleSlug"
-        />
+        <ClientOnly>
+          <ArticleWidget
+            v-if="latestArticleSlug"
+            :article-slug="latestArticleSlug"
+          />
+        </ClientOnly>
       </template>
     </ContentBlock>
   </div>

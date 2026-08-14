@@ -1,16 +1,18 @@
 <template>
   <div class="mg-content-page-hero">
     <div
-      v-if="heroImage"
+      v-if="hasHeroBackground"
       class="mg-content-page-hero__cover"
+      :style="coverStyle"
     >
       <NuxtImg
-        provider="contentful"
-        :src="heroImage.url || ''"
+        v-if="hasHeroImage"
+        :provider="heroProvider"
+        :src="heroImageSrc"
         class="mg-content-page-hero__cover-img"
         sizes="100vw sm:500px lg:800px xl:1200px"
-        :width="heroImage?.width || 800"
-        :height="heroImage?.height || 500"
+        :width="contentfulHeroImage?.width || 800"
+        :height="contentfulHeroImage?.height || 500"
         format="webp"
         quality="75"
         loading="eager"
@@ -21,7 +23,7 @@
       <div class="mg-content-page-hero__cover-overlay" />
     </div>
     <div
-      :class="['mg-content-page-hero__text-content', { 'mg-content-page-hero__text-content--with-cover': heroImage }]"
+      :class="['mg-content-page-hero__text-content', { 'mg-content-page-hero__text-content--with-cover': hasHeroBackground }]"
     >
       <p
         v-if="pageData.label"
@@ -43,12 +45,44 @@
 <script setup lang="ts">
 import type { ContentPageDataFragment } from "#gql"
 
-const { pageData } = defineProps<{
+const { pageData, heroImage, heroColor } = defineProps<{
   pageData: ContentPageDataFragment
+  heroImage?: string
+  heroColor?: string
 }>()
 
-const heroImage = computed(() => {
+const contentfulHeroImage = computed(() => {
   return pageData?.hero
+})
+
+const sanitizedHeroColor = computed(() => {
+  const color = heroColor?.trim()
+
+  if (!color) return ""
+
+  const isHexColor = /^#(?:[\da-fA-F]{3}|[\da-fA-F]{6}|[\da-fA-F]{8})$/.test(color)
+  const isCssVarColor = /^var\(--[\w-]+\)$/.test(color)
+  return isHexColor || isCssVarColor ? color : ""
+})
+
+const heroImageSrc = computed(() => {
+  return contentfulHeroImage.value?.url || heroImage || ""
+})
+
+const hasHeroImage = computed(() => Boolean(heroImageSrc.value))
+const hasHeroColor = computed(() => !hasHeroImage.value && Boolean(sanitizedHeroColor.value))
+const hasHeroBackground = computed(() => hasHeroImage.value || hasHeroColor.value)
+
+const heroProvider = computed(() => {
+  return contentfulHeroImage.value?.url ? "contentful" : undefined
+})
+
+const coverStyle = computed(() => {
+  if (!hasHeroColor.value) return undefined
+
+  return {
+    backgroundColor: sanitizedHeroColor.value
+  }
 })
 </script>
 
@@ -89,7 +123,7 @@ const heroImage = computed(() => {
   }
 
   &__text-content {
-    padding: 36px;
+    padding: 24px;
     max-width: 1440px;
     width: 100%;
     margin: 0 auto;

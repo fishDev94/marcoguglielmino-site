@@ -32,31 +32,25 @@ export const useAsyncHomepageData = async () => {
 
   if (error.value) {
     logHomepageDataError(error.value)
-
-    throw createError({
-      statusCode: 500,
-      statusMessage: "Failed to fetch homepage data",
-      fatal: true
-    })
   }
 
   const homepageData = computed(() => {
-    return data?.value.homepageCollection?.items[0] as HomepageDataFragment
+    return data.value?.homepageCollection?.items[0] as HomepageDataFragment | undefined
   })
 
   const contentBlocks = computed<ContentBlockDataFragment[]>(() => {
-    return homepageData.value?.bodyContent?.items as ContentBlockDataFragment[]
+    return (homepageData.value?.bodyContent?.items || []) as ContentBlockDataFragment[]
   })
 
   const bottomContentBlocks = computed(() => {
-    return homepageData.value?.bottomContent?.items as ContentBlockDataFragment[]
+    return (homepageData.value?.bottomContent?.items || []) as ContentBlockDataFragment[]
   })
 
   const aboutCardList = computed(() => {
-    return homepageData.value.bodyContent?.items[0]?.cards?.items as Array<{ type: "light" | "dark" } & AboutCardDataFragment>
+    return (homepageData.value?.bodyContent?.items[0]?.cards?.items || []) as Array<{ type: "light" | "dark" } & AboutCardDataFragment>
   })
 
-  const ctaButtons = computed(() => homepageData.value.ctaButton?.items as CtaButtonDataFragment[])
+  const ctaButtons = computed(() => (homepageData.value?.ctaButton?.items || []) as CtaButtonDataFragment[])
 
   return {
     homepageData,

@@ -1,5 +1,6 @@
 <template>
   <ArticleCard
+    v-if="article?.slug"
     :article
     dimension="wide"
   />
@@ -10,5 +11,5 @@ const { articleSlug } = defineProps<{
   articleSlug: string
 }>()
 
-const { article } = await useAsyncArticleData(articleSlug || "")
+const { article } = await useAsyncArticleData(articleSlug || "", { showError: false })
 </script>

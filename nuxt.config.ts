@@ -19,6 +19,7 @@ export default defineNuxtConfig({
     "@nuxtjs/i18n",
     "@nuxtjs/mdc",
     "@vercel/analytics",
+    "@vercel/speed-insights",
     "nuxt-graphql-client",
     "@nuxt/image",
     "nuxt-svgo-loader",
@@ -31,9 +32,6 @@ export default defineNuxtConfig({
   },
   app: {
     head: {
-      htmlAttrs: {
-        lang: "en"
-      },
       title: "Marco Guglielmino",
       meta: [
         { name: "viewport", content: "width=device-width, initial-scale=1" },
@@ -82,15 +80,6 @@ export default defineNuxtConfig({
       vercel: "2025-07-14"
     },
     routeRules: {
-      "/": {
-        isr: 3600
-      },
-      "/blog": {
-        isr: 600
-      },
-      "/blog/**": {
-        isr: 600
-      },
       "/coach-page": {
         isr: 3600
       },

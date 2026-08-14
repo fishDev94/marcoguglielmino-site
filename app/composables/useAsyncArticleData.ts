@@ -6,7 +6,11 @@ import type { LightboxImage } from "@@/types/image-viewer"
 import type { PaginatorItem } from "~/components/Article/Paginator.vue"
 import type { BodyDescriptionType } from "~~/types/contentful"
 
-export const useAsyncArticleData = async (slug: string) => {
+export const useAsyncArticleData = async (
+  slug: string,
+  options: { showError?: boolean } = {}
+) => {
+  const showErrorOnFailure = options.showError !== false
   const lang = useCurrentLang()
   const { articles } = useArticlesData({ server: false })
 
@@ -26,7 +30,7 @@ export const useAsyncArticleData = async (slug: string) => {
   watch(
     error,
     (err) => {
-      if (err) {
+      if (err && showErrorOnFailure) {
         showError(
           createError({
             statusCode: err.statusCode || 500,
@@ -40,14 +44,16 @@ export const useAsyncArticleData = async (slug: string) => {
   )
 
   const article = computed(() => {
-    if (!data.value.blogPostCollection?.items[0]) {
-      showError(
-        createError({
-          statusCode: 404,
-          statusMessage: "No resources",
-          message: `There is not resources with this slug: ${slug}`
-        })
-      )
+    if (!data.value?.blogPostCollection?.items[0]) {
+      if (showErrorOnFailure) {
+        showError(
+          createError({
+            statusCode: 404,
+            statusMessage: "No resources",
+            message: `There is not resources with this slug: ${slug}`
+          })
+        )
+      }
 
       return {}
     }

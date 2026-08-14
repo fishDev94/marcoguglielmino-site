@@ -23,7 +23,7 @@
         >
           <template #side>
             <div class="mg-articles__search-engine">
-              <UISearchBar v-model="searchQuery" />
+              <UISearchBar v-model="searchInput" />
               <div class="mg-articles__filters">
                 <UBadge
                   v-for="(tag, i) in tags"
@@ -39,21 +39,21 @@
             </div>
           </template>
           <template #main>
-            <ArticleCardGrid
-              v-if="articles && !isLoading"
-              :articles
-            />
-
-            <div
-              v-else
-              class="mg-articles__skeleton-grid"
-            >
-              <ArticleCardSkeleton
-                v-for="n in 6"
-                :key="`article-skeleton-${n}`"
-              />
-            </div>
-
+            <UICardGrid>
+              <template v-if="articles && !isLoading">
+                <ArticleCard
+                  v-for="(article, i) in articles"
+                  :key="`${article?.slug}+${i}`"
+                  :article="article"
+                />
+              </template>
+              <template v-else>
+                <ArticleCardSkeleton
+                  v-for="n in 6"
+                  :key="`article-skeleton-${n}`"
+                />
+              </template>
+            </UICardGrid>
             <UPagination
               v-model="currentPage"
               :total
@@ -68,6 +68,7 @@
 </template>
 
 <script setup lang="ts">
+import { watchDebounced } from "@vueuse/core"
 import type { TagDataFragment } from "#gql"
 import type { BreadcrumbItem } from "@nuxt/ui"
 import { PAGE_SIZE } from "@/constants"
@@ -92,6 +93,21 @@ const {
   limit,
   skip
 } = useUrlSearchEngine({ pageSize: PAGE_SIZE })
+const { locale } = useI18n()
+
+const searchInput = ref(searchQuery.value)
+
+watch(searchQuery, (value) => {
+  if (value !== searchInput.value) {
+    searchInput.value = value
+  }
+})
+
+watchDebounced(searchInput, (value) => {
+  if (value !== searchQuery.value) {
+    searchQuery.value = value
+  }
+}, { debounce: 400 })
 
 const { articles, total, isLoading } = useArticlesData({
   searchQuery,
@@ -109,6 +125,15 @@ const isTagActive = (
     color: isFilterSelected(tagValue) ? "primary" : "neutral"
   }
 }
+
+useSeoMeta({
+  title: $t("articles.seo.title"),
+  description: $t("articles.seo.description"),
+  ogTitle: $t("articles.seo.title"),
+  ogDescription: $t("articles.seo.description"),
+  ogType: "website",
+  ogLocale: locale.value === "it" ? "it_IT" : "en_US"
+})
 </script>
 
 <style lang="scss" scoped>
@@ -163,20 +188,6 @@ const isTagActive = (
     display: flex;
     justify-content: center;
     margin-top: 32px;
-  }
-
-  &__skeleton-grid {
-    display: grid;
-    grid-template-columns: 1fr;
-    gap: 16px;
-
-    @include start-from(tablet) {
-      grid-template-columns: repeat(2, 1fr);
-    }
-
-    @include start-from(large-desktop) {
-      grid-template-columns: repeat(3, 1fr);
-    }
   }
 
   :deep(.mg-article-layout) {

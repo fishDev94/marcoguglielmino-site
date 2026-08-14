@@ -6,6 +6,7 @@
           class="mg-top-nav-bar__left"
           to="/"
           aria-label="Marco Guglielmino - Home"
+          @click="handleNavigationMenuClick"
         >
           <UILogo />
           <h1 class="mg-top-nav-bar__title">
@@ -34,6 +35,17 @@ interface Props {
 }
 
 defineProps<Props>()
+
+const route = useRoute()
+
+const handleNavigationMenuClick = () => {
+  if (route.path === "/") {
+    window.scrollTo({
+      top: 0,
+      behavior: "smooth"
+    })
+  }
+}
 </script>
 
 <style scoped lang="scss">

@@ -1,8 +1,9 @@
 <template>
   <div class="mg-content-card-list">
-    <UIContentCard
+    <ContentCard
       v-for="(cardData, id) in data"
       :key="'about-card-data'+id"
+      :link="cardData.link || ''"
       :title="cardData.cardTitle || ''"
       :description="cardData.cardDescription || ''"
       :icon="cardData.iconCard || ''"

@@ -56,7 +56,11 @@
   },
   "articles": {
     "title": "Running Insights",
-    "description": "Thresholds, splits, and race execution. The story of a passion built on fast paces, data analysis, and pushing past the limit."
+    "description": "Thresholds, splits, and race execution. The story of a passion built on fast paces, data analysis, and pushing past the limit.",
+    "seo": {
+      "title": "Blog & Articles | Marco Guglielmino",
+      "description": "Explore articles by Marco Guglielmino on running, training data analysis and race execution."
+    }
   },
   "performance": {
     "read_post_cta": "Read Post",
@@ -67,6 +71,23 @@
       "performance_time": "Time",
       "trend": "Trend",
       "actions": "Actions"
+    }
+  },
+  "contacts": {
+    "social": {
+    "instagram": {
+      "title": "Instagram",
+      "description": "Behind the scenes and race moments in real time.",
+      "actionLabel": "{'@'}fish.run.dev"
+    },
+    "strava": {
+      "title": "Strava",
+      "description": "Technical analysis and weekly training volumes.",
+      "actionLabel": "View segments"
+    }
+    },
+    "contact": {
+      "directEmail": "Direct Email"
     }
   }
 }

@@ -1,24 +1,8 @@
 <template>
   <div class="mg-article-card-grid">
-    <template
-      v-for="(article, i) in articles"
-      :key="`${article?.slug}+${i}`"
-    >
-      <ArticleCard
-        v-if="article"
-        :article
-      />
-    </template>
+    <slot />
   </div>
 </template>
-
-<script setup lang="ts">
-import type { BlogCardFragment } from "#gql"
-
-defineProps<{
-  articles: BlogCardFragment[]
-}>()
-</script>
 
 <style lang="scss" scoped>
 .mg-article-card-grid {

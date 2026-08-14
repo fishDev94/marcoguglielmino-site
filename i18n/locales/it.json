@@ -56,7 +56,11 @@
   },
   "articles": {
     "title": "Running Insights",
-    "description": "Soglie, parziali e gestione della gara. Il racconto di una passione vissuta tra ritmi serrati, analisi dei dati e continua ricerca del limite."
+    "description": "Soglie, parziali e gestione della gara. Il racconto di una passione vissuta tra ritmi serrati, analisi dei dati e continua ricerca del limite.",
+    "seo": {
+      "title": "Blog & Articoli | Marco Guglielmino",
+      "description": "Leggi gli articoli di Marco Guglielmino su corsa, analisi dei dati di allenamento e gare."
+    }
   },
   "performance": {
     "read_post_cta": "Leggi articolo",
@@ -67,6 +71,23 @@
       "performance_time": "Tempo",
       "trend": "Trend",
       "actions": "Azioni"
+    }
+  },
+  "contacts": {
+    "social": {
+      "instagram": {
+        "title": "Instagram",
+        "description": "Dietro le quinte e momenti di gara in tempo reale.",
+        "actionLabel": "{'@'}fish.run.dev"
+    },
+      "strava": {
+        "title": "Strava",
+        "description": "Analisi tecnica e volumi di allenamento settimanali.",
+        "actionLabel": "Guarda i segmenti"
+    }
+    },
+    "contact": {
+    "directEmail": "Email Diretta"
     }
   }
 }

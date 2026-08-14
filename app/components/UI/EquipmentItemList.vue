@@ -15,6 +15,7 @@
         :name="item.name || ''"
         :short-description="item.shortDescription || ''"
         :img-src="item.image?.url || ''"
+        :affiliate-url="item.affiliateUrl || '#'"
       />
     </div>
   </div>

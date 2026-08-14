@@ -5,4 +5,5 @@ fragment EquipmentItemData on EquipmentItem {
     }
     name
     shortDescription
+    affiliateUrl
 }

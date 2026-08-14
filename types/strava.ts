@@ -137,6 +137,13 @@ export interface StravaActivityDetail extends StravaActivityBase {
 
 export type StravaActivity = StravaActivitySummary
 
+export interface StravaActivitiesPage<T extends StravaActivity = StravaActivity> {
+  items: T[]
+  page: number
+  perPage: number
+  hasNextPage: boolean
+}
+
 export interface StravaAthleteReference {
   id: number
   id_str: string
