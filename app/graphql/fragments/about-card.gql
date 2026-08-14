@@ -3,4 +3,5 @@ fragment AboutCardData on AboutCard {
   cardDescription
   iconCard
   type
+  link
 }
