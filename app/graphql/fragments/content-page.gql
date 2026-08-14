@@ -25,6 +25,14 @@ fragment ContentPageData on Page {
           height
         }
       }
+      entries {
+        block {
+          sys {
+            id
+          }
+          __typename
+        }
+      }
     }
   }
   seoTitle

@@ -2,17 +2,21 @@
   <main>
     <ContentPageHero
       v-if="pageData"
-      :page-data
+      :page-data="pageData"
+      :hero-image="props.heroImage"
+      :hero-color="props.heroColor"
     />
     <NuxtLayout
-      v-if="!withAsideLayout"
+      v-if="!props.withAsideLayout"
       name="content-wrapper"
     >
-      <RichTextRenderer
-        v-if="richTextField"
-        :custom-rich-text-json="richTextField"
-      />
-      <slot />
+      <div :class="['mg-default-page__flow', { 'mg-default-page__flow--with-block-padding': props.withBlockPadding }]">
+        <RichTextRenderer
+          v-if="richTextField"
+          :custom-rich-text-json="richTextField"
+        />
+        <slot />
+      </div>
     </NuxtLayout>
     <div
       v-else
@@ -20,7 +24,8 @@
     >
       <NuxtLayout
         name="article-layout"
-        :split
+        :split="props.split"
+        :mobile-side-position="props.mobileSidePosition"
       >
         <template #main>
           <RichTextRenderer
@@ -38,10 +43,18 @@
 </template>
 
 <script setup lang="ts">
-const { withAsideLayout = false } = defineProps<{
+const props = withDefaults(defineProps<{
   withAsideLayout?: boolean
   split?: "8-4" | "50-50"
-}>()
+  mobileSidePosition?: "top" | "bottom"
+  heroImage?: string
+  heroColor?: string
+  withBlockPadding?: boolean
+}>(), {
+  withAsideLayout: false,
+  mobileSidePosition: "bottom",
+  withBlockPadding: false
+})
 
 const {
   pageData,
@@ -73,6 +86,16 @@ useHead({
 
 <style scoped lang="scss">
 .mg-default-page {
+  &__flow {
+    &--with-block-padding {
+      padding-block: 36px;
+
+      @include start-from(tablet) {
+        padding-block: 64px;
+      }
+    }
+  }
+
   &__content {
     padding-block: calc(36px - 24px);
 
