@@ -1,15 +1,25 @@
-fragment ContentBlock on ContentBlock {
+fragment ContentBlockData on ContentBlock {
   sys {
     id
   }
   title
+  contentAlignment
+  carousel: carouselCollection(limit: 10) {
+    items {
+      __typename
+      ... on PerformanceCard {
+        ...PerformanceCardData
+      }
+    }
+  }
   slug
   bodyDescription {
     ...RichTextBody
   }
-  cards: cardsCollection {
+  background
+  cards: cardsCollection(limit: 3) {
     items {
-    ...AboutCard
+      ...AboutCardData
     }
   }
 }

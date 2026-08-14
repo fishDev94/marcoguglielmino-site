@@ -1,0 +1,7 @@
+query page($slug: String!, $locale: String) {
+  pageCollection(limit: 1, where: { slug: $slug }, locale: $locale) {
+    items {
+      ...ContentPageData
+    }
+  }
+}

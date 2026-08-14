@@ -1,3 +1,3 @@
 <template>
-  <h1>Coach Page</h1>
+  loading...
 </template>

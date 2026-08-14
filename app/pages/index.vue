@@ -1,49 +1,55 @@
 <template>
-  <div>
-    <h1 class="my-text">
-      {{ homepageData?.title }}
-    </h1>
-    <div class="button-content">
-      <UIButton
-        type="primary"
-        is-strong
-      >
-        Primary
-      </UIButton>
-      <UIButton type="secondary">
-        Secondary
-      </UIButton>
-      <UIButton type="inverted">
-        Inverted
-      </UIButton>
-      <UIButton type="outlined">
-        Outlined
-      </UIButton>
-      <UIButton
-        type="outlined-light"
-        is-strong
-      >
-        Outlined Light
-      </UIButton>
-    </div>
-    <UISearchBar />
-    <RichTextRenderer
-      :custom-rich-text-json="bodyDescription"
+  <div class="mg-homepage">
+    <Hero
+      :src="homepageData?.heroBackground?.url || ''"
+      :label="homepageData?.label || ''"
+      :title="homepageData?.title || ''"
+      :kicker="homepageData?.kicker || ''"
+      :copy="homepageData?.copy || ''"
+      :cta-buttons
     />
+    <!-- Body Content-block from Contentful -->
+    <ContentBlock
+      v-for="(contentBlock, idx) in contentBlocks"
+      :key="contentBlock?.slug || `${idx}+content-block-home`"
+      :content-data="contentBlock"
+    />
+    <StravaLastActivities />
+    <InstagramTopReels />
+    <!-- Bottom Content-block from Contentful -->
+    <ContentBlock
+      v-for="(bottomBlock, idx) in bottomContentBlocks"
+      :key="bottomBlock?.slug || `${idx}+content-block-home`"
+      :content-data="bottomBlock"
+    >
+      <template v-if="bottomBlock.slug === 'latest-stories-section'">
+        <ClientOnly>
+          <ArticleWidget
+            v-if="latestArticleSlug"
+            :article-slug="latestArticleSlug"
+          />
+        </ClientOnly>
+      </template>
+    </ContentBlock>
   </div>
 </template>
 
 <script setup lang="ts">
-const { homepageData, bodyDescription } = await useAsyncHomepageData()
+definePageMeta({
+  name: "home"
+})
+
+const {
+  homepageData,
+  contentBlocks,
+  bottomContentBlocks,
+  ctaButtons
+} = await useAsyncHomepageData()
+
+const {
+  articles
+  // isLoading
+} = useArticlesData({ limit: ref(1), server: false })
+
+const latestArticleSlug = computed(() => articles.value?.at(0)?.slug || "")
 </script>
-
-<style lang="scss" scoped>
-.my-text {
-  @include heading(1);
-}
-
-.button-content {
-  display: flex;
-  gap: 4px;
-}
-</style>

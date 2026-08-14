@@ -1,0 +1,5 @@
+fragment LinkData on Link {
+    title
+    url
+    isExternal
+}

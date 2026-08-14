@@ -4,7 +4,7 @@
   "type": "module",
   "scripts": {
     "prepare": "husky",
-    "build": "nuxt build",
+    "build": "nuxi build",
     "dev": "nuxt dev",
     "preview": "nuxt preview",
     "postinstall": "nuxt prepare",
@@ -12,35 +12,60 @@
     "format": "eslint . --fix",
     "typecheck": "nuxt typecheck"
   },
+  "engines": {
+    "node": ">=22.0.0"
+  },
   "dependencies": {
-    "@contentful/rich-text-html-renderer": "^17.2.2",
-    "@contentful/rich-text-types": "^17.2.7",
+    "@contentful/rich-text-html-renderer": "17.2.2",
+    "@contentful/rich-text-types": "17.2.7",
+    "@mapbox/polyline": "1.2.1",
     "@nuxt/image": "2.0.0",
-    "@nuxt/ui": "^4.9.0",
-    "@nuxtjs/i18n": "^10.4.0",
-    "@nuxtjs/mdc": "^0.22.1",
+    "@nuxt/ui": "4.9.0",
+    "@nuxtjs/i18n": "10.4.0",
+    "@nuxtjs/mdc": "0.22.1",
+    "@nuxtjs/sitemap": "^8.3.0",
+    "@stefanobartoletti/nuxt-social-share": "^3.1.0",
+    "@upstash/redis": "1.38.0",
     "@vercel/analytics": "2.0.1",
-    "graphql-request": "^7.4.0",
-    "nuxt": "^4.4.8",
+    "@vercel/speed-insights": "^2.0.0",
+    "@vueuse/core": "14.3.0",
+    "graphql-request": "7.4.0",
+    "leaflet": "1.9.4",
+    "nuxt": "4.5.2",
     "nuxt-graphql-client": "0.2.46",
-    "oxlint": "^1.72.0",
-    "sass": "^1.97.3",
-    "tailwindcss": "^4.3.1"
+    "nuxt-svgo-loader": "0.6.3",
+    "oxlint": "1.72.0",
+    "sass": "1.97.3",
+    "tailwindcss": "4.3.1"
   },
   "devDependencies": {
     "@commitlint/cli": "21.2.0",
     "@commitlint/config-conventional": "21.2.0",
     "@commitlint/types": "21.2.0",
-    "@nuxt/eslint": "^1.16.0",
+    "@iconify-json/boxicons": "1.2.0",
+    "@iconify-json/circle-flags": "^1.2.10",
+    "@iconify-json/lucide": "^1.2.123",
+    "@iconify-json/material-symbols": "1.2.83",
+    "@iconify-json/mdi": "1.2.3",
+    "@iconify-json/ph": "1.2.2",
+    "@nuxt/eslint": "1.16.0",
+    "@oxc-parser/binding-darwin-arm64": "^0.143.0",
+    "@oxc-parser/binding-linux-x64-gnu": "^0.141.0",
+    "@types/leaflet": "1.9.21",
+    "@types/mapbox__polyline": "1.0.5",
     "eslint": "10.6.0",
     "husky": "9.1.7",
     "lint-staged": "17.0.8",
-    "typescript": "^6.0.3",
+    "typescript": "6.0.3",
     "vue-eslint-parser": "10.4.1",
-    "vue-tsc": "^3.3.5"
+    "vue-tsc": "3.3.5"
   },
   "lint-staged": {
     "**/*.{js,ts,vue}": "npx oxlint --fix"
   },
-  "packageManager": "pnpm@11.9.0"
+  "packageManager": "pnpm@11.20.0+sha512.9a6f330a95b66446ea088faf1521405a8a01f07fde7124cc9958dfed52d4bb436737e65b08f85f37b46fcba375092558ac51262b816844b22f63406ed166bfee",
+  "overrides": {
+    "**/@graphql-tools/load": "8.0.2",
+    "**/@graphql-tools/git-loader": "8.0.0"
+  }
 }

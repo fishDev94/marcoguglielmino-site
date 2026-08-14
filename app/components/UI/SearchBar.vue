@@ -1,14 +1,15 @@
 <template>
   <UInput
-    v-model="value"
+    v-model="model"
     icon="i-lucide-search"
     size="md"
-    class="rounded-none"
+    class="mg-search-bar"
     variant="outline"
     placeholder="Search..."
+    @keyup.enter="emit('onSearchSubmit')"
   >
     <template
-      v-if="value?.length"
+      v-if="model?.length"
       #trailing
     >
       <UButton
@@ -24,12 +25,28 @@
 </template>
 
 <script setup lang="ts">
-const value = ref("")
+const model = defineModel<string>({ default: "" })
+
+const emit = defineEmits<{
+  (e: "onSearchSubmit" | "onClear"): void
+}>()
 
 const onClear = () => {
-  value.value = ""
+  model.value = ""
+  emit("onClear")
 }
+
+watch(model, (val) => {
+  if (val.length === 0) {
+    emit("onClear")
+  }
+})
 </script>
 
 <style lang="scss" scoped>
+  .mg-search-bar {
+    :deep(input) {
+      border-radius: 8px;
+    }
+  }
 </style>

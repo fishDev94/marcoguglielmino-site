@@ -1,0 +1,15 @@
+fragment FooterData on Footer {
+    mainTitle
+    copy
+    navigationLinks: navigationLinksCollection {
+        items {
+        ...LinkData
+        }
+    }
+    socialLinks: socialLinksCollection {
+        items {
+        ...LinkData
+        }
+    }
+    copyright
+}

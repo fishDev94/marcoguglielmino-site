@@ -1,0 +1,12 @@
+fragment PerformanceCardData on PerformanceCard {
+    title
+    discipline
+    date
+    typeOfRace
+    label
+    value
+    comparisonText
+    location
+    blogReference
+    showInHomepage
+}

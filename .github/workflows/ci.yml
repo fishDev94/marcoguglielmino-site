@@ -8,6 +8,8 @@ jobs:
     env:
       CTF_CDA_ACCESS_TOKEN: ${{ secrets.CTF_CDA_ACCESS_TOKEN }}
       CTF_CDA_SPACE_ID: ${{ secrets.CTF_CDA_SPACE_ID }}
+      GRAPHQL_CLIENT_CLIENTS_DEFAULT: ${{ secrets.GRAPHQL_CLIENT_CLIENTS_DEFAULT }}
+      GRAPHQL_CLIENT_CLIENTS_DEFAULT_TOKEN: ${{ secrets.GRAPHQL_CLIENT_CLIENTS_DEFAULT_TOKEN }}
 
     strategy:
       matrix:

@@ -61,4 +61,9 @@
   --mg-search-disabled-bg: var(--mg-color-surface-container-low); /* Dimmed background */
   --mg-search-disabled-text: var(--mg-color-on-surface-variant);  /* Muted text */
   --mg-search-disabled-border: var(--mg-color-outline);           /* Faint border */
+
+  --mg-navbar-logo-color: var( --mg-color-on-error);
+
+  --mg-navbar-padding-mobile-x: 16px;
+  --mg-navbar-padding-desktop-x: 24px;
 }

@@ -1,0 +1,16 @@
+fragment BlogCard on BlogPost {
+  __typename
+  title
+  slug
+  seoDescription
+  publishedData
+  coverImage {
+    url
+    title
+  }
+  tags: tagsCollection {
+    items {
+    ...TagData
+    }
+  }
+}

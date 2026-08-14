@@ -1,0 +1,48 @@
+fragment ContentPageData on Page {
+   slug
+   title
+   subTitle
+   label
+   hero {
+    url
+    title
+    description
+    width
+    height
+   }
+   bodyContent {
+    json
+    links {
+      assets {
+        block {
+          sys {
+            id
+          }
+          url
+          title
+          description
+          width
+          height
+        }
+      }
+      entries {
+        block {
+          sys {
+            id
+          }
+          __typename
+        }
+      }
+    }
+  }
+  seoTitle
+  seoDescription
+  ogImage {
+    url
+    title
+    description
+    width
+    height
+  }
+  noIndex
+}

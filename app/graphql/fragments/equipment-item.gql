@@ -1,0 +1,9 @@
+fragment EquipmentItemData on EquipmentItem {
+    type
+    image {
+        url
+    }
+    name
+    shortDescription
+    affiliateUrl
+}

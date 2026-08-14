@@ -1,0 +1,6 @@
+fragment AvatarImage on Avatar {
+    avatarImage {
+        url
+        title
+    }
+}

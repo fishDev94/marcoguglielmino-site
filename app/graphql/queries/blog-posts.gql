@@ -1,0 +1,20 @@
+query blogPosts(
+  $locale: String
+  $searchValue: String = ""
+  $filters: [String]
+  $limit: Int = 100
+  $skip: Int = 0
+) {
+  blogPostCollection(
+    locale: $locale
+    where: { title_contains: $searchValue, tags: { tagValue_in: $filters } }
+    order: [publishedData_DESC]
+    limit: $limit
+    skip: $skip
+  ) {
+    total
+    items {
+      ...BlogCard
+    }
+  }
+}

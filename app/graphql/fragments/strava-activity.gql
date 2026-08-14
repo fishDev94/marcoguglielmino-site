@@ -1,0 +1,4 @@
+fragment StravaActivityData on StravaActivity {
+  title
+  activityId
+}

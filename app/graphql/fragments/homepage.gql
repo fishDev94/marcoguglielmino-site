@@ -1,11 +1,11 @@
-fragment Homepage on Homepage {
+fragment HomepageData on Homepage {
       label
       title
       kicker
       copy
       ctaButton: ctaButtonsCollection {
         items {
-          ...CtaButton
+          ...CtaButtonData
         }
       }
       heroBackground {
@@ -13,7 +13,12 @@ fragment Homepage on Homepage {
       }
       bodyContent: bodyContentCollection {
         items {
-          ...ContentBlock
+          ...ContentBlockData
+        }
+      }
+      bottomContent: bottomContentCollection {
+        items {
+          ...ContentBlockData
         }
       }
 }

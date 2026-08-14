@@ -5,7 +5,7 @@
 $heading-map: (
   1: (
     "family": var(--mg-headline-font-family),
-    "size": 48px,
+    "size": 46px,
     "weight": 800,
   ),
   2: (
@@ -16,6 +16,11 @@ $heading-map: (
   3: (
     "family": var(--mg-headline-font-family),
     "size": 24px,
+    "weight": 700,
+  ),
+  4: (
+    "family": var(--mg-headline-font-family),
+    "size": 20px,
     "weight": 700,
   ),
 );
@@ -106,6 +111,13 @@ $body-map: (
   3: (
     "family": var(--mg-font-body),
     "size": 14px,
+    "line-height": 1,
+    "weight": 600,
+    "letterSpacing": 0.05em,
+  ),
+  4: (
+    "family": var(--mg-font-body),
+    "size": 12px,
     "line-height": 1,
     "weight": 600,
     "letterSpacing": 0.05em,

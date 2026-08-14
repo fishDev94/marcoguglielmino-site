@@ -1,0 +1,93 @@
+{
+  "top_sections": {
+    "strava": {
+      "title": "Attività recenti",
+      "description": "Dati real-time dalle ultime sessioni di allenamento",
+      "link": "Vedi tutte le attività"
+    },
+    "instagram": {
+      "title": "Momenti",
+      "description": "Segui il dietro le quinte su Instagram"
+    }
+  },
+  "time_ago": {
+    "just_now": "Pochi secondi fa",
+    "minutes": "{count} minuto fa | {count} minuti fa",
+    "hours": "{count} ora fa | {count} ore fa",
+    "days": "{count} giorno fa | {count} giorni fa",
+    "months": "{count} mese fa | {count} mesi fa",
+    "years": "{count} anno fa | {count} anni fa"
+  },
+  "reel_viewer": {
+    "reels": "Reels",
+    "close": "Chiudi Modal",
+    "play": "Avvia",
+    "pause": "Pausa",
+    "mute": "Disattiva audio",
+    "unmute": "Attiva audio",
+    "view_on_instagram": "Vedi su Instagram",
+    "close_reel": "Chiudi Reel"
+  },
+  "article": {
+    "equipment": {
+      "title": "Attrezzatura"
+    },
+    "gallery": {
+      "title": "Racconto Visivo",
+      "image_viewer": {
+        "close": "Chiudi visualizzatore immagine",
+        "previous": "Immagine precedente",
+        "next": "Immagine successiva"
+      }
+    },
+    "socials": {
+      "ask_ai": "Riassumi con l'AI",
+      "share": "Condividi"
+    },
+    "paginator": {
+      "aria_label": "Navigazione articoli",
+      "previous": "Precedente",
+      "next": "Successivo"
+    },
+    "wide_card": {
+      "readMoreCTA": "Leggi l'articolo completo"
+    },
+    "published_on": "Pubblicato il {date}"
+  },
+  "articles": {
+    "title": "Running Insights",
+    "description": "Soglie, parziali e gestione della gara. Il racconto di una passione vissuta tra ritmi serrati, analisi dei dati e continua ricerca del limite.",
+    "seo": {
+      "title": "Blog & Articoli | Marco Guglielmino",
+      "description": "Leggi gli articoli di Marco Guglielmino su corsa, analisi dei dati di allenamento e gare."
+    }
+  },
+  "performance": {
+    "read_post_cta": "Leggi articolo",
+    "no_report": "Nessun report",
+    "table": {
+      "date": "Data",
+      "event": "Gara / Luogo",
+      "performance_time": "Tempo",
+      "trend": "Trend",
+      "actions": "Azioni"
+    }
+  },
+  "contacts": {
+    "social": {
+      "instagram": {
+        "title": "Instagram",
+        "description": "Dietro le quinte e momenti di gara in tempo reale.",
+        "actionLabel": "{'@'}fish.run.dev"
+    },
+      "strava": {
+        "title": "Strava",
+        "description": "Analisi tecnica e volumi di allenamento settimanali.",
+        "actionLabel": "Guarda i segmenti"
+    }
+    },
+    "contact": {
+    "directEmail": "Email Diretta"
+    }
+  }
+}

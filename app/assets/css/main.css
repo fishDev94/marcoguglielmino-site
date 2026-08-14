@@ -6,6 +6,8 @@
 
 @theme {
     --font-sans: var(--mg-font-body);
+    --font-montserrat: var(--mg-headline-font-family);
+    --velocity-cyan: #00E5FF;
 }
 
 :root {
@@ -13,6 +15,7 @@
     --ui-secondary: var(--mg-color-secondary);
     --ui-tertiary: var(--mg-color-tertiary);
     --ui-neutral: var(--mg-color-neutral);
+    --ui-info: var(--mg-color-accent);
 
     --ui-error: var(--mg-color-error);
 }
