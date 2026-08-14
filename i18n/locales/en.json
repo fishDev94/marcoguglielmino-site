@@ -1,4 +1,10 @@
 {
+  "home": {
+    "seo": {
+      "title": "Marco Guglielmino | Running, Training & Data Analysis",
+      "description": "Personal website of Marco Guglielmino: running stories, endurance training data analysis, track & field, and performance insights."
+    }
+  },
   "top_sections": {
     "strava": {
       "title": "Recent activities",

@@ -1,4 +1,10 @@
 {
+  "home": {
+    "seo": {
+      "title": "Marco Guglielmino | Corsa, Allenamento e Analisi Dati",
+      "description": "Sito personale di Marco Guglielmino: storie di corsa, analisi dei dati di allenamento, atletica leggera e percorsi di performance."
+    }
+  },
   "top_sections": {
     "strava": {
       "title": "Attività recenti",
