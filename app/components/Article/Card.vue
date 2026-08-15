@@ -13,10 +13,14 @@
           :src="article.coverImage.url"
           :alt="article.coverImage.title || article.title"
           class="mg-blog-card__image"
+          provider="contentful"
           loading="lazy"
           format="webp"
-          width="400"
-          height="225"
+          :quality="imageQuality"
+          :sizes="imageSizes"
+          :width="article.coverImage.width ?? undefined"
+          :height="article.coverImage.height ?? undefined"
+          densities="x1 x2"
         />
         <span
           v-if="mainTag"
@@ -92,6 +96,10 @@ const { article, dimension = "normal" } = defineProps<{
 }>()
 
 const isWideCard = computed(() => dimension === "wide")
+const imageSizes = computed(() =>
+  isWideCard.value ? "xs:100vw md:50vw" : "xs:100vw sm:50vw lg:33vw"
+)
+const imageQuality = computed(() => isWideCard.value ? 100 : 70)
 
 const lang = useCurrentLang()
 

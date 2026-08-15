@@ -4,6 +4,7 @@
     :items="locales"
     value-key="code"
     label-key="code"
+    :search-input="false"
     :ui="{
       base: 'bg-[var(--mg-color-secondary)] text-[var(--mg-btn-text-primary)] ring-[var(--mg-btn-text-secondary)] hover:bg-[var(--mg-color-on-surface-variant)] cursor-pointer',
       content:

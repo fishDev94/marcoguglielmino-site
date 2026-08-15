@@ -8,11 +8,11 @@
       ref="videoRef"
       :src
       loop
-      autoplay
+      :autoplay
       :muted
       playsinline
       webkit-playsinline
-      preload="auto"
+      :preload
       aria-label="Instagram Reel Video"
       class="mg-reel-player__video"
       @timeupdate="handleTimeUpdate"
@@ -110,6 +110,8 @@
 interface Props {
   src: string
   muted?: boolean
+  autoplay?: boolean
+  preload?: "auto" | "metadata" | "none"
   progress?: number
   isPaused?: boolean
   formattedCurrentTime?: string
@@ -119,6 +121,8 @@ interface Props {
 
 const {
   muted = true,
+  autoplay = true,
+  preload = "auto",
   progress = 0,
   isPaused = false,
   formattedCurrentTime = "00:00",

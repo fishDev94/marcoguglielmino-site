@@ -15,7 +15,7 @@
         :height="ogImage.height || 800"
         :alt="ogImage.title || 'Coach image'"
         class="mg-coach__side-image"
-        sizes="100vw md:50vw lg:33vw"
+        sizes="xs:128px lg:33vw"
         format="webp"
         quality="80"
         loading="lazy"

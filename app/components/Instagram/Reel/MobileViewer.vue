@@ -53,8 +53,10 @@
                 :ref="(el: any) => setPlayerRef(el, reel.id)"
                 :src="proxyVideoUrl(reel.id, reel.video_src)"
                 :muted="isMuted"
-                :progress="activeReelId === reel.id ? videoProgress : 0"
-                :is-paused="isPaused && activeReelId === reel.id"
+                :autoplay="isActiveReel(reel.id)"
+                :preload="isActiveReel(reel.id) ? 'auto' : 'none'"
+                :progress="isActiveReel(reel.id) ? videoProgress : 0"
+                :is-paused="isPaused && isActiveReel(reel.id)"
                 variant="mobile"
                 @click="handleSlideTogglePlayPause"
                 @timeupdate="(video: HTMLVideoElement) => handleMobileTimeUpdate(video, reel.id)"
@@ -119,6 +121,8 @@ const containerRef = useTemplateRef<HTMLElement>("containerRef")
 const playerRefs = new Map<string, { videoEl: HTMLVideoElement | null }>()
 const activeReelId = ref<string | undefined>(undefined)
 const orderedReels = ref<InstagramReel[]>([])
+
+const isActiveReel = (id: string) => activeReelId.value === id
 
 // :aria-label="isMuted ? $t('reel_viewer.unmute') : $t('reel_viewer.mute')"
 // :name="isMuted ? 'i-material-symbols-volume-off-rounded' : 'i-material-symbols-volume-up-rounded'"
