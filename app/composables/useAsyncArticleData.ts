@@ -12,7 +12,7 @@ export const useAsyncArticleData = async (
 ) => {
   const showErrorOnFailure = options.showError !== false
   const lang = useCurrentLang()
-  const { articles } = useArticlesData({ server: false })
+  const { articles } = useArticlesData()
 
   const { data, pending, error } = await useAsyncGql({
     operation: "blogPost",
@@ -60,14 +60,16 @@ export const useAsyncArticleData = async (
 
     return data.value.blogPostCollection.items[0]
   })
-  const galleryData = computed<LightboxImage[]>(() => {
+  const galleryData = computed<Array<LightboxImage & { width: number, height: number }>>(() => {
     const items = article.value.gallery?.items || []
 
     return items.map((item) => {
       return {
         id: item?.title || "",
         title: item?.title || "",
-        url: item?.url || ""
+        url: item?.url || "",
+        width: item?.width || 0,
+        height: item?.height || 0
       }
     })
   })

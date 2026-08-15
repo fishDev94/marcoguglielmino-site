@@ -74,10 +74,10 @@ const stravaActivityUrl = computed(() => `https://www.strava.com/activities/${ac
   @include start-from(tablet) {
     width: 320px;
     margin-block: 4px;
-  }
 
-  &:hover {
-    transform: translateY(-2px);
+    &:hover {
+      transform: translateY(-2px);
+    }
   }
 
   .content-container {

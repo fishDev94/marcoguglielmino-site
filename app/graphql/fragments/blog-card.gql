@@ -7,6 +7,8 @@ fragment BlogCard on BlogPost {
   coverImage {
     url
     title
+    width
+    height
   }
   tags: tagsCollection {
     items {
