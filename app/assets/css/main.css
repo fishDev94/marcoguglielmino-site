@@ -8,6 +8,7 @@
     --font-sans: var(--mg-font-body);
     --font-montserrat: var(--mg-headline-font-family);
     --velocity-cyan: #00E5FF;
+    --breakpoint-md: 744px;
 }
 
 :root {
