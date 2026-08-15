@@ -18,6 +18,7 @@
           v-for="(image, index) in images"
           :key="`gallery-image-desktop-${image.id || index}`"
           class="mg-gallery-section__carousel-item"
+          :style="{ '--thumbnail-width': `${thumbnailWidth(image)}px` }"
         >
           <NuxtImg
             :src="image.url || ''"
@@ -25,12 +26,11 @@
             provider="contentful"
             loading="lazy"
             format="webp"
-            quality="75"
-            sizes="md:320px lg:320px"
-            width="320"
-            height="240"
+            quality="80"
+            :sizes="thumbnailSizes(image)"
+            :width="thumbnailWidth(image)"
+            :height="THUMBNAIL_HEIGHT"
             densities="x1 x2"
-            :placeholder="`data:image/svg+xml;base64,${toBase64(shimmer(320, 240))}`"
             class="mg-gallery-section__img"
             @click="openViewer(image.id)"
           />
@@ -53,9 +53,14 @@
 import { breakpointsTailwind, useBreakpoints } from "@vueuse/core"
 import type { LightboxImage } from "@@/types/image-viewer"
 
+type GalleryImage = LightboxImage & {
+  width: number
+  height: number
+}
+
 interface Props {
   title?: string
-  images?: LightboxImage[]
+  images?: GalleryImage[]
   carouselItemSize?: string
 }
 
@@ -70,6 +75,19 @@ const isDesktop = breakpoints.greaterOrEqual("md")
 
 const imagesRef = toRef(() => images)
 const { openViewer } = useImageViewer(imagesRef)
+
+const THUMBNAIL_HEIGHT = 240
+const MAX_THUMBNAIL_WIDTH = 320
+
+const thumbnailWidth = (image: GalleryImage) => {
+  if (!image.width || !image.height) return MAX_THUMBNAIL_WIDTH
+  return Math.min(Math.round((image.width / image.height) * THUMBNAIL_HEIGHT), MAX_THUMBNAIL_WIDTH)
+}
+
+const thumbnailSizes = (image: GalleryImage) => {
+  const width = thumbnailWidth(image)
+  return `md:${width}px lg:${width}px`
+}
 </script>
 
 <style lang="scss" scoped>
@@ -99,7 +117,7 @@ const { openViewer } = useImageViewer(imagesRef)
   }
 
   &__carousel-item {
-    width: var(--carousel-item-size, 320px);
+    width: var(--thumbnail-width, var(--carousel-item-size, 320px));
     height: 240px;
     border-radius: 0.75rem;
     overflow: hidden;

@@ -46,6 +46,8 @@ fragment BlogPostData on BlogPost {
     items {
       title
       url
+      width
+      height
     }
   }
   equipment: equipmentCollection {

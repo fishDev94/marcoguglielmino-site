@@ -35,9 +35,10 @@
             <NuxtImg
               :key="selectedImage.id"
               :src="selectedImage.url || ''"
+              provider="contentful"
               format="webp"
-              quality="90"
-              sizes="md:80vw lg:1200px"
+              quality="85"
+              sizes="xs:100vw md:80vw xl:1400px"
               densities="x1 x2"
               class="mg-image-desktop__img"
             />

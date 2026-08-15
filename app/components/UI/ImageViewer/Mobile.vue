@@ -37,6 +37,7 @@
             >
               <NuxtImg
                 :src="img.url || ''"
+                provider="contentful"
                 format="webp"
                 quality="85"
                 sizes="xs:100vw sm:100vw"
