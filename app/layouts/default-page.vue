@@ -62,11 +62,14 @@ const {
   richTextField
 } = await useAsyncContentPageData()
 
+const requestUrl = useRequestURL()
+
 useSeoMeta({
   title: seoData.value?.title,
   description: seoData.value?.description,
   ogTitle: seoData.value?.title,
   ogDescription: seoData.value?.description,
+  ogUrl: requestUrl.href,
   ogImage: seoData.value?.ogImage?.url,
   ogImageAlt: seoData.value?.ogImage?.title,
   ogImageWidth: seoData.value?.ogImage?.width,

@@ -55,6 +55,7 @@ useSeoMeta({
   description: $t("home.seo.description"),
   ogTitle: $t("home.seo.title"),
   ogDescription: $t("home.seo.description"),
+  ogUrl: useRequestURL().href,
   ogImage: homepageData.value?.heroBackground?.url,
   robots: { index: true, follow: true }
 })

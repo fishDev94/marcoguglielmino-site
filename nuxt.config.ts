@@ -25,7 +25,8 @@ export default defineNuxtConfig({
     "nuxt-svgo-loader",
     "@stefanobartoletti/nuxt-social-share",
     "@nuxtjs/sitemap",
-    "@nuxtjs/robots"
+    "@nuxtjs/robots",
+    "nuxt-schema-org"
   ],
   devtools: {
     enabled: true
@@ -235,6 +236,13 @@ export default defineNuxtConfig({
     blockAiBots: true,
     disallow: ["/api/", "/_nuxt/"],
     allow: "/"
+  },
+  schemaOrg: {
+    identity: {
+      type: "Person",
+      name: "Marco Guglielmino",
+      url: baseUrl
+    }
   },
   sitemap: {
     autoLastmod: true,

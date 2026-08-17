@@ -34,6 +34,7 @@
     "leaflet": "1.9.4",
     "nuxt": "4.5.2",
     "nuxt-graphql-client": "0.2.46",
+    "nuxt-schema-org": "^6.2.9",
     "nuxt-svgo-loader": "0.6.3",
     "oxlint": "1.72.0",
     "sass": "1.97.3",
