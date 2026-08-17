@@ -129,7 +129,8 @@ useSeoMeta({
   twitterTitle: title,
   twitterDescription: description,
   twitterImage: coverImageUrl,
-  twitterImageAlt: coverImageAlt
+  twitterImageAlt: coverImageAlt,
+  robots: { index: true, follow: true, maxImagePreview: "large" }
 })
 
 useHead({

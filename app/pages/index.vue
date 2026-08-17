@@ -48,7 +48,6 @@ const {
 
 const {
   articles
-  // isLoading
 } = useArticlesData({ limit: ref(1), server: false })
 
 useSeoMeta({
@@ -56,7 +55,8 @@ useSeoMeta({
   description: $t("home.seo.description"),
   ogTitle: $t("home.seo.title"),
   ogDescription: $t("home.seo.description"),
-  ogImage: homepageData.value?.heroBackground?.url
+  ogImage: homepageData.value?.heroBackground?.url,
+  robots: { index: true, follow: true }
 })
 
 const latestArticleSlug = computed(() => articles.value?.at(0)?.slug || "")

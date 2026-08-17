@@ -76,7 +76,10 @@ useSeoMeta({
   twitterDescription: seoData.value?.description,
   twitterImage: seoData.value?.ogImage?.url,
   twitterImageAlt: seoData.value?.ogImage?.title,
-  robots: seoData.value?.noIndex ? "noindex" : undefined
+  robots: {
+    index: !seoData.value?.noIndex,
+    follow: true
+  }
 })
 
 useHead({
