@@ -80,7 +80,7 @@ const formattedDate = computed(() => {
       white-space: nowrap;
       overflow: hidden;
       text-overflow: ellipsis;
-      width: 220px;
+      width: 180px;
       letter-spacing: -0.02em;
     }
 

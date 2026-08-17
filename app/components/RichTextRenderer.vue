@@ -185,7 +185,7 @@ const renderedContent = computed(() => {
 
   &__strava-card {
     margin-top: 8px;
-    margin-bottom: 32px;
+    margin-bottom: 32px !important;
   }
 
   &__ul {
