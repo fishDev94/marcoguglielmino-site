@@ -44,7 +44,7 @@ interface Props {
 }
 
 const { isWeightTraining, sufferScore, distance, averageHeartrate, averageSpeed } = defineProps<Props>()
-const sufferDistanceLabel = computed(() => isWeightTraining ? "SUFFER SCORE" : "DISTANZA")
+const sufferDistanceLabel = computed(() => isWeightTraining ? "SUFFSCORE" : "DISTANZA")
 const sufferDistanceValue = computed(() => isWeightTraining ? (sufferScore || 0) : formattedDistance(distance))
 const sufferDistanceUnit = computed(() => isWeightTraining ? "" : "km")
 const paceHRLabel = computed(() => isWeightTraining ? "BPM MEDI" : "PASSO")
