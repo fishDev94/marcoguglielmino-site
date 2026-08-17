@@ -60,6 +60,7 @@ const askAIList = [
             gap: 4px;
 
             & > .social-share-button {
+                color: var(--mg-btn-text-primary);
                 padding: .5rem;
             }
         }

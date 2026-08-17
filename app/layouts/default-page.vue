@@ -62,11 +62,14 @@ const {
   richTextField
 } = await useAsyncContentPageData()
 
+const requestUrl = useRequestURL()
+
 useSeoMeta({
   title: seoData.value?.title,
   description: seoData.value?.description,
   ogTitle: seoData.value?.title,
   ogDescription: seoData.value?.description,
+  ogUrl: requestUrl.href,
   ogImage: seoData.value?.ogImage?.url,
   ogImageAlt: seoData.value?.ogImage?.title,
   ogImageWidth: seoData.value?.ogImage?.width,
@@ -76,7 +79,10 @@ useSeoMeta({
   twitterDescription: seoData.value?.description,
   twitterImage: seoData.value?.ogImage?.url,
   twitterImageAlt: seoData.value?.ogImage?.title,
-  robots: seoData.value?.noIndex ? "noindex" : undefined
+  robots: {
+    index: !seoData.value?.noIndex,
+    follow: true
+  }
 })
 
 useHead({

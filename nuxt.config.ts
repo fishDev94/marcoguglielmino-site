@@ -24,9 +24,10 @@ export default defineNuxtConfig({
     "@nuxt/image",
     "nuxt-svgo-loader",
     "@stefanobartoletti/nuxt-social-share",
-    "@nuxtjs/sitemap"
+    "@nuxtjs/sitemap",
+    "@nuxtjs/robots",
+    "nuxt-schema-org"
   ],
-
   devtools: {
     enabled: true
   },
@@ -42,7 +43,8 @@ export default defineNuxtConfig({
   },
   css: ["~/assets/css/main.css"],
   site: {
-    url: baseUrl
+    url: baseUrl,
+    name: "Marco Guglielmino"
   },
   ui: {
     colorMode: false
@@ -75,7 +77,7 @@ export default defineNuxtConfig({
       vercel: "2025-07-14"
     },
     routeRules: {
-      "/coach-page": {
+      "/coach": {
         isr: 3600
       },
       "/gallery": {
@@ -227,6 +229,26 @@ export default defineNuxtConfig({
       xl: 1280,
       xxl: 1536,
       "2xl": 1536
+    }
+  },
+  robots: {
+    blockNonSeoBots: true,
+    blockAiBots: true,
+    disallow: ["/api/", "/_nuxt/"],
+    allow: "/"
+  },
+  schemaOrg: {
+    identity: {
+      type: "Person",
+      name: "Marco Guglielmino",
+      url: baseUrl
+    }
+  },
+  sitemap: {
+    autoLastmod: true,
+    defaults: {
+      changefreq: "weekly",
+      priority: 0.5
     }
   },
   socialShare: {

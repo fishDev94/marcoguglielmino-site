@@ -48,4 +48,9 @@ useHead({
     dir
   }
 })
+
+useSchemaOrg([
+  defineWebSite({ name: "Marco Guglielmino" }),
+  definePerson({ name: "Marco Guglielmino", url: "https://www.marcoguglielmino.com" })
+])
 </script>

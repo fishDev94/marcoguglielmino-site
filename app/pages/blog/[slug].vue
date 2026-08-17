@@ -119,6 +119,7 @@ useSeoMeta({
   ogTitle: title,
   ogSiteName: "Marco Guglielmino",
   ogDescription: description,
+  ogUrl: useRequestURL().href,
   ogImage: coverImageUrl,
   ogImageAlt: coverImageAlt,
   ogImageWidth: coverImageWidth,
@@ -129,13 +130,35 @@ useSeoMeta({
   twitterTitle: title,
   twitterDescription: description,
   twitterImage: coverImageUrl,
-  twitterImageAlt: coverImageAlt
+  twitterImageAlt: coverImageAlt,
+  robots: { index: true, follow: true, maxImagePreview: "large" }
 })
 
 useHead({
   title,
   meta
 })
+
+useSchemaOrg([
+  defineArticle({
+    "@type": "BlogPosting",
+    headline: title,
+    description,
+    image: coverImageUrl,
+    datePublished: article.value.publishedData || undefined,
+    author: {
+      name: "Marco Guglielmino"
+    }
+  }),
+  defineBreadcrumb({
+    itemListElement: breadcrumbItems.map((item, index) => ({
+      "@type": "ListItem",
+      position: index + 1,
+      name: item.label,
+      item: item.to ? `https://www.marcoguglielmino.com${item.to}` : undefined
+    }))
+  })
+])
 </script>
 
 <style lang="scss" scoped>

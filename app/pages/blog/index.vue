@@ -131,6 +131,7 @@ useSeoMeta({
   description: $t("articles.seo.description"),
   ogTitle: $t("articles.seo.title"),
   ogDescription: $t("articles.seo.description"),
+  ogUrl: useRequestURL().href,
   ogType: "website",
   ogLocale: locale.value === "it" ? "it_IT" : "en_US"
 })
