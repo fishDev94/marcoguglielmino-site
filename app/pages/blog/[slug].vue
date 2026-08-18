@@ -220,7 +220,7 @@ useSchemaOrg([
   &__body-text {
     margin-bottom: 24px;
 
-    :deep(p) {
+    & > :deep(p) {
       margin-bottom: 24px;
     }
   }

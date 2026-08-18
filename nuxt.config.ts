@@ -234,7 +234,7 @@ export default defineNuxtConfig({
   robots: {
     blockNonSeoBots: true,
     blockAiBots: true,
-    disallow: ["/api/", "/_nuxt/"],
+    disallow: ["/api/"],
     allow: "/"
   },
   schemaOrg: {
