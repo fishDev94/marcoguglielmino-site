@@ -11,41 +11,69 @@ export async function getStravaAccessToken() {
   const { stravaClientID, stravaClientSecret, stravaRefreshToken } = useRuntimeConfig()
 
   // Check if we have a cached access token
-  const cachedToken = await redis.get<string>("strava_access_token")
-  if (cachedToken) {
-    return cachedToken
+  try {
+    const cachedToken = await redis.get<string>("strava_access_token")
+    if (cachedToken) {
+      return cachedToken
+    }
+  } catch (redisErr) {
+    console.error("[Strava] Redis read failed for cached token, proceeding with refresh:", redisErr)
   }
 
   // No cached token — refresh it
-  let refreshToken = await redis.get<string>("strava_refresh_token")
+  let refreshToken: string | null = null
+
+  try {
+    refreshToken = await redis.get<string>("strava_refresh_token")
+  } catch (redisErr) {
+    console.error("[Strava] Redis read failed for refresh token, using env fallback:", redisErr)
+  }
 
   if (!refreshToken) {
     refreshToken = stravaRefreshToken
-    await redis.set("strava_refresh_token", refreshToken)
+    try {
+      await redis.set("strava_refresh_token", refreshToken)
+    } catch (redisErr) {
+      console.error("[Strava] Redis write failed for refresh token:", redisErr)
+    }
   }
 
-  const tokenRes = await $fetch<StravaTokenResponse>(
-    "https://www.strava.com/oauth/token",
-    {
-      method: "POST",
-      body: {
-        client_id: stravaClientID,
-        client_secret: stravaClientSecret,
-        grant_type: "refresh_token",
-        refresh_token: refreshToken
+  let tokenRes: StravaTokenResponse
+
+  try {
+    tokenRes = await $fetch<StravaTokenResponse>(
+      "https://www.strava.com/oauth/token",
+      {
+        method: "POST",
+        body: {
+          client_id: stravaClientID,
+          client_secret: stravaClientSecret,
+          grant_type: "refresh_token",
+          refresh_token: refreshToken
+        }
       }
-    }
-  )
+    )
+  } catch (fetchErr) {
+    console.error("[Strava] Token refresh failed:", fetchErr)
+    throw createError({
+      statusCode: 503,
+      statusMessage: "Strava authentication failed. Unable to refresh access token."
+    })
+  }
 
   const accessToken = tokenRes.access_token
   const newRefreshToken = tokenRes.refresh_token
 
   // Cache access token for 50 minutes (Strava tokens last 6 hours)
-  await redis.set("strava_access_token", accessToken, { ex: 3000 })
+  try {
+    await redis.set("strava_access_token", accessToken, { ex: 3000 })
 
-  // Update refresh token if rotated
-  if (newRefreshToken && newRefreshToken !== refreshToken) {
-    await redis.set("strava_refresh_token", newRefreshToken)
+    // Update refresh token if rotated
+    if (newRefreshToken && newRefreshToken !== refreshToken) {
+      await redis.set("strava_refresh_token", newRefreshToken)
+    }
+  } catch (redisErr) {
+    console.error("[Strava] Redis write failed for tokens (non-blocking):", redisErr)
   }
 
   return accessToken

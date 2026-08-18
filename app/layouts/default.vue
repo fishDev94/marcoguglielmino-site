@@ -13,10 +13,28 @@
 </template>
 
 <script setup lang="ts">
-const [footerData, avatarData] = await Promise.all([
+type FooterDataReturn = Awaited<ReturnType<typeof useAsyncFooterData>>
+type AvatarDataReturn = Awaited<ReturnType<typeof useAsyncAvatarData>>
+
+const [footerResult, avatarResult] = await Promise.allSettled([
   useAsyncFooterData(),
   useAsyncAvatarData()
 ])
+
+const footerData: FooterDataReturn = footerResult.status === "fulfilled"
+  ? footerResult.value
+  : { footerData: computed(() => undefined), isLoading: ref(false), isError: ref(undefined), internalLinks: computed(() => undefined), externalLinks: computed(() => undefined) } as FooterDataReturn
+
+const avatarData: AvatarDataReturn = avatarResult.status === "fulfilled"
+  ? avatarResult.value
+  : { src: computed(() => ""), title: computed(() => "") }
+
+if (footerResult.status === "rejected") {
+  console.error("[default layout] Failed to load footer data:", footerResult.reason)
+}
+if (avatarResult.status === "rejected") {
+  console.error("[default layout] Failed to load avatar data:", avatarResult.reason)
+}
 </script>
 
 <style lang="scss" scoped>

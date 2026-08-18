@@ -59,8 +59,26 @@ const props = withDefaults(defineProps<{
 const {
   pageData,
   seoData,
-  richTextField
+  richTextField,
+  error
 } = await useAsyncContentPageData()
+
+if (error.value) {
+  console.error("[default-page] Failed to fetch page content:", error.value)
+  showError(
+    createError({
+      statusCode: 500,
+      statusMessage: "Error loading page content"
+    })
+  )
+} else if (!pageData.value) {
+  showError(
+    createError({
+      statusCode: 404,
+      statusMessage: "This page doesn't exist"
+    })
+  )
+}
 
 const requestUrl = useRequestURL()
 

@@ -79,6 +79,14 @@
       "actions": "Azioni"
     }
   },
+  "error": {
+    "back_home": "Torna in Home Page",
+    "route_error": "Errore di Percorso",
+    "title_404": "Oops! Sembra che tu sia uscito fuori pista.",
+    "title_generic": "Qualcosa è andato storto.",
+    "description_404": "Anche ai migliori capita di sbagliare traiettoria. Non preoccuparti, riprendiamo il ritmo e torniamo sul percorso principale.",
+    "description_generic": "Si è verificato un errore imprevisto. Riprova tra qualche istante o torna alla home page."
+  },
   "contacts": {
     "social": {
       "instagram": {

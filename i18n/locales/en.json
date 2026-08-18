@@ -79,6 +79,14 @@
       "actions": "Actions"
     }
   },
+  "error": {
+    "back_home": "Back to Home",
+    "route_error": "Route Error",
+    "title_404": "Oops! Looks like you went off track.",
+    "title_generic": "Something went wrong.",
+    "description_404": "Even the best runners miss a turn sometimes. Don't worry, let's get back on course.",
+    "description_generic": "An unexpected error occurred. Try again in a moment or head back to the home page."
+  },
   "contacts": {
     "social": {
     "instagram": {

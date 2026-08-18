@@ -9,7 +9,7 @@ export default async function useAsyncContentPageData() {
   const lang = useCurrentLang()
   const pageName = slugParam ? String(slugParam) : String(baseRouteName.value)
 
-  const { data, error } = await useAsyncGql({
+  const { data, error, pending } = await useAsyncGql({
     operation: "page",
     variables: {
       slug: pageName || "",
@@ -43,6 +43,7 @@ export default async function useAsyncContentPageData() {
     pageData,
     seoData,
     richTextField,
-    error
+    error,
+    isDataLoading: pending
   }
 }

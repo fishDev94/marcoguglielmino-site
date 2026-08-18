@@ -60,6 +60,11 @@ export default defineEventHandler(async (event) => {
       } satisfies StravaActivitiesPage<StravaActivitySummary>
     }
 
-    throw err
+    throw createError({
+      statusCode: (err as { status?: number, statusCode?: number })?.status
+        || (err as { status?: number, statusCode?: number })?.statusCode
+        || 502,
+      statusMessage: "Failed to fetch activities from Strava"
+    })
   }
 })
