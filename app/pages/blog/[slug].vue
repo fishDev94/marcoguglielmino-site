@@ -44,6 +44,7 @@
           class="mg-blog-post__body-text"
         />
         <UIGallery
+          v-if="galleryData.length"
           :images="galleryData"
           :title="$t('article.gallery.title')"
         />
