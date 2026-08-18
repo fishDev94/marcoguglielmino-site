@@ -96,6 +96,7 @@ $tablet-padding: 64px;
     display: flex;
     flex-direction: column;
     gap: 1.5rem;
+    min-width: 0;
 
     @media (min-width: 1024px) {
       grid-column: span 8 / span 8;
