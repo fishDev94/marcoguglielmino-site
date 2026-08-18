@@ -44,6 +44,7 @@
           class="mg-blog-post__body-text"
         />
         <UIGallery
+          v-if="galleryData.length"
           :images="galleryData"
           :title="$t('article.gallery.title')"
         />
@@ -59,7 +60,10 @@
         v-if="equipmentCollection"
         :items="equipmentCollection"
       />
-      <UIArticlePerformance :data="performance" />
+      <UIArticlePerformance
+        v-if="performance"
+        :data="performance"
+      />
       <ArticleSocialShare />
     </template>
   </NuxtLayout>
