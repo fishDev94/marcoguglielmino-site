@@ -56,6 +56,12 @@
           <p class="font-body-lg text-body-lg text-on-surface-variant">
             {{ errorDescription }}
           </p>
+          <p
+            v-if="errorStatusMessage"
+            class="font-body-lg text-body-lg text-on-surface-variant mt-2 opacity-70 italic"
+          >
+            {{ errorStatusMessage }}
+          </p>
         </div>
         <!-- Call to Action -->
         <div class="flex flex-col sm:flex-row gap-4 items-center">
@@ -70,7 +76,7 @@
               name="i-material-symbols-arrow-back-rounded"
               class="size-5"
             /></span>
-            Torna in Home Page
+            {{ $t('error.back_home') }}
           </a>
         </div>
       </div>
@@ -90,7 +96,7 @@
           </div>
           <div>
             <p class="font-label-bold text-[10px] uppercase text-split-gray">
-              Errore di Percorso
+              {{ $t('error.route_error') }}
             </p>
             <p class="font-data-mono text-atletica-blue">
               0:00:00
@@ -103,21 +109,24 @@
 </template>
 
 <script setup lang="ts">
+const { t } = useI18n()
 const error = useError()
 
 const statusCode = computed(() => error.value?.statusCode || 500)
 
+const errorStatusMessage = computed(() => error.value?.statusMessage || "")
+
 const errorTitle = computed(() => {
   if (statusCode.value === 404) {
-    return "Oops! Sembra che tu sia uscito fuori pista."
+    return t("error.title_404")
   }
-  return "Qualcosa è andato storto."
+  return t("error.title_generic")
 })
 
 const errorDescription = computed(() => {
   if (statusCode.value === 404) {
-    return "Anche ai migliori capita di sbagliare traiettoria. Non preoccuparti, riprendiamo il ritmo e torniamo sul percorso principale."
+    return t("error.description_404")
   }
-  return "Si è verificato un errore imprevisto. Riprova tra qualche istante o torna alla home page."
+  return t("error.description_generic")
 })
 </script>
