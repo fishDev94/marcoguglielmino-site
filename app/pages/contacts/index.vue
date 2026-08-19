@@ -8,8 +8,7 @@
       <UIContactDetail
         icon="i-ic-outline-email"
         :label="$t('contacts.contact.directEmail')"
-        value="info@marcoguglielmino.com"
-        href="mailto:info@marcoguglielmino.com"
+        encoded-email="aW5mb0BtYXJjb2d1Z2xpZWxtaW5vLmNvbQ=="
       />
     </template>
     <template #side>
