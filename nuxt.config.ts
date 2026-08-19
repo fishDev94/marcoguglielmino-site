@@ -232,8 +232,6 @@ export default defineNuxtConfig({
     }
   },
   robots: {
-    blockNonSeoBots: true,
-    blockAiBots: true,
     disallow: ["/api/"],
     allow: "/"
   },
