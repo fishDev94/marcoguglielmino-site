@@ -20,7 +20,40 @@ const props = defineProps<{
   } | null
 }>()
 
+// Regex pattern to detect email addresses
+const emailRegex = /[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}/
+
+// Helper: Converts email characters into decimal HTML entities for text node protection
+const encodeEmailToEntities = (email: string) => {
+  return email
+    .split("")
+    .map(char => `&#${char.charCodeAt(0)};`)
+    .join("")
+}
+
+// Handler: Safely opens the mail client on user click without revealing the email in href SSR
+const handleProtectedEmailClick = (event: MouseEvent, email: string) => {
+  event.preventDefault()
+  window.location.href = `mailto:${email}`
+}
+
 const renderTextNode = (node: Text): VNodeChild => {
+  if (!node.value) return ""
+
+  // 1. If a raw text node contains an email address (without being wrapped in a Contentful Hyperlink)
+  if (emailRegex.test(node.value)) {
+    const rawEmail = node.value.match(emailRegex)?.[0] || node.value
+    const safeEmailEntities = encodeEmailToEntities(rawEmail)
+
+    return h("a", {
+      href: "#",
+      class: "text-blue-600 hover:underline cursor-pointer",
+      innerHTML: safeEmailEntities,
+      onClick: (e: MouseEvent) => handleProtectedEmailClick(e, rawEmail)
+    })
+  }
+
+  // 2. Standard text node rendering with marks (bold, code, italic, etc.)
   if (!node.marks?.length) {
     return node.value
   }
@@ -115,11 +148,37 @@ const renderNode = (node: RichTextNode, index: number): VNodeChild => {
       return h("blockquote", { class: "border-l-4 pl-4 italic mb-4" }, renderNodes((node as Block).content))
     case INLINES.HYPERLINK: {
       const hyperlinkNode = node as HyperlinkNode
+      const uri = hyperlinkNode.data?.uri ?? "#"
+
+      // Extract text content from children nodes to check if it contains an email
+      const firstChild = hyperlinkNode.content?.[0] as Text | undefined
+      const nodeText = firstChild?.value || ""
+
+      const containsEmail = emailRegex.test(uri) || emailRegex.test(nodeText)
+
+      if (containsEmail) {
+        const rawEmail = uri.replace("mailto:", "").match(emailRegex)?.[0]
+          || nodeText.match(emailRegex)?.[0]
+          || ""
+
+        if (rawEmail) {
+          const safeEmailEntities = encodeEmailToEntities(rawEmail)
+
+          return h("a", {
+            key: index,
+            href: "#",
+            class: "text-blue-600 hover:underline cursor-pointer",
+            innerHTML: safeEmailEntities,
+            onClick: (e: MouseEvent) => handleProtectedEmailClick(e, rawEmail)
+          })
+        }
+      }
+
       return h(
         NuxtLinkLocale,
         {
           key: index,
-          to: hyperlinkNode.data?.uri ?? "#",
+          to: uri,
           class: "text-blue-600 hover:underline"
         },
         {
@@ -152,7 +211,6 @@ const renderedContent = computed(() => {
 
     &:last-child {
       margin-bottom: 0;
-
     }
 
     strong {
