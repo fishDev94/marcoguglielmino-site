@@ -4,9 +4,21 @@
 
 <script setup lang="ts">
 import { computed, h, type VNodeChild } from "vue"
-import { BLOCKS, INLINES, MARKS, type Document, type Block, type Text } from "@contentful/rich-text-types"
+import {
+  BLOCKS,
+  INLINES,
+  MARKS,
+  type Document,
+  type Block,
+  type Text
+} from "@contentful/rich-text-types"
 import { NuxtLinkLocale, NuxtImg, StravaActivityWidget } from "#components"
-import type { AssetBlock, EntryBlock, RichTextNode, HyperlinkNode } from "@@/types/contentful"
+import type {
+  AssetBlock,
+  EntryBlock,
+  RichTextNode,
+  HyperlinkNode
+} from "@@/types/contentful"
 
 const props = defineProps<{
   customRichTextJson?: Document | null
@@ -87,19 +99,47 @@ const renderNode = (node: RichTextNode, index: number): VNodeChild => {
     case BLOCKS.DOCUMENT:
       return h("div", renderNodes((node as Document).content))
     case BLOCKS.PARAGRAPH:
-      return h("p", { class: "mg-richtext__text" }, renderNodes((node as Block).content))
+      return h(
+        "p",
+        { class: "mg-richtext__text" },
+        renderNodes((node as Block).content)
+      )
     case BLOCKS.HEADING_1:
-      return h("h1", { class: "mg-richtext__heading-1" }, renderNodes((node as Block).content))
+      return h(
+        "h1",
+        { class: "mg-richtext__heading-1" },
+        renderNodes((node as Block).content)
+      )
     case BLOCKS.HEADING_2:
-      return h("h2", { class: "mg-richtext__heading-2" }, renderNodes((node as Block).content))
+      return h(
+        "h2",
+        { class: "mg-richtext__heading-2" },
+        renderNodes((node as Block).content)
+      )
     case BLOCKS.HEADING_3:
-      return h("h3", { class: "mg-richtext__heading-3" }, renderNodes((node as Block).content))
+      return h(
+        "h3",
+        { class: "mg-richtext__heading-3" },
+        renderNodes((node as Block).content)
+      )
     case BLOCKS.UL_LIST:
-      return h("ul", { class: "mg-richtext__ul" }, renderNodes((node as Block).content))
+      return h(
+        "ul",
+        { class: "mg-richtext__ul" },
+        renderNodes((node as Block).content)
+      )
     case BLOCKS.OL_LIST:
-      return h("ol", { class: "mg-richtext__ol" }, renderNodes((node as Block).content))
+      return h(
+        "ol",
+        { class: "mg-richtext__ol" },
+        renderNodes((node as Block).content)
+      )
     case BLOCKS.LIST_ITEM:
-      return h("li", { class: "mg-richtext__li" }, renderNodes((node as Block).content))
+      return h(
+        "li",
+        { class: "mg-richtext__li" },
+        renderNodes((node as Block).content)
+      )
     case BLOCKS.EMBEDDED_ASSET: {
       const embeddedAssetNode = node
       const targetId = embeddedAssetNode.data?.target?.sys?.id
@@ -112,23 +152,20 @@ const renderNode = (node: RichTextNode, index: number): VNodeChild => {
         ? `https:${matchedAsset.url}`
         : matchedAsset.url
 
-      return h(
-        NuxtImg as Component,
-        {
-          key: index,
-          src: formattedUrl,
-          provider: "contentful",
-          alt: matchedAsset.title || "",
-          width: matchedAsset.width,
-          height: matchedAsset.height,
-          sizes: "xs:100vw md:100vw xl:1400px",
-          densities: "x1 x2",
-          format: "webp",
-          quality: "80",
-          loading: "lazy",
-          class: "mg-richtext__img my-6 rounded-lg w-full object-cover"
-        }
-      )
+      return h(NuxtImg as Component, {
+        key: index,
+        src: formattedUrl,
+        provider: "contentful",
+        alt: matchedAsset.title || "",
+        width: matchedAsset.width,
+        height: matchedAsset.height,
+        sizes: "xs:100vw md:100vw xl:1400px",
+        densities: "x1 x2",
+        format: "webp",
+        quality: "80",
+        loading: "lazy",
+        class: "mg-richtext__img my-6 rounded-lg w-full object-cover"
+      })
     }
     case BLOCKS.EMBEDDED_ENTRY: {
       const embeddedEntryNode = node
@@ -139,13 +176,21 @@ const renderNode = (node: RichTextNode, index: number): VNodeChild => {
       if (!matchedEntry) return null
 
       if (matchedEntry.__typename === "StravaActivity") {
-        return h(StravaActivityWidget, { key: index, activityId: matchedEntry.activityId, class: "mg-richtext__strava-card" })
+        return h(StravaActivityWidget, {
+          key: index,
+          activityId: matchedEntry.activityId,
+          class: "mg-richtext__strava-card"
+        })
       }
 
       return null
     }
     case BLOCKS.QUOTE:
-      return h("blockquote", { class: "border-l-4 pl-4 italic mb-4" }, renderNodes((node as Block).content))
+      return h(
+        "blockquote",
+        { class: "mg-richtext__blockquote border-l-4 pl-4 italic mb-4" },
+        renderNodes((node as Block).content)
+      )
     case INLINES.HYPERLINK: {
       const hyperlinkNode = node as HyperlinkNode
       const uri = hyperlinkNode.data?.uri ?? "#"
@@ -157,9 +202,10 @@ const renderNode = (node: RichTextNode, index: number): VNodeChild => {
       const containsEmail = emailRegex.test(uri) || emailRegex.test(nodeText)
 
       if (containsEmail) {
-        const rawEmail = uri.replace("mailto:", "").match(emailRegex)?.[0]
-          || nodeText.match(emailRegex)?.[0]
-          || ""
+        const rawEmail
+          = uri.replace("mailto:", "").match(emailRegex)?.[0]
+            || nodeText.match(emailRegex)?.[0]
+            || ""
 
         if (rawEmail) {
           const safeEmailEntities = encodeEmailToEntities(rawEmail)
@@ -198,7 +244,11 @@ const renderedContent = computed(() => {
     return h("div")
   }
 
-  return h("div", { class: "prose max-w-none" }, renderNodes(props.customRichTextJson.content))
+  return h(
+    "div",
+    { class: "prose max-w-none" },
+    renderNodes(props.customRichTextJson.content)
+  )
 })
 </script>
 
@@ -241,12 +291,65 @@ const renderedContent = computed(() => {
     margin-bottom: 32px;
   }
 
+  &__blockquote {
+    position: relative;
+    margin: 2rem 0;
+    padding: 1.5rem 1.75rem 1.5rem 2rem;
+    background-color: var(--mg-color-surface-alt);
+    border-left: 4px solid var(--mg-color-primary);
+    border-radius: 0.25rem 0.5rem 0.5rem 0.25rem;
+
+    /* Tipografia */
+    font-style: italic;
+    font-size: 1.05rem;
+    line-height: 1.65;
+    color: var(--mg-color-on-surface);
+
+    p {
+      margin: 0;
+
+      & + p {
+        margin-top: 0.75rem;
+      }
+    }
+
+    cite,
+    footer {
+      display: block;
+      margin-top: 1rem;
+      font-style: normal;
+      font-weight: 700;
+      font-size: 0.875rem;
+      letter-spacing: 0.025em;
+      color: var(--mg-color-secondary);
+
+      &::before {
+        content: "— ";
+        color: var(--mg-color-primary);
+      }
+    }
+
+    &::before {
+      content: "“";
+      position: absolute;
+      top: -0.5rem;
+      right: 1.25rem;
+      font-size: 5rem;
+      font-family: Georgia, serif;
+      line-height: 1;
+      color: var(--mg-color-primary);
+      opacity: 0.12;
+      pointer-events: none;
+    }
+  }
+
   &__strava-card {
     margin-top: 8px;
     margin-bottom: 32px !important;
   }
 
-  &__ul {
+  &__ul,
+  &__ol {
     display: block;
     list-style: disc outside none;
     margin-bottom: 24px;
