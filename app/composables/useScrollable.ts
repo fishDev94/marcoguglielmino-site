@@ -21,7 +21,7 @@ export const useScrollable = <T extends HTMLElement>(
     () => maxScrollLeft.value > INIT_REF_NUMBER
   )
 
-  const handleScroll = (side?: "right") => {
+  const handleScroll = (side?: "right" | "left") => {
     const moveAmount = scrollMoveRef.value
 
     if (element.value) {

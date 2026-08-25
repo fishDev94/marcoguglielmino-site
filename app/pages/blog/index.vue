@@ -31,7 +31,7 @@
                   class="mg-articles__filter cursor-pointer"
                   :color="isTagActive(tag?.tagValue).color"
                   :variant="isTagActive(tag?.tagValue).variant"
-                  @click="toggleFilter(tag?.tagValue || '')"
+                  @click="handleTagClick(tag?.tagValue)"
                 >
                   {{ tag?.tagName }}
                 </UBadge>
@@ -68,6 +68,7 @@
 </template>
 
 <script setup lang="ts">
+import { track } from "@vercel/analytics"
 import { watchDebounced } from "@vueuse/core"
 import type { TagDataFragment } from "#gql"
 import type { BreadcrumbItem } from "@nuxt/ui"
@@ -135,6 +136,14 @@ useSeoMeta({
   ogType: "website",
   ogLocale: locale.value === "it" ? "it_IT" : "en_US"
 })
+
+const handleTagClick = (tagValue?: string | null) => {
+  toggleFilter(tagValue || "")
+
+  track("Article Tag:", {
+    name: tagValue
+  })
+}
 </script>
 
 <style lang="scss" scoped>

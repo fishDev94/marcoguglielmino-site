@@ -15,7 +15,7 @@
         variant="solid"
         color="primary"
         :disabled="isPrevDisabled"
-        @click="handleScroll()"
+        @click="handleClick('left')"
       />
       <UButton
         :class="[
@@ -27,7 +27,7 @@
         size="md"
         color="primary"
         :disabled="isNextDisabled"
-        @click="handleScroll('right')"
+        @click="handleClick('right')"
       />
     </div>
     <div
@@ -41,6 +41,7 @@
 </template>
 
 <script lang="ts" setup>
+import { track } from "@vercel/analytics"
 import { FIRST_ELEMENT, INIT_REF_NUMBER } from "@/constants"
 
 interface Props {
@@ -63,6 +64,14 @@ const scrollableContentStyle = computed(() =>
     ? { "--carousel-item-size": carouselItemSize } as Record<string, string>
     : undefined
 )
+
+const handleClick = (direction: "left" | "right") => {
+  handleScroll(direction)
+
+  track("Carousel arrow direction", {
+    direction
+  })
+}
 </script>
 
 <style lang="scss" scoped>
