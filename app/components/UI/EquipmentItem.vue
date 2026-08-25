@@ -4,6 +4,7 @@
     class="mg-equipment-item"
     target="_blank"
     rel="noopener noreferrer"
+    @click="handleClick"
   >
     <div class="mg-equipment-item__image-wrapper">
       <img
@@ -35,6 +36,8 @@
 </template>
 
 <script lang="ts" setup>
+import { track } from "@vercel/analytics"
+
 interface Props {
   name?: string
   shortDescription?: string
@@ -45,8 +48,16 @@ interface Props {
 const {
   name = "Item name",
   shortDescription = "",
-  imgSrc = ""
+  imgSrc = "",
+  affiliateUrl
 } = defineProps<Props>()
+
+const handleClick = () => {
+  track("Blog Attrezzatura", {
+    name,
+    url: affiliateUrl
+  })
+}
 </script>
 
 <style lang="scss" scoped>
