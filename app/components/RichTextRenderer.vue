@@ -188,13 +188,10 @@ const renderNode = (node: RichTextNode, index: number): VNodeChild => {
     case BLOCKS.QUOTE: {
       const quoteBlock = node as Block
 
-      // Se dentro il blockquote c'è un paragrafo singolo che racchiude testo + autore
       const children = quoteBlock.content.map((childNode, childIndex) => {
         if (childNode.nodeType === BLOCKS.PARAGRAPH) {
           const paragraphContent = (childNode as Block).content
 
-          // Cerchiamo l'indice del nodo in cui inizia l'autore (es. il link o il testo dell'autore)
-          // Nel tuo caso l'autore è racchiuso o preceduto da un tag/link o grassetto
           const authorNodeIndex = paragraphContent.findIndex((inlineNode) => {
             if (inlineNode.nodeType === INLINES.HYPERLINK) return true
             if (inlineNode.nodeType === "text") {
@@ -204,7 +201,6 @@ const renderNode = (node: RichTextNode, index: number): VNodeChild => {
             return false
           })
 
-          // Se troviamo una separazione per l'autore all'interno dello stesso paragrafo
           if (authorNodeIndex !== -1 && authorNodeIndex > 0) {
             const quoteNodes = paragraphContent.slice(0, authorNodeIndex)
             const authorNodes = paragraphContent.slice(authorNodeIndex)
