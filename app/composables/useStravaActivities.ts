@@ -55,21 +55,6 @@ const getActivity = <T extends StravaActivity>(activityId: string) => {
     }
   })
 
-  watch(
-    error,
-    (err) => {
-      if (err) {
-        showError(
-          createError({
-            statusCode: err.status || 500,
-            statusMessage: err.statusText || "Fetch error",
-            message: err.message
-          })
-        )
-      }
-    }
-  )
-
   return { data, pending, error } as {
     data: Ref<T>
     pending: Ref<boolean>

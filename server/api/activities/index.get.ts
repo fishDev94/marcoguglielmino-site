@@ -10,8 +10,7 @@ export default defineEventHandler(async (event) => {
   const cacheKey = `strava_activities_${perPage}_${page}`
 
   try {
-    const accessToken = await getStravaAccessToken()
-    const activities = await fetchStravaActivities(accessToken, {
+    const activities = await fetchStravaActivities({
       page,
       per_page: perPage
     })
@@ -19,7 +18,7 @@ export default defineEventHandler(async (event) => {
     let hasNextPage = false
 
     if (activities.length === perPage) {
-      const probe = await fetchStravaActivities(accessToken, {
+      const probe = await fetchStravaActivities({
         page: page + 1,
         per_page: 1
       })

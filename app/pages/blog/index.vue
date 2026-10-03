@@ -55,7 +55,7 @@
               </template>
             </UICardGrid>
             <UPagination
-              v-model="currentPage"
+              v-model:page="currentPage"
               :total
               :items-per-page="12"
               class="mg-articles__pagination"
