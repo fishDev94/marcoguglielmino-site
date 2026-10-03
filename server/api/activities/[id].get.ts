@@ -6,8 +6,7 @@ export default defineEventHandler(async (event) => {
   const cacheKey = `strava_activity_${activityId}`
 
   try {
-    const accessToken = await getStravaAccessToken()
-    const activity = await fetchStravaActivityById(accessToken, activityId)
+    const activity = await fetchStravaActivityById(activityId)
 
     // Cache successful response in Redis (1 hour TTL — single activities don't change)
     await redis.set(cacheKey, JSON.stringify(activity), { ex: 3600 })
